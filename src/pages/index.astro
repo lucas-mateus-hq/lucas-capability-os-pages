@@ -2,6 +2,7 @@
 import CapabilityRegistry from '../components/CapabilityRegistry.astro';
 import ImpactDemo from '../components/ImpactDemo.astro';
 import CapabilityEvolutionLab from '../components/CapabilityEvolutionLab.astro';
+import LiveCapabilityLab from '../components/LiveCapabilityLab.astro';
 import telemetry from '../data/telemetry_source.json';
 ---
 
@@ -25,7 +26,8 @@ import telemetry from '../data/telemetry_source.json';
         <a href="./portfolio/">Professional portfolio</a>
         <a href="#system">System</a>
         <a href="#impact-demo">In practice</a>
-        <a href="#experiment">Experiment</a>
+        <a href="#experiment">Blind test</a>
+        <a href="#live-experiment">Live</a>
         <a href="#capabilities">Registry</a>
         <a href="#evidence">Evidence</a>
       </nav>
@@ -97,6 +99,7 @@ import telemetry from '../data/telemetry_source.json';
 
       <ImpactDemo />
       <CapabilityEvolutionLab />
+      <LiveCapabilityLab />
 
       <section id="capabilities" class="registry-section">
         <CapabilityRegistry />
@@ -104,7 +107,7 @@ import telemetry from '../data/telemetry_source.json';
 
       <section class="evidence-section" id="evidence">
         <header class="section-head">
-          <span>04 / EVIDENCE BOUNDARY</span>
+          <span>05 / EVIDENCE BOUNDARY</span>
           <h2>What is shown.<br />What stays private.</h2>
         </header>
         <div class="evidence-grid">
@@ -128,7 +131,7 @@ import telemetry from '../data/telemetry_source.json';
 
       <section class="tier-section" id="progress">
         <div class="tier-copy">
-          <span>05 / VERIFICATION DEPTH</span>
+          <span>06 / VERIFICATION DEPTH</span>
           <h2>Progress without synthetic scores.</h2>
         </div>
         <ol class="tier-list">
@@ -166,7 +169,7 @@ import telemetry from '../data/telemetry_source.json';
   .masthead{position:sticky;top:0;z-index:20;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;min-height:64px;padding:0 28px;border-bottom:1px solid #111;background:rgba(244,244,240,.94);backdrop-filter:blur(10px)}
   .brand{display:inline-flex;align-items:center;gap:10px;width:max-content;text-decoration:none;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.02em}
   .brand-mark{display:grid;place-items:center;width:28px;height:28px;border:1px solid #111;font:700 10px ui-monospace,SFMono-Regular,Menlo,monospace}
-  .masthead nav{display:flex;gap:22px}.masthead nav a{text-decoration:none;font-size:11px;color:#5f5f5a}.masthead nav a:hover{color:#111}
+  .masthead nav{display:flex;gap:20px}.masthead nav a{text-decoration:none;font-size:11px;color:#5f5f5a}.masthead nav a:hover{color:#111}
   .operator-chip{justify-self:end;display:flex;align-items:center;gap:10px;font:600 10px ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase;color:#666661}
   .operator-chip img{width:30px;height:30px;border-radius:50%;object-fit:cover;filter:grayscale(1) contrast(1.1);transition:filter .35s ease,transform .35s ease;transform:translateZ(0)}
   .operator-chip:hover img{filter:grayscale(0);transform:translateZ(0) scale(1.04)}
