@@ -6,10 +6,14 @@ const payload = JSON.parse(raw);
 
 if (!Array.isArray(payload.events)) throw new Error('events must be an array');
 
+const ids = new Set();
 for (const event of payload.events) {
   for (const key of ['id', 'title', 'start', 'end']) {
     if (!event[key] || typeof event[key] !== 'string') throw new Error(`event missing string field: ${key}`);
   }
+  if (ids.has(event.id)) throw new Error(`duplicate event id: ${event.id}`);
+  ids.add(event.id);
+
   const start = new Date(event.start);
   const end = new Date(event.end);
   if (Number.isNaN(start.valueOf()) || Number.isNaN(end.valueOf())) throw new Error(`invalid date in event ${event.id}`);
@@ -30,5 +34,17 @@ const response = await fetch(url, {
 });
 
 const text = await response.text();
-if (!response.ok) throw new Error(`calendar webhook failed ${response.status}: ${text}`);
-console.log(text || `Synced ${payload.events.length} event(s).`);
+if (!response.ok) throw new Error(`calendar webhook HTTP ${response.status}: ${text}`);
+
+let result;
+try {
+  result = JSON.parse(text);
+} catch {
+  throw new Error(`calendar webhook returned non-JSON response: ${text}`);
+}
+
+if (result?.ok !== true) {
+  throw new Error(`calendar sync rejected: ${result?.error || 'unknown error'}`);
+}
+
+console.log(JSON.stringify(result));
