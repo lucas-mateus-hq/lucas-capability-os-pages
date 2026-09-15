@@ -4,19 +4,19 @@ function doPost(e) {
   try {
     const body = JSON.parse(e.postData.contents || '{}');
     const expected = PropertiesService.getScriptProperties().getProperty('CAPLAB_SHARED_TOKEN');
-    if (!expected || body.token !== expected) return json_({ ok: false, error: 'unauthorized' }, 401);
-    if (!Array.isArray(body.events)) return json_({ ok: false, error: 'events must be an array' }, 400);
+    if (!expected || body.token !== expected) return json_({ ok: false, error: 'unauthorized' });
+    if (!Array.isArray(body.events)) return json_({ ok: false, error: 'events must be an array' });
 
     const calendarId = PropertiesService.getScriptProperties().getProperty('TARGET_CALENDAR_ID') || 'primary';
     const calendar = calendarId === 'primary'
       ? CalendarApp.getDefaultCalendar()
       : CalendarApp.getCalendarById(calendarId);
-    if (!calendar) return json_({ ok: false, error: 'calendar not found' }, 500);
+    if (!calendar) return json_({ ok: false, error: 'calendar not found' });
 
     const results = body.events.map(event => upsertEvent_(calendar, event));
-    return json_({ ok: true, count: results.length, results }, 200);
+    return json_({ ok: true, count: results.length, results });
   } catch (err) {
-    return json_({ ok: false, error: String(err && err.message ? err.message : err) }, 500);
+    return json_({ ok: false, error: String(err && err.message ? err.message : err) });
   }
 }
 
@@ -40,7 +40,7 @@ function upsertEvent_(calendar, event) {
     existing.setTitle(event.title);
     existing.setTime(start, end);
     existing.setDescription(description);
-    if (event.location) existing.setLocation(event.location);
+    existing.setLocation(event.location || '');
     return { id: event.id, action: 'updated', calendarEventId: existing.getId() };
   }
 
@@ -51,7 +51,7 @@ function upsertEvent_(calendar, event) {
   return { id: event.id, action: 'created', calendarEventId: created.getId() };
 }
 
-function json_(payload, status) {
+function json_(payload) {
   const out = ContentService.createTextOutput(JSON.stringify(payload));
   out.setMimeType(ContentService.MimeType.JSON);
   return out;
