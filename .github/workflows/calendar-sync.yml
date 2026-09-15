@@ -1,0 +1,26 @@
+name: Calendar sync
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'automation/calendar/events.json'
+      - 'scripts/sync-calendar.mjs'
+
+permissions:
+  contents: read
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate and sync events
+        env:
+          CALENDAR_WEBHOOK_URL: ${{ secrets.CALENDAR_WEBHOOK_URL }}
+          CALENDAR_WEBHOOK_TOKEN: ${{ secrets.CALENDAR_WEBHOOK_TOKEN }}
+        run: node scripts/sync-calendar.mjs automation/calendar/events.json

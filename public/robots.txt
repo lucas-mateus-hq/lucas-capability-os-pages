@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://lucas-mateus-hq.github.io/lucas-capability-os-pages/sitemap.xml
