@@ -1,0 +1,62 @@
+name: Calendar Bridge UX Gate
+
+on:
+  pull_request:
+    paths:
+      - 'integrations/google-calendar/**'
+      - 'integrations/README.md'
+      - '.github/workflows/calendar-bridge-ux-gate.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate Apps Script, UX and security contracts
+        run: |
+          node <<'NODE'
+          const fs = require('node:fs');
+          const assert = require('node:assert/strict');
+
+          const code = fs.readFileSync('integrations/google-calendar/Code.gs', 'utf8');
+          const html = fs.readFileSync('integrations/google-calendar/Index.html', 'utf8');
+          const manifest = JSON.parse(fs.readFileSync('integrations/google-calendar/appsscript.json', 'utf8'));
+
+          // Parse-time validation for Apps Script server source.
+          new Function(code);
+
+          // Parse-time validation for the single inline browser script.
+          const script = html.match(/<script>([\s\S]*?)<\/script>/i);
+          assert.ok(script, 'Index.html must contain an inline script');
+          new Function(script[1]);
+
+          // Server contract.
+          for (const token of ['function doGet()', 'function getBridgeStatus()', 'function doPost(e)', 'CAPLAB_SHARED_TOKEN', 'MAX_EVENTS_PER_SYNC', "body.source !== 'github'", 'LockService.getScriptLock()']) {
+            assert.ok(code.includes(token), `missing server contract: ${token}`);
+          }
+          assert.ok(code.includes('writesFromUi: false'), 'status API must declare browser UI read-only');
+
+          // UX contract.
+          for (const token of ['data-lang="pt"', 'data-lang="en"', 'aria-live="polite"', 'role="alert"', 'Refresh status', 'Atualizar status', 'Read-only UI', 'Interface somente leitura']) {
+            assert.ok(html.includes(token), `missing UX contract: ${token}`);
+          }
+
+          // Browser must not contain mutation APIs, secrets or calendar data surfaces.
+          for (const forbidden of ['createEvent(', '.setTitle(', '.setTime(', 'calendarEventId', 'CAPLAB_SHARED_TOKEN', 'TARGET_CALENDAR_ID']) {
+            assert.ok(!html.includes(forbidden), `forbidden browser surface: ${forbidden}`);
+          }
+
+          // Deployment boundary remains explicit: public ingress, deployer execution, token-gated POST.
+          assert.equal(manifest.runtimeVersion, 'V8');
+          assert.equal(manifest.webapp.executeAs, 'USER_DEPLOYING');
+          assert.equal(manifest.webapp.access, 'ANYONE_ANONYMOUS');
+
+          console.log('CALENDAR_BRIDGE_UX_GATE=PASS');
+          NODE
