@@ -25,7 +25,7 @@ for (const file of files) {
 
   const token = process.env.LINKEDIN_ACCESS_TOKEN;
   const author = process.env.LINKEDIN_AUTHOR_URN;
-  const version = process.env.LINKEDIN_API_VERSION || '202606';
+  const version = process.env.LINKEDIN_API_VERSION || '202608';
   if (!token || !author) throw new Error('LinkedIn credentials are not configured.');
   if (!post.text || typeof post.text !== 'string') throw new Error(`Missing text in ${file}`);
 
