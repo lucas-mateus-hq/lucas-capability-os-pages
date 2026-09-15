@@ -1,4 +1,6 @@
 const STORAGE_KEY = 'caplab.relay.self.v1';
+const SESSION_KEY = 'caplab.relay.fast_session.v1';
+const SESSION_TTL_MS = 30 * 60 * 1000;
 const PBKDF2_ITERATIONS = 250000;
 const MAX_MESSAGE_LENGTH = 4000;
 const ALLOWED_HANDOFF_KEYS = new Set(['m', 'text']);
@@ -15,6 +17,9 @@ const sendPinInput = $('send-pin');
 const messageInput = $('message');
 const bindingStatus = $('binding-status');
 const sendStatus = $('send-status');
+const fastSessionInput = $('fast-session');
+
+let handoffAutostartPending = false;
 
 function setStatus(node, text, kind = '') {
   node.textContent = text;
@@ -119,44 +124,111 @@ function bindingExists() {
   return Boolean(localStorage.getItem(STORAGE_KEY));
 }
 
+function clearFastSession() {
+  sessionStorage.removeItem(SESSION_KEY);
+}
+
+function saveFastSession(phone) {
+  const record = {
+    version: 1,
+    phone: normalizePhone(phone),
+    expiresAt: Date.now() + SESSION_TTL_MS,
+  };
+  sessionStorage.setItem(SESSION_KEY, JSON.stringify(record));
+}
+
+function readFastSessionPhone() {
+  try {
+    const raw = sessionStorage.getItem(SESSION_KEY);
+    if (!raw) return '';
+    const record = JSON.parse(raw);
+    if (record?.version !== 1 || !Number.isFinite(record?.expiresAt) || record.expiresAt <= Date.now()) {
+      clearFastSession();
+      return '';
+    }
+    return normalizePhone(record.phone);
+  } catch {
+    clearFastSession();
+    return '';
+  }
+}
+
 function refreshBindingStatus() {
   if (bindingExists()) {
-    setStatus(bindingStatus, 'Vínculo local encontrado. O número armazenado está criptografado.', 'ok');
+    const fast = Boolean(readFastSessionPhone());
+    setStatus(
+      bindingStatus,
+      fast
+        ? 'Vínculo local encontrado. Sessão rápida ativa por até 30 minutos nesta aba/sessão do navegador.'
+        : 'Vínculo local encontrado. O número armazenado está criptografado.',
+      'ok',
+    );
   } else {
     setStatus(bindingStatus, 'Nenhum vínculo local salvo neste navegador.');
   }
 }
 
-function loadMessageFromFragment() {
+function buildWhatsAppDestination(phone, message) {
+  return `https://wa.me/${normalizePhone(phone)}?text=${encodeURIComponent(validateMessage(message))}`;
+}
+
+function openWhatsApp(phone, message) {
+  setStatus(sendStatus, 'Abrindo seu WhatsApp. O envio final continua manual.', 'ok');
+  window.location.assign(buildWhatsAppDestination(phone, message));
+}
+
+function parseHandoffFragment() {
   const rawFragment = location.hash.slice(1);
-  if (!rawFragment) return;
+  if (!rawFragment) return null;
 
   history.replaceState(null, '', location.pathname + location.search);
 
+  const params = new URLSearchParams(rawFragment);
+  const keys = [...params.keys()];
+
+  if (keys.some((key) => FORBIDDEN_DESTINATION_KEYS.has(key))) {
+    throw new Error('DESTINATION_OVERRIDE_FORBIDDEN');
+  }
+  if (keys.some((key) => !ALLOWED_HANDOFF_KEYS.has(key))) {
+    throw new Error('HANDOFF_FIELD_FORBIDDEN');
+  }
+
+  const packed = params.get('m');
+  const plain = params.get('text');
+  if (packed && plain) throw new Error('AMBIGUOUS_MESSAGE_INPUT');
+
+  let text = '';
+  if (packed) text = dec.decode(fromB64url(packed));
+  else if (plain) text = plain;
+  else return null;
+
+  return validateMessage(text);
+}
+
+function loadMessageFromFragment() {
   try {
-    const params = new URLSearchParams(rawFragment);
-    const keys = [...params.keys()];
+    const text = parseHandoffFragment();
+    if (!text) return;
 
-    if (keys.some((key) => FORBIDDEN_DESTINATION_KEYS.has(key))) {
-      throw new Error('DESTINATION_OVERRIDE_FORBIDDEN');
+    messageInput.value = text;
+    const fastPhone = readFastSessionPhone();
+    if (fastPhone) {
+      handoffAutostartPending = false;
+      setStatus(sendStatus, 'Handoff válido recebido. Sessão rápida ativa; abrindo seu WhatsApp automaticamente.', 'ok');
+      window.setTimeout(() => openWhatsApp(fastPhone, text), 40);
+      return;
     }
-    if (keys.some((key) => !ALLOWED_HANDOFF_KEYS.has(key))) {
-      throw new Error('HANDOFF_FIELD_FORBIDDEN');
-    }
 
-    const packed = params.get('m');
-    const plain = params.get('text');
-    if (packed && plain) throw new Error('AMBIGUOUS_MESSAGE_INPUT');
-
-    let text = '';
-    if (packed) text = dec.decode(fromB64url(packed));
-    else if (plain) text = plain;
-    else return;
-
-    messageInput.value = validateMessage(text);
-    setStatus(sendStatus, 'Mensagem recebida da IA. Confirme o conteúdo e use seu PIN para abrir seu próprio WhatsApp.', 'ok');
+    handoffAutostartPending = true;
+    setStatus(
+      sendStatus,
+      'Mensagem recebida da IA. Digite seu PIN uma vez; se ativar a sessão rápida, próximos handoffs desta sessão irão direto ao WhatsApp.',
+      'ok',
+    );
+    sendPinInput.focus();
   } catch (error) {
     const code = error?.message || 'HANDOFF_INVALID';
+    handoffAutostartPending = false;
     if (code === 'DESTINATION_OVERRIDE_FORBIDDEN' || code === 'HANDOFF_FIELD_FORBIDDEN') {
       setStatus(sendStatus, 'Link rejeitado: a IA só pode preencher a mensagem, nunca o destinatário.', 'error');
     } else {
@@ -174,6 +246,7 @@ $('save-binding').addEventListener('click', async () => {
     pin = validatePin(bindPinInput.value);
     const record = await createEncryptedBinding(phone, pin);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(record));
+    clearFastSession();
     phoneInput.value = '';
     bindPinInput.value = '';
     setStatus(bindingStatus, 'Vínculo salvo. O telefone em texto puro não foi persistido.', 'ok');
@@ -188,10 +261,18 @@ $('save-binding').addEventListener('click', async () => {
 
 $('clear-binding').addEventListener('click', () => {
   localStorage.removeItem(STORAGE_KEY);
+  clearFastSession();
   phoneInput.value = '';
   bindPinInput.value = '';
   sendPinInput.value = '';
   refreshBindingStatus();
+});
+
+$('clear-session').addEventListener('click', () => {
+  clearFastSession();
+  fastSessionInput.checked = false;
+  refreshBindingStatus();
+  setStatus(sendStatus, 'Sessão rápida encerrada.', 'ok');
 });
 
 $('send').addEventListener('click', async () => {
@@ -199,15 +280,18 @@ $('send').addEventListener('click', async () => {
   let pin = '';
   try {
     const message = validateMessage(messageInput.value);
-    pin = validatePin(sendPinInput.value);
-    setStatus(sendStatus, 'Desbloqueando destino local...');
-    phone = await decryptPhone(pin);
-    const destination = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+    phone = readFastSessionPhone();
+
+    if (!phone) {
+      pin = validatePin(sendPinInput.value);
+      setStatus(sendStatus, 'Desbloqueando destino local...');
+      phone = await decryptPhone(pin);
+      if (fastSessionInput.checked) saveFastSession(phone);
+    }
+
     sendPinInput.value = '';
-    setStatus(sendStatus, 'Abrindo seu WhatsApp. O envio final continua manual.', 'ok');
-    phone = '';
-    pin = '';
-    window.location.assign(destination);
+    handoffAutostartPending = false;
+    openWhatsApp(phone, message);
   } catch (error) {
     const code = error?.message || 'RELAY_ERROR';
     if (code === 'BINDING_MISSING') setStatus(sendStatus, 'Crie primeiro o vínculo local do seu WhatsApp.', 'error');
@@ -221,8 +305,14 @@ $('send').addEventListener('click', async () => {
   }
 });
 
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./service-worker.js', { scope: './' }).catch(() => {
+    setStatus(sendStatus, 'O modo de compartilhamento do dispositivo não pôde ser ativado. O handoff por link continua disponível.', 'error');
+  });
+}
+
 window.addEventListener('hashchange', loadMessageFromFragment);
 refreshBindingStatus();
 loadMessageFromFragment();
 
-// O que isso faz: mantém o self-destination criptografado localmente, permite à IA preencher apenas a mensagem via fragmento local e processa handoffs na mesma aba sem conceder à IA autoridade sobre o destinatário.
+// O que isso faz: mantém o self-destination criptografado localmente, adiciona uma sessão rápida temporária para handoffs repetidos, abre automaticamente o WhatsApp quando um handoff válido chega durante essa sessão e preserva o envio final manual.

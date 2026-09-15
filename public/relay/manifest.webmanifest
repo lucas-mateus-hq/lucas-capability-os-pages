@@ -1,0 +1,20 @@
+{
+  "name": "Capability Lab Relay",
+  "short_name": "Send2Self",
+  "description": "Provider-neutral local handoff from AI output to your own WhatsApp.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0b0d10",
+  "theme_color": "#0b0d10",
+  "share_target": {
+    "action": "./share-target",
+    "method": "POST",
+    "enctype": "application/x-www-form-urlencoded",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  }
+}

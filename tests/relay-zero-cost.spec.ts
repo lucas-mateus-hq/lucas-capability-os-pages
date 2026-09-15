@@ -38,7 +38,7 @@ test('AI handoff pre-fills only the message and removes it from the URL', async 
   await page.goto(`relay/#text=${encodeURIComponent(message)}`);
 
   await expect(page.getByLabel('Mensagem')).toHaveValue(message);
-  await expect(page.getByText('Mensagem recebida da IA. Confirme o conteúdo e use seu PIN para abrir seu próprio WhatsApp.')).toBeVisible();
+  await expect(page.getByText(/Mensagem recebida da IA\. Digite seu PIN uma vez/)).toBeVisible();
   await expect(page).toHaveURL(/\/relay\/$/);
 });
 
@@ -75,4 +75,29 @@ test('legacy packed fragment remains compatible and still uses the local destina
   expect(request.url()).toContain(`https://wa.me/${TEST_DESTINATION}?text=CAPLAB-PACKED-AI-HANDOFF`);
 });
 
-// O que isso faz: valida em navegador real que mensagens vindas da IA podem ser pré-preenchidas sem expor ou permitir alteração do destino criptografado localmente.
+test('fast session turns the next valid AI handoff into automatic WhatsApp opening', async ({ page }) => {
+  await page.goto('relay/');
+  await saveBinding(page);
+
+  await page.getByLabel('Ativar sessão rápida após o próximo desbloqueio').check();
+  await page.getByLabel('Mensagem').fill('CAPLAB-FAST-SESSION-PRIME');
+  await page.getByLabel('PIN local').last().fill(TEST_PIN);
+
+  await page.route('https://wa.me/**', (route) => route.abort());
+  let firstRequest = page.waitForRequest((request) => request.url().startsWith('https://wa.me/'));
+  await page.getByRole('button', { name: 'Abrir meu WhatsApp' }).click();
+  await firstRequest;
+
+  const session = await page.evaluate(() => sessionStorage.getItem('caplab.relay.fast_session.v1'));
+  expect(session).toBeTruthy();
+  expect(session).toContain(TEST_DESTINATION);
+
+  const nextMessage = 'CAPLAB-SEND2SELF-AUTO-HANDOFF';
+  const secondRequest = page.waitForRequest((request) => request.url().startsWith('https://wa.me/'));
+  await page.goto(`relay/#text=${encodeURIComponent(nextMessage)}`);
+  const request = await secondRequest;
+
+  expect(request.url()).toContain(`https://wa.me/${TEST_DESTINATION}?text=${nextMessage}`);
+});
+
+// O que isso faz: valida que o destino persistente continua criptografado, que a IA não pode alterar o destinatário e que a sessão rápida temporária permite abrir automaticamente o WhatsApp em handoffs subsequentes.
