@@ -1,4 +1,13 @@
 {
   "timezone": "America/Sao_Paulo",
-  "events": []
+  "events": [
+    {
+      "id": "calendar-bridge-live-gate-20260916",
+      "title": "[TESTE] Capability Lab — Calendar Bridge",
+      "start": "2026-09-16T15:00:00-03:00",
+      "end": "2026-09-16T15:15:00-03:00",
+      "description": "Gate controlado da integração GitHub → Apps Script → Google Calendar. Pode ser removido após a validação.",
+      "location": ""
+    }
+  ]
 }
