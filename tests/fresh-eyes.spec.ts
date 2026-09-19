@@ -108,6 +108,33 @@ test('mobile impact demo keeps scenario, step and result interactions readable',
   await capture(page, 'impact-demo-mobile');
 });
 
+test('desktop live experiment fails closed until verified Apps Script URL is installed', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto('./#live-experiment');
+  const wrapper = page.locator('[data-live-wrapper]');
+  await expect(wrapper).toBeVisible();
+  await expect(wrapper.locator('[data-live-pending]')).toBeVisible();
+  await expect(wrapper.locator('[data-live-frame]')).toBeHidden();
+  await expect(page.locator('#live-experiment')).toContainText('Secure no-billing connection pending');
+  const geometry = await documentGeometry(page);
+  await persistGeometry('live-experiment-desktop', geometry);
+  expect(geometry.overflow, JSON.stringify(geometry, null, 2)).toBe(0);
+  await capture(page, 'live-experiment-desktop');
+});
+
+test('mobile live experiment pending state remains readable and contained', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('./#live-experiment');
+  const wrapper = page.locator('[data-live-wrapper]');
+  await expect(wrapper).toBeVisible();
+  await expect(wrapper.locator('[data-live-pending]')).toBeVisible();
+  await expect(wrapper.locator('[data-live-frame]')).toBeHidden();
+  const geometry = await documentGeometry(page);
+  await persistGeometry('live-experiment-mobile', geometry);
+  expect(geometry.overflow, JSON.stringify(geometry, null, 2)).toBe(0);
+  await capture(page, 'live-experiment-mobile');
+});
+
 test('desktop professional portfolio is recruiter-readable and contained', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto('./portfolio/');

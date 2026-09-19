@@ -1,0 +1,86 @@
+name: Experiment 02 Live Gemini Smoke
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  live-smoke:
+    if: github.head_ref == 'experiment/live-capability-lab-v2'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - run: npx playwright install --with-deps chromium
+      - name: Run real Apps Script + Gemini smoke test
+        env:
+          LIVE_URL: https://script.google.com/macros/s/AKfycbwjxa81lNy4aY1ATp767p8x7SXLdymtlbvgOlhyoeYa3uUrDqIivU6253kxkGmM38ybmw/exec
+        run: |
+          node <<'NODE'
+          const { chromium } = require('playwright');
+          (async () => {
+            const browser = await chromium.launch({headless:true});
+            const page = await browser.newPage({viewport:{width:1280,height:900}});
+            await page.goto(process.env.LIVE_URL, {waitUntil:'domcontentloaded', timeout:60000});
+            await page.waitForTimeout(3000);
+            console.log('FINAL_URL='+page.url());
+            console.log('TITLE='+(await page.title()));
+
+            let appFrame = null;
+            for (const frame of page.frames()) {
+              console.log('FRAME='+frame.url());
+              if (await frame.locator('#problem').count()) { appFrame = frame; break; }
+            }
+            if (!appFrame) throw new Error('Apps Script UI frame with #problem was not found');
+
+            await appFrame.locator('#problem').fill('Our team has 30 days to launch a mentoring program, but information is scattered and nobody agrees on what success means.');
+            await appFrame.locator('#run').click();
+
+            let state = 'timeout';
+            for (let i = 0; i < 120; i++) {
+              if (await appFrame.locator('#results').isVisible().catch(()=>false)) { state = 'results'; break; }
+              if (await appFrame.locator('#error').isVisible().catch(()=>false)) { state = 'error'; break; }
+              await page.waitForTimeout(1000);
+            }
+
+            await page.screenshot({path:'live-experiment-smoke.png', fullPage:true});
+            if (state === 'error') {
+              const msg=(await appFrame.locator('#error').innerText()).trim();
+              console.log('LIVE_ERROR='+msg);
+              throw new Error('Apps Script/Gemini returned error: '+msg);
+            }
+            if (state !== 'results') {
+              const status=(await appFrame.locator('#status').innerText().catch(()=>'' )).trim();
+              console.log('LIVE_STATUS='+status);
+              throw new Error('Timed out waiting for live result');
+            }
+
+            const baseline=(await appFrame.locator('#baseline').innerText()).trim();
+            const clab=(await appFrame.locator('#clab').innerText()).trim();
+            const scores=(await appFrame.locator('#scoreGrid').innerText()).trim();
+            if (baseline.length < 40) throw new Error('Baseline answer too short or missing');
+            if (clab.length < 40) throw new Error('C Lab answer too short or missing');
+            if (!/Traceability/i.test(scores)) throw new Error('Evaluation scores missing');
+            console.log('LIVE_APPS_SCRIPT=PASS');
+            console.log('BASELINE_CHARS='+baseline.length);
+            console.log('CLAB_CHARS='+clab.length);
+            await browser.close();
+          })().catch(err=>{ console.error(err); process.exit(1); });
+          NODE
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: experiment-02-live-smoke
+          path: live-experiment-smoke.png
+          if-no-files-found: ignore
+          retention-days: 7
+
+# O que isso faz: executa uma validação real do Apps Script + Gemini antes do merge e expõe erros do servidor sem revelar credenciais.
