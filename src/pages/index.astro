@@ -12,124 +12,254 @@ import telemetry from '../data/telemetry_source.json';
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex,nofollow" />
     <meta name="color-scheme" content="light" />
-    <meta name="theme-color" content="#f4f4f0" />
-    <title>Capability Lab / Capability OS — Independent Applied R&D</title>
+    <meta name="theme-color" content="#f6f2e9" />
+    <meta
+      name="description"
+      content="Capability Lab is Lucas Mateus's independent human-AI R&D space: a practical exploration of learning, evidence, judgment and reusable capability."
+    />
+    <title>Capability Lab — Human + AI R&D by Lucas Mateus</title>
   </head>
   <body>
     <header class="masthead">
-      <a class="brand" href="#home" aria-label="Capability OS home">
-        <span class="brand-mark">LC</span>
-        <span>Capability OS</span>
+      <a class="brand" href="#home" aria-label="Capability Lab home">
+        <span class="brand-mark">C</span>
+        <span>C Lab</span>
       </a>
       <nav aria-label="Primary">
-        <a href="./portfolio/">Professional portfolio</a>
-        <a href="#system">System</a>
-        <a href="#impact-demo">In practice</a>
+        <a href="#system">Why it exists</a>
+        <a href="#impact-demo">Try it</a>
         <a href="#experiment">Experiment</a>
-        <a href="#capabilities">Registry</a>
         <a href="#evidence">Evidence</a>
+        <a href="#capabilities">Technical details</a>
       </nav>
-      <div class="operator-chip">
-        <span>{telemetry.operator.label}</span>
-        <img src="https://avatars.githubusercontent.com/u/322756565?v=4" alt="Lucas Mateus" loading="lazy" decoding="async" />
-      </div>
+      <a class="portfolio-link" href="./portfolio/">Lucas's portfolio ↗</a>
     </header>
 
     <main id="home">
       <section class="hero" aria-labelledby="home-title">
-        <div class="hero-kicker">Independent Applied R&D · Public system surface / 2026</div>
-        <h1 id="home-title">Capability<br />Operating<br />System</h1>
-        <div class="hero-bottom">
-          <p>An independent project exploring how AI-assisted workflows, evidence, evaluation and reproducibility can help structure and validate complex work.</p>
-          <dl>
-            <div><dt>Surface</dt><dd>Sanitized public snapshot</dd></div>
-            <div><dt>Source</dt><dd>Private canonical repository</dd></div>
-            <div><dt>Authority</dt><dd>None · presentation only</dd></div>
-          </dl>
-        </div>
-      </section>
-
-      <section class="metric-band" aria-label="Current system metrics">
-        <article>
-          <span>01</span>
-          <strong>{telemetry.summary.materialized_candidate_count}</strong>
-          <p>Materialized capabilities</p>
-          <code>evidence-backed · eval required</code>
-        </article>
-        <article>
-          <span>02</span>
-          <strong>{telemetry.summary.scaffold_unverified_count}</strong>
-          <p>Scaffold / unverified</p>
-          <code>no synthetic promotion</code>
-        </article>
-        <article>
-          <span>03</span>
-          <strong>{telemetry.summary.current_tier}</strong>
-          <p>Verification depth</p>
-          <code>active candidate</code>
-        </article>
-        <article>
-          <span>04</span>
-          <strong>{telemetry.operator.level}</strong>
-          <p>Operator consolidation</p>
-          <code>{telemetry.operator.label}</code>
-        </article>
-      </section>
-
-      <section class="system-section" id="system">
-        <header class="section-head">
-          <span>01 / SYSTEM STATE</span>
-          <h2>Operational by evidence,<br />not by appearance.</h2>
-        </header>
-        <div class="system-grid">
-          <div class="system-copy">
-            <p class="lead">Capability OS is an independent Applied R&D project by Lucas Mateus. The public Home Base exposes only high-level states that can be shown without publishing private contracts, execution receipts or credentials.</p>
-            <p>This work is separate from Lucas's core professional career in Talent Acquisition and Recruiting Operations. Public publication cannot expand runtime authority; planning, authorization, execution and promotion remain separate concerns.</p>
+        <div class="hero-copy">
+          <p class="hero-kicker">Lucas Mateus · Independent human + AI research</p>
+          <h1 id="home-title">Can AI help us become more capable, not just faster?</h1>
+          <p class="hero-intro">
+            Capability Lab is my personal R&D space for exploring that question through practical experiments.
+            I use AI, evidence and human judgment together — then keep what actually survives testing.
+          </p>
+          <div class="hero-actions" aria-label="Explore Capability Lab">
+            <a class="primary-action" href="#impact-demo">Try a simple example ↓</a>
+            <a class="secondary-action" href="#system">Why I built this</a>
           </div>
-          <dl class="facts">
-            <div><dt>Promotion rule</dt><dd>Green ≠ promotable</dd></div>
-            <div><dt>Telemetry</dt><dd>{telemetry.mode}</dd></div>
-            <div><dt>Schema</dt><dd>{telemetry.schema_version}</dd></div>
-            <div><dt>Scope</dt><dd>{telemetry.source_scope}</dd></div>
-          </dl>
         </div>
+
+        <aside class="hero-note" aria-label="About Lucas and Capability Lab">
+          <img
+            src="https://avatars.githubusercontent.com/u/322756565?v=4&s=164"
+            alt="Lucas Mateus"
+            width="82"
+            height="82"
+            loading="lazy"
+            fetchpriority="low"
+            decoding="async"
+          />
+          <div>
+            <span>ABOUT THE PERSON BEHIND THE LAB</span>
+            <p>
+              My background is in Talent Acquisition, Learning & Development and customer-facing work.
+              I came to AI through curiosity about people, learning and better ways to work — not through a traditional software-engineering path.
+            </p>
+            <a href="./portfolio/">See my professional background ↗</a>
+          </div>
+        </aside>
+      </section>
+
+      <section class="story-section" id="system" aria-labelledby="story-title">
+        <header class="story-head">
+          <span>01 / WHY THIS EXISTS</span>
+          <div>
+            <p class="eyebrow">A question became a lab</p>
+            <h2 id="story-title">I did not want AI to become another tool I used without understanding what it changed in me.</h2>
+          </div>
+        </header>
+
+        <div class="story-grid">
+          <div class="story-copy">
+            <p class="lead">
+              The more I worked with AI, the more interesting question stopped being “what can the model do?”
+              and became “what can a person learn to do with it?”
+            </p>
+            <p>
+              C Lab is where I test ways of making AI-assisted work more understandable, reviewable and reusable.
+              Sometimes that means better prompts. Often it means something less glamorous: clearer goals, explicit assumptions,
+              stronger evidence, a useful failure record, or a human checkpoint before calling something done.
+            </p>
+            <p>
+              The aim is not to remove human judgment. It is to make the collaboration between human judgment and machine capability
+              easier to inspect, improve and carry forward.
+            </p>
+          </div>
+
+          <div class="question-stack" aria-label="Questions Capability Lab explores">
+            <article>
+              <span>01</span>
+              <p>Can AI help someone learn from experience instead of only producing an answer?</p>
+            </article>
+            <article>
+              <span>02</span>
+              <p>Can good work become reusable capability instead of disappearing inside a chat?</p>
+            </article>
+            <article>
+              <span>03</span>
+              <p>Can evidence and human review make AI-assisted work easier to trust?</p>
+            </article>
+            <article>
+              <span>04</span>
+              <p>Can useful capability survive when the underlying model or provider changes?</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="method-section" aria-labelledby="method-title">
+        <header>
+          <span>02 / THE BASIC LOOP</span>
+          <h2 id="method-title">Ask. Try. Check. Keep what works.</h2>
+          <p>
+            Most of the Lab can be understood through four ordinary actions. The technical architecture exists to support this loop,
+            not to be the story itself.
+          </p>
+        </header>
+
+        <ol class="method-loop">
+          <li>
+            <span>01</span>
+            <strong>Ask</strong>
+            <p>Start with a real problem or uncertainty worth resolving.</p>
+          </li>
+          <li>
+            <span>02</span>
+            <strong>Try</strong>
+            <p>Build the smallest useful way to test an approach.</p>
+          </li>
+          <li>
+            <span>03</span>
+            <strong>Check</strong>
+            <p>Separate what worked from what merely looked convincing.</p>
+          </li>
+          <li>
+            <span>04</span>
+            <strong>Keep</strong>
+            <p>Preserve validated learning so future work can start from a better place.</p>
+          </li>
+        </ol>
       </section>
 
       <ImpactDemo />
       <CapabilityEvolutionLab />
 
-      <section id="capabilities" class="registry-section">
-        <CapabilityRegistry />
-      </section>
-
-      <section class="evidence-section" id="evidence">
+      <section class="evidence-section" id="evidence" aria-labelledby="evidence-title">
         <header class="section-head">
-          <span>04 / EVIDENCE BOUNDARY</span>
-          <h2>What is shown.<br />What stays private.</h2>
+          <span>05 / WHAT COUNTS AS PROGRESS</span>
+          <div>
+            <p class="eyebrow">Evidence before confidence</p>
+            <h2 id="evidence-title">A polished answer is not the same thing as a learned capability.</h2>
+          </div>
         </header>
+
         <div class="evidence-grid">
           <article>
             <span class="number">A</span>
-            <h3>Public</h3>
-            <p>Capability names, coarse maturity state, verification tier and sanitized publication metadata.</p>
+            <h3>Show the evidence</h3>
+            <p>
+              A claim should point to something inspectable: a test, an artifact, a comparison, a result or a clearly stated limitation.
+            </p>
           </article>
           <article>
             <span class="number">B</span>
-            <h3>Private</h3>
-            <p>Execution receipts, review packets, credentials, internal evidence, implementation contracts and source provenance.</p>
+            <h3>Keep humans in the loop</h3>
+            <p>
+              AI can structure, challenge and accelerate work. Important conclusions still need human judgment and explicit review.
+            </p>
           </article>
           <article>
             <span class="number">C</span>
-            <h3>Gated</h3>
-            <p>Promotion requires evidence, independent evaluation and an explicit owner decision. Technical green alone does not promote capability.</p>
+            <h3>Learn from failure</h3>
+            <p>
+              A failed experiment is useful when it reduces uncertainty and changes what happens next. Hiding failure would make the Lab less useful.
+            </p>
+          </article>
+          <article>
+            <span class="number">D</span>
+            <h3>Do not confuse “built” with “proven”</h3>
+            <p>
+              Experiments, candidates and validated capabilities are different states. The public surface keeps those boundaries visible.
+            </p>
           </article>
         </div>
       </section>
 
-      <section class="tier-section" id="progress">
+      <section class="technical-section" id="capabilities" aria-labelledby="technical-title">
+        <header class="technical-head">
+          <div>
+            <span>06 / FOR THE CURIOUS</span>
+            <p class="eyebrow">Technical details, when you want them</p>
+            <h2 id="technical-title">The machinery sits underneath the story.</h2>
+          </div>
+          <p>
+            This is the same evidence-backed system surface that existed before this redesign.
+            It is intentionally lower on the page so a visitor can understand the purpose of C Lab before meeting its internal vocabulary.
+            Public presentation layer only; no runtime authority.
+          </p>
+        </header>
+
+        <div class="metric-band" aria-label="Current system metrics">
+          <article>
+            <span>01</span>
+            <strong>{telemetry.summary.materialized_candidate_count}</strong>
+            <p>Materialized capabilities</p>
+            <code>evidence-backed · evaluation required</code>
+          </article>
+          <article>
+            <span>02</span>
+            <strong>{telemetry.summary.scaffold_unverified_count}</strong>
+            <p>Scaffold / unverified</p>
+            <code>not promoted by appearance</code>
+          </article>
+          <article>
+            <span>03</span>
+            <strong>{telemetry.summary.current_tier}</strong>
+            <p>Verification depth</p>
+            <code>current candidate tier</code>
+          </article>
+          <article>
+            <span>04</span>
+            <strong>{telemetry.operator.level}</strong>
+            <p>Operator consolidation</p>
+            <code>{telemetry.operator.label}</code>
+          </article>
+        </div>
+
+        <div class="boundary-note">
+          <div>
+            <span>PUBLIC</span>
+            <p>High-level capability names, coarse maturity state, verification tier and sanitized publication metadata.</p>
+          </div>
+          <div>
+            <span>PRIVATE</span>
+            <p>Execution receipts, credentials, internal evidence, implementation contracts and canonical working state.</p>
+          </div>
+        </div>
+
+        <div class="registry-wrap">
+          <CapabilityRegistry />
+        </div>
+      </section>
+
+      <section class="tier-section" id="progress" aria-labelledby="progress-title">
         <div class="tier-copy">
-          <span>05 / VERIFICATION DEPTH</span>
-          <h2>Progress without synthetic scores.</h2>
+          <span>07 / VERIFICATION DEPTH</span>
+          <h2 id="progress-title">Progress without pretending every stage is finished.</h2>
+          <p>
+            These levels describe how deeply a capability has been checked. They are tracking states, not a score for the person behind the Lab.
+          </p>
         </div>
         <ol class="tier-list">
           {telemetry.tiers.map((tier, index) => (
@@ -143,10 +273,19 @@ import telemetry from '../data/telemetry_source.json';
         </ol>
       </section>
 
+      <section class="closing-section" aria-labelledby="closing-title">
+        <span>THE SHORT VERSION</span>
+        <h2 id="closing-title">C Lab is a place to turn curiosity into tested learning — and tested learning into capability that can be reused.</h2>
+        <div>
+          <a class="primary-action" href="#impact-demo">Try the example ↑</a>
+          <a class="secondary-action" href="./portfolio/">Meet Lucas through his work ↗</a>
+        </div>
+      </section>
+
       <footer class="footer">
         <div>
-          <span>Lucas Capability OS</span>
-          <span>Public presentation layer · no runtime authority</span>
+          <span>Capability Lab · Lucas Mateus</span>
+          <span>Independent applied R&D · selective public surface</span>
         </div>
         <div>
           <a href="./portfolio/">Professional portfolio</a>
@@ -158,32 +297,309 @@ import telemetry from '../data/telemetry_source.json';
 </html>
 
 <style is:global>
-  :root{--ink:#11110f;--paper:#f4f4f0;--line:#c8c8c1;--muted:#6f6f69;--green:#17865b}
+  :root{
+    --ink:#171613;
+    --paper:#f6f2e9;
+    --paper-deep:#ece5d7;
+    --surface:#fffdf8;
+    --line:#cfc7b8;
+    --muted:#6f6a61;
+    --green:#176b52;
+    --green-soft:#dfece5;
+    --blue:#315aa8;
+  }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth;background:var(--paper)}
-  body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif;-webkit-font-smoothing:antialiased}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:Arial,Helvetica,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
   a{color:inherit}
-  .masthead{position:sticky;top:0;z-index:20;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;min-height:64px;padding:0 28px;border-bottom:1px solid #111;background:rgba(244,244,240,.94);backdrop-filter:blur(10px)}
-  .brand{display:inline-flex;align-items:center;gap:10px;width:max-content;text-decoration:none;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.02em}
-  .brand-mark{display:grid;place-items:center;width:28px;height:28px;border:1px solid #111;font:700 10px ui-monospace,SFMono-Regular,Menlo,monospace}
-  .masthead nav{display:flex;gap:22px}.masthead nav a{text-decoration:none;font-size:11px;color:#5f5f5a}.masthead nav a:hover{color:#111}
-  .operator-chip{justify-self:end;display:flex;align-items:center;gap:10px;font:600 10px ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase;color:#666661}
-  .operator-chip img{width:30px;height:30px;border-radius:50%;object-fit:cover;filter:grayscale(1) contrast(1.1);transition:filter .35s ease,transform .35s ease;transform:translateZ(0)}
-  .operator-chip:hover img{filter:grayscale(0);transform:translateZ(0) scale(1.04)}
+  .masthead{
+    position:sticky;
+    top:0;
+    z-index:20;
+    display:grid;
+    grid-template-columns:1fr auto 1fr;
+    align-items:center;
+    min-height:66px;
+    padding:0 28px;
+    border-bottom:1px solid var(--ink);
+    background:rgba(246,242,233,.94);
+    backdrop-filter:blur(12px);
+  }
+  .brand{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    width:max-content;
+    text-decoration:none;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:.01em;
+  }
+  .brand-mark{
+    display:grid;
+    place-items:center;
+    width:30px;
+    height:30px;
+    border:1px solid var(--ink);
+    border-radius:50%;
+    font:700 11px ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  .masthead nav{display:flex;gap:22px}
+  .masthead nav a,.portfolio-link{
+    text-decoration:none;
+    font-size:11px;
+    color:#5f5a52;
+  }
+  .masthead nav a:hover,.portfolio-link:hover{color:var(--ink)}
+  .portfolio-link{justify-self:end;font-weight:700}
   main{width:min(100%,1600px);margin:0 auto;padding:0 28px 42px}
-  .hero{min-height:calc(100vh - 64px);display:grid;grid-template-rows:auto 1fr auto;padding:28px 0 36px;border-bottom:1px solid #111}
-  .hero-kicker{font:600 10px ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase;letter-spacing:.06em;color:#686863}
-  .hero h1{align-self:center;margin:34px 0;font-size:clamp(76px,13vw,210px);line-height:.78;letter-spacing:-.085em;font-weight:600;text-transform:uppercase}
-  .hero-bottom{display:grid;grid-template-columns:1.1fr .9fr;gap:64px;align-items:end}.hero-bottom>p{max-width:680px;margin:0;font-size:clamp(22px,2.6vw,38px);line-height:1.05;letter-spacing:-.035em}.hero-bottom dl{margin:0;display:grid}.hero-bottom dl div{display:grid;grid-template-columns:120px 1fr;gap:20px;padding:10px 0;border-top:1px solid var(--line);font-size:11px}.hero-bottom dt{color:var(--muted)}.hero-bottom dd{margin:0;text-align:right}
-  .metric-band{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid #111}.metric-band article{min-height:200px;padding:18px 20px 22px 0;border-right:1px solid var(--line)}.metric-band article+article{padding-left:20px}.metric-band article:last-child{border-right:0}.metric-band span{font:600 9px ui-monospace,SFMono-Regular,Menlo,monospace;color:#777772}.metric-band strong{display:block;margin-top:24px;font-size:clamp(54px,6vw,96px);line-height:.9;letter-spacing:-.06em;font-weight:500}.metric-band p{margin:18px 0 5px;font-size:12px}.metric-band code{font:500 9px ui-monospace,SFMono-Regular,Menlo,monospace;color:#797973}
-  .system-section,.evidence-section,.tier-section{padding:86px 0;border-bottom:1px solid #111}
-  .section-head{display:grid;grid-template-columns:220px 1fr;gap:38px;align-items:start;margin-bottom:58px}.section-head>span,.tier-copy>span{font:600 10px ui-monospace,SFMono-Regular,Menlo,monospace;color:#6c6c67;letter-spacing:.05em}.section-head h2,.tier-copy h2{margin:0;font-size:clamp(44px,6vw,88px);line-height:.94;letter-spacing:-.065em;font-weight:500}
-  .system-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:80px;margin-left:258px}.system-copy{max-width:650px}.system-copy p{margin:0 0 20px;font-size:14px;line-height:1.65;color:#565651}.system-copy .lead{font-size:19px;line-height:1.45;color:#171715;letter-spacing:-.018em}
-  .facts{margin:0}.facts div{display:grid;grid-template-columns:1fr auto;gap:24px;padding:13px 0;border-top:1px solid var(--line)}.facts dt{font-size:11px;color:#70706a}.facts dd{margin:0;font:600 10px ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase}
-  .registry-section{padding:86px 0}
-  .evidence-grid{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid #111}.evidence-grid article{min-height:270px;padding:22px 28px 26px 0;border-right:1px solid var(--line)}.evidence-grid article+article{padding-left:28px}.evidence-grid article:last-child{border-right:0}.number{font:600 10px ui-monospace,SFMono-Regular,Menlo,monospace;color:#6c6c67}.evidence-grid h3{margin:54px 0 16px;font-size:30px;letter-spacing:-.04em}.evidence-grid p{max-width:400px;margin:0;font-size:13px;line-height:1.65;color:#5d5d58}
-  .tier-section{display:grid;grid-template-columns:.85fr 1.15fr;gap:70px}.tier-copy h2{margin-top:18px;font-size:clamp(42px,5vw,72px)}.tier-list{list-style:none;margin:0;padding:0;border-top:1px solid #111}.tier-list li{display:grid;grid-template-columns:48px 56px 1fr auto;align-items:center;gap:18px;min-height:72px;border-bottom:1px solid var(--line)}.tier-list li span{font:600 9px ui-monospace,SFMono-Regular,Menlo,monospace;color:#85857f}.tier-list li b{font-size:14px}.tier-list li em{font-style:normal;font-size:13px}.tier-list li small{font:600 9px ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase;color:#75756f}.tier-list li.is-current b,.tier-list li.is-current small{color:var(--green)}.tier-list li.is-current{border-bottom-color:#9cc7b5}.tier-list li.is-done{color:#383835}
-  .footer{display:flex;justify-content:space-between;gap:30px;padding:24px 0 0}.footer div{display:flex;gap:18px;flex-wrap:wrap}.footer span,.footer a{font:600 9px ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase;letter-spacing:.05em;color:#696963}.footer a{text-decoration:none}
-  @media(max-width:980px){.masthead{grid-template-columns:1fr auto}.masthead nav{display:none}.hero{min-height:auto}.hero h1{margin:90px 0}.hero-bottom,.system-grid,.tier-section{grid-template-columns:1fr}.system-grid{margin-left:0}.metric-band{grid-template-columns:1fr 1fr}.metric-band article:nth-child(2){border-right:0}.metric-band article:nth-child(-n+2){border-bottom:1px solid var(--line)}.section-head{grid-template-columns:1fr;gap:18px}.evidence-grid{grid-template-columns:1fr}.evidence-grid article,.evidence-grid article+article{padding-left:0;border-right:0;border-bottom:1px solid var(--line)}.evidence-grid article:last-child{border-bottom:0}}
-  @media(max-width:640px){.masthead{padding:0 18px}.operator-chip span{display:none}main{padding:0 18px 32px}.hero h1{font-size:clamp(64px,20vw,112px);line-height:.82}.hero-bottom{gap:36px}.hero-bottom dl div{grid-template-columns:90px 1fr}.metric-band{grid-template-columns:1fr}.metric-band article,.metric-band article+article{padding:18px 0;border-right:0;border-bottom:1px solid var(--line)}.system-section,.evidence-section,.tier-section,.registry-section{padding:58px 0}.tier-list li{grid-template-columns:36px 44px 1fr;gap:12px}.tier-list li small{grid-column:3}.footer{flex-direction:column}}
+
+  .hero{
+    min-height:calc(100vh - 66px);
+    display:grid;
+    grid-template-columns:minmax(0,1.35fr) minmax(300px,.65fr);
+    gap:70px;
+    align-items:end;
+    padding:72px 0 52px;
+    border-bottom:1px solid var(--ink);
+  }
+  .hero-copy{align-self:center}
+  .hero-kicker,.story-head>span,.method-section>header>span,.section-head>span,.technical-head>div>span,.tier-copy>span,.closing-section>span{
+    font:600 10px ui-monospace,SFMono-Regular,Menlo,monospace;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    color:var(--muted);
+  }
+  .hero h1{
+    max-width:1100px;
+    margin:26px 0 28px;
+    font-size:clamp(68px,8.8vw,138px);
+    line-height:.88;
+    letter-spacing:-.075em;
+    font-weight:500;
+  }
+  .hero-intro{
+    max-width:760px;
+    margin:0;
+    font-size:clamp(20px,2vw,30px);
+    line-height:1.34;
+    letter-spacing:-.025em;
+    color:#3f3c36;
+  }
+  .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:34px}
+  .primary-action,.secondary-action{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-height:46px;
+    padding:0 17px;
+    text-decoration:none;
+    font-size:12px;
+    font-weight:700;
+  }
+  .primary-action{background:var(--ink);color:#fff}
+  .primary-action:hover{background:var(--green)}
+  .secondary-action{border:1px solid #9c958a}
+  .secondary-action:hover{border-color:var(--ink);background:var(--surface)}
+  .hero-note{
+    align-self:end;
+    margin-bottom:4px;
+    padding:24px;
+    border:1px solid var(--line);
+    border-radius:18px;
+    background:rgba(255,253,248,.72);
+  }
+  .hero-note img{
+    width:82px;
+    height:82px;
+    border-radius:50%;
+    object-fit:cover;
+    filter:grayscale(.15);
+  }
+  .hero-note>div{margin-top:28px}
+  .hero-note span,.eyebrow{
+    font:600 9px ui-monospace,SFMono-Regular,Menlo,monospace;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    color:var(--green);
+  }
+  .hero-note p{margin:12px 0 18px;font-size:14px;line-height:1.6;color:#4d4942}
+  .hero-note a{font-size:11px;font-weight:700;text-decoration:none;border-bottom:1px solid #918a7e;padding-bottom:3px}
+
+  .story-section,.method-section,.evidence-section,.technical-section,.tier-section,.closing-section{
+    padding:88px 0;
+    border-bottom:1px solid var(--ink);
+  }
+  .story-head,.section-head{
+    display:grid;
+    grid-template-columns:220px 1fr;
+    gap:38px;
+    align-items:start;
+    margin-bottom:58px;
+  }
+  .story-head h2,.section-head h2,.technical-head h2,.tier-copy h2,.closing-section h2{
+    max-width:1150px;
+    margin:12px 0 0;
+    font-size:clamp(44px,6vw,86px);
+    line-height:.96;
+    letter-spacing:-.06em;
+    font-weight:500;
+  }
+  .story-grid{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) minmax(360px,.75fr);
+    gap:90px;
+    margin-left:258px;
+  }
+  .story-copy{max-width:720px}
+  .story-copy p{margin:0 0 22px;font-size:16px;line-height:1.72;color:#514d46}
+  .story-copy .lead{font-size:24px;line-height:1.44;letter-spacing:-.025em;color:var(--ink)}
+  .question-stack{border-top:1px solid var(--ink)}
+  .question-stack article{
+    display:grid;
+    grid-template-columns:48px 1fr;
+    gap:20px;
+    padding:20px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .question-stack span{
+    font:600 10px ui-monospace,SFMono-Regular,Menlo,monospace;
+    color:var(--green);
+  }
+  .question-stack p{margin:0;font-size:16px;line-height:1.42}
+
+  .method-section>header{
+    display:grid;
+    grid-template-columns:220px minmax(0,1fr) minmax(260px,.55fr);
+    gap:38px;
+    align-items:start;
+    margin-bottom:52px;
+  }
+  .method-section h2{margin:0;font-size:clamp(46px,5.8vw,82px);line-height:.96;letter-spacing:-.06em;font-weight:500}
+  .method-section>header>p{margin:0;font-size:15px;line-height:1.65;color:#555048}
+  .method-loop{display:grid;grid-template-columns:repeat(4,1fr);margin:0;padding:0;list-style:none;border-top:1px solid var(--ink)}
+  .method-loop li{min-height:270px;padding:22px 28px 28px 0;border-right:1px solid var(--line)}
+  .method-loop li+li{padding-left:28px}
+  .method-loop li:last-child{border-right:0}
+  .method-loop span{font:600 10px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--green)}
+  .method-loop strong{display:block;margin:58px 0 14px;font-size:34px;letter-spacing:-.04em}
+  .method-loop p{max-width:260px;margin:0;font-size:13px;line-height:1.65;color:#5d5850}
+
+  .section-head .eyebrow{margin:0}
+  .evidence-grid{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--ink)}
+  .evidence-grid article{min-height:300px;padding:24px 28px 30px 0;border-right:1px solid var(--line)}
+  .evidence-grid article+article{padding-left:28px}
+  .evidence-grid article:last-child{border-right:0}
+  .number{font:600 10px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--green)}
+  .evidence-grid h3{margin:58px 0 16px;font-size:28px;letter-spacing:-.035em}
+  .evidence-grid p{margin:0;font-size:13px;line-height:1.7;color:#5a554e}
+
+  .technical-section{background:linear-gradient(180deg,rgba(236,229,215,.45),transparent 55%)}
+  .technical-head{
+    display:grid;
+    grid-template-columns:minmax(0,1.15fr) minmax(300px,.55fr);
+    gap:80px;
+    align-items:end;
+    margin-bottom:54px;
+  }
+  .technical-head>p{margin:0 0 8px;font-size:15px;line-height:1.65;color:#514d46}
+  .metric-band{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--ink);border-bottom:1px solid var(--ink)}
+  .metric-band article{min-height:190px;padding:18px 20px 22px 0;border-right:1px solid var(--line)}
+  .metric-band article+article{padding-left:20px}
+  .metric-band article:last-child{border-right:0}
+  .metric-band span{font:600 9px ui-monospace,SFMono-Regular,Menlo,monospace;color:#777168}
+  .metric-band strong{display:block;margin-top:24px;font-size:clamp(48px,5.5vw,82px);line-height:.9;letter-spacing:-.06em;font-weight:500}
+  .metric-band p{margin:18px 0 5px;font-size:12px}
+  .metric-band code{font:500 9px ui-monospace,SFMono-Regular,Menlo,monospace;color:#79736a}
+  .boundary-note{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--ink)}
+  .boundary-note>div{padding:24px 28px 24px 0;border-right:1px solid var(--line)}
+  .boundary-note>div+div{padding-left:28px;border-right:0}
+  .boundary-note span{font:700 9px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--green);letter-spacing:.08em}
+  .boundary-note p{max-width:600px;margin:10px 0 0;font-size:13px;line-height:1.6;color:#59544c}
+  .registry-wrap{padding-top:50px}
+
+  .tier-section{display:grid;grid-template-columns:.85fr 1.15fr;gap:70px}
+  .tier-copy h2{font-size:clamp(42px,5vw,72px)}
+  .tier-copy p{max-width:560px;margin:22px 0 0;font-size:14px;line-height:1.65;color:#58534b}
+  .tier-list{list-style:none;margin:0;padding:0;border-top:1px solid var(--ink)}
+  .tier-list li{display:grid;grid-template-columns:48px 56px 1fr auto;align-items:center;gap:18px;min-height:72px;border-bottom:1px solid var(--line)}
+  .tier-list li span{font:600 9px ui-monospace,SFMono-Regular,Menlo,monospace;color:#858078}
+  .tier-list li b{font-size:14px}
+  .tier-list li em{font-style:normal;font-size:13px}
+  .tier-list li small{font:600 9px ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase;color:#757068}
+  .tier-list li.is-current b,.tier-list li.is-current small{color:var(--green)}
+  .tier-list li.is-current{border-bottom-color:#91b9a8}
+  .tier-list li.is-done{color:#383631}
+
+  .closing-section{text-align:center;padding-left:7vw;padding-right:7vw}
+  .closing-section h2{margin:18px auto 34px;max-width:1200px}
+  .closing-section>div{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+
+  .footer{display:flex;justify-content:space-between;gap:30px;padding:24px 0 0}
+  .footer div{display:flex;gap:18px;flex-wrap:wrap}
+  .footer span,.footer a{
+    font:600 9px ui-monospace,SFMono-Regular,Menlo,monospace;
+    text-transform:uppercase;
+    letter-spacing:.05em;
+    color:#69645c;
+  }
+  .footer a{text-decoration:none}
+
+  @media(max-width:1080px){
+    .masthead{grid-template-columns:1fr auto}
+    .masthead nav{display:none}
+    .hero{grid-template-columns:1fr;min-height:auto;padding-top:84px}
+    .hero-note{max-width:620px}
+    .story-grid{margin-left:0}
+    .method-section>header{grid-template-columns:1fr}
+    .technical-head{grid-template-columns:1fr}
+    .evidence-grid{grid-template-columns:1fr 1fr}
+    .evidence-grid article:nth-child(2){border-right:0}
+    .evidence-grid article:nth-child(-n+2){border-bottom:1px solid var(--line)}
+  }
+  @media(max-width:860px){
+    .story-head,.section-head{grid-template-columns:1fr;gap:18px}
+    .story-grid,.tier-section{grid-template-columns:1fr}
+    .metric-band{grid-template-columns:1fr 1fr}
+    .metric-band article:nth-child(2){border-right:0}
+    .metric-band article:nth-child(-n+2){border-bottom:1px solid var(--line)}
+    .method-loop{grid-template-columns:1fr 1fr}
+    .method-loop li:nth-child(2){border-right:0}
+    .method-loop li:nth-child(-n+2){border-bottom:1px solid var(--line)}
+  }
+  @media(max-width:640px){
+    .masthead{padding:0 18px}
+    .portfolio-link{font-size:10px}
+    main{padding:0 18px 32px}
+    .hero{padding:58px 0 42px;gap:42px}
+    .hero h1{font-size:clamp(56px,18vw,88px);line-height:.9}
+    .hero-intro{font-size:20px}
+    .hero-note{padding:20px}
+    .hero-actions,.closing-section>div{align-items:stretch;flex-direction:column}
+    .primary-action,.secondary-action{width:100%}
+    .story-section,.method-section,.evidence-section,.technical-section,.tier-section,.closing-section{padding:58px 0}
+    .story-grid{gap:42px}
+    .story-copy .lead{font-size:20px}
+    .method-loop,.evidence-grid,.metric-band,.boundary-note{grid-template-columns:1fr}
+    .method-loop li,.method-loop li+li,.evidence-grid article,.evidence-grid article+article,.metric-band article,.metric-band article+article{
+      padding-left:0;
+      padding-right:0;
+      border-right:0;
+      border-bottom:1px solid var(--line);
+    }
+    .method-loop li:last-child,.evidence-grid article:last-child,.metric-band article:last-child{border-bottom:0}
+    .method-loop strong,.evidence-grid h3{margin-top:30px}
+    .boundary-note>div,.boundary-note>div+div{padding:22px 0;border-right:0;border-bottom:1px solid var(--line)}
+    .boundary-note>div:last-child{border-bottom:0}
+    .tier-list li{grid-template-columns:36px 44px 1fr;gap:12px}
+    .tier-list li small{grid-column:3}
+    .closing-section{padding-left:0;padding-right:0}
+    .footer{flex-direction:column}
+  }
 </style>

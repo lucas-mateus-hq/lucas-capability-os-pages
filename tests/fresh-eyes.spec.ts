@@ -37,6 +37,29 @@ const documentGeometry = async (page: Page) =>
     };
   });
 
+test('home tells the human story before exposing technical system language', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto('./');
+
+  await expect(page.locator('#home-title')).toContainText('more capable, not just faster');
+  await expect(page.locator('#system')).toContainText('A question became a lab');
+  await expect(page.locator('#system')).toContainText('what can a person learn to do with it');
+  await expect(page.locator('.method-section')).toContainText('Ask. Try. Check. Keep what works.');
+  await expect(page.locator('#capabilities')).toContainText('Technical details, when you want them');
+  await expect(page.locator('[data-capability-registry]')).toBeVisible();
+
+  const order = await page.evaluate(() => {
+    const selectors = ['#home', '#system', '#impact-demo', '#experiment', '#evidence', '#capabilities'];
+    return selectors.map((selector) => {
+      const node = document.querySelector(selector);
+      if (!node) throw new Error(`Missing narrative section: ${selector}`);
+      return Array.from(document.querySelectorAll('main section')).indexOf(node as HTMLElement);
+    });
+  });
+
+  expect(order).toEqual([...order].sort((a, b) => a - b));
+});
+
 test('desktop fresh-eyes surface remains contained', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto('./');
