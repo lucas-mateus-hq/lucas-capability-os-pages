@@ -8,7 +8,7 @@ This project is separate from Lucas's core professional career in **Talent Acqui
 
 For recruiting, hiring and career context, start here:
 
-- [Lucas Mateus — Professional Portfolio](https://lucas-mateus-hq.github.io/lucas-capability-os-pages/portfolio/)
+- [Lucas Mateus — Canonical Public Professional Portfolio](https://lucas-mateus-hq.github.io/lucas-capability-os-pages/portfolio/)
 - [LinkedIn](https://www.linkedin.com/in/lucasmateus/)
 
 ## Try the idea in practice
@@ -44,4 +44,4 @@ The R&D surface remains intentionally `noindex,nofollow`; the professional portf
 - private professional records;
 - canonical internal system state.
 
-The private repositories remain the source of truth. This public repository is presentation-only and does not grant runtime or operational authority.
+The private repositories remain the source of truth. For professional identity data, `lucas-mateus-professional-home` is the canonical private source and `/portfolio/` is its canonical public projection. Third-party recruiting profiles are secondary copies. This public repository is presentation-only and does not grant runtime or operational authority.
