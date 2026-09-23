@@ -13,9 +13,13 @@ const maxNodeOverlapArea = async (page: import('@playwright/test').Page) =>
     const boxes = elements.map((element) => element.getBoundingClientRect());
     let max = 0;
     for (let i = 0; i < boxes.length; i += 1) {
+      const a = boxes[i];
+      if (!a) continue;
       for (let j = i + 1; j < boxes.length; j += 1) {
-        const width = Math.max(0, Math.min(boxes[i].right, boxes[j].right) - Math.max(boxes[i].left, boxes[j].left));
-        const height = Math.max(0, Math.min(boxes[i].bottom, boxes[j].bottom) - Math.max(boxes[i].top, boxes[j].top));
+        const b = boxes[j];
+        if (!b) continue;
+        const width = Math.max(0, Math.min(a.right, b.right) - Math.max(a.left, b.left));
+        const height = Math.max(0, Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top));
         max = Math.max(max, width * height);
       }
     }
