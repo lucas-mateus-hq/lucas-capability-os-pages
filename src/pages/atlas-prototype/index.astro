@@ -235,14 +235,28 @@ const graphData = JSON.stringify({ nodes, edges });
         };
 
         const state = new Map();
+        const mobileBase = {
+          'reckitt': { x: 24, y: 19 },
+          'candidate-experience': { x: 74, y: 30 },
+          'q1-survey': { x: 24, y: 46 },
+          'recruiting-ops': { x: 74, y: 59 },
+          'evaluation': { x: 37, y: 81 }
+        };
+
+        const basePosition = (node) => {
+          if (window.innerWidth <= 520 && mobileBase[node.id]) return mobileBase[node.id];
+          return { x: node.x, y: node.y };
+        };
+
         graph.nodes.forEach((node) => {
+          const base = basePosition(node);
           state.set(node.id, {
-            baseX: node.x,
-            baseY: node.y,
-            x: node.x,
-            y: node.y,
-            targetX: node.x,
-            targetY: node.y,
+            baseX: base.x,
+            baseY: base.y,
+            x: base.x,
+            y: base.y,
+            targetX: base.x,
+            targetY: base.y,
             dragging: false
           });
         });
@@ -334,22 +348,47 @@ const graphData = JSON.stringify({ nodes, edges });
           const unrelated = graph.nodes.map((node) => node.id).filter((nodeId) => nodeId !== id && !neighbors.includes(nodeId));
 
           const selectedState = state.get(id);
-          selectedState.targetX = 41;
-          selectedState.targetY = 50;
 
-          const angles = neighbors.length === 1 ? [-20] : neighbors.length === 2 ? [-55, 48] : [-72, 0, 70, 145];
-          neighbors.forEach((nodeId, index) => {
-            const angle = (angles[index] ?? (index * 360) / neighbors.length) * Math.PI / 180;
-            const item = state.get(nodeId);
-            item.targetX = 41 + Math.cos(angle) * 27;
-            item.targetY = 50 + Math.sin(angle) * 34;
-          });
+          if (window.innerWidth <= 520) {
+            selectedState.targetX = 50;
+            selectedState.targetY = 20;
 
-          unrelated.forEach((nodeId, index) => {
-            const item = state.get(nodeId);
-            item.targetX = 83;
-            item.targetY = 29 + index * 30;
-          });
+            const compactTargets = [
+              { x: 24, y: 46 },
+              { x: 76, y: 46 },
+              { x: 50, y: 69 },
+              { x: 24, y: 84 }
+            ];
+            neighbors.forEach((nodeId, index) => {
+              const item = state.get(nodeId);
+              const target = compactTargets[index] || { x: 76, y: 84 };
+              item.targetX = target.x;
+              item.targetY = target.y;
+            });
+
+            unrelated.forEach((nodeId, index) => {
+              const item = state.get(nodeId);
+              item.targetX = index % 2 === 0 ? 76 : 24;
+              item.targetY = 84;
+            });
+          } else {
+            selectedState.targetX = 41;
+            selectedState.targetY = 50;
+
+            const angles = neighbors.length === 1 ? [-20] : neighbors.length === 2 ? [-55, 48] : [-72, 0, 70, 145];
+            neighbors.forEach((nodeId, index) => {
+              const angle = (angles[index] ?? (index * 360) / neighbors.length) * Math.PI / 180;
+              const item = state.get(nodeId);
+              item.targetX = 41 + Math.cos(angle) * 27;
+              item.targetY = 50 + Math.sin(angle) * 34;
+            });
+
+            unrelated.forEach((nodeId, index) => {
+              const item = state.get(nodeId);
+              item.targetX = 83;
+              item.targetY = 29 + index * 30;
+            });
+          }
 
           setActive(id);
           updateDrawer(id);
@@ -476,7 +515,19 @@ const graphData = JSON.stringify({ nodes, edges });
         });
 
         resetButton?.addEventListener('click', reset);
-        window.addEventListener('resize', updateEdges);
+        window.addEventListener('resize', () => {
+          if (!selected && !dragId) {
+            graph.nodes.forEach((node) => {
+              const base = basePosition(node);
+              const item = state.get(node.id);
+              item.baseX = base.x;
+              item.baseY = base.y;
+              item.targetX = base.x;
+              item.targetY = base.y;
+            });
+          }
+          updateEdges();
+        });
         canvas.dataset.atlasReady = 'true';
         requestAnimationFrame(animate);
       })();
@@ -519,8 +570,7 @@ const graphData = JSON.stringify({ nodes, edges });
   a { color: inherit; }
 
   .prototype-bar {
-    position: sticky;
-    top: 0;
+    position: relative;
     z-index: 30;
     display: grid;
     grid-template-columns: 1fr auto;
