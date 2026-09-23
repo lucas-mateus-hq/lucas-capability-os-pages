@@ -1,0 +1,967 @@
+---
+const nodes = [
+  {
+    id: 'reckitt',
+    type: 'Experience',
+    title: 'Reckitt',
+    meta: 'Talent Acquisition · Nov 2022 — Jul 2024',
+    body: 'Full-cycle recruiting within an assigned Brazil portfolio, spanning Early Careers, operational and factory, commercial and junior corporate roles.',
+    note: 'A professional context where sourcing, candidate communication, hiring-manager partnership and recruiting operations were practised together.',
+    x: 22,
+    y: 52
+  },
+  {
+    id: 'candidate-experience',
+    type: 'Capability',
+    title: 'Candidate Experience',
+    meta: 'Recruiting practice',
+    body: 'Clear candidate communication, process transparency and structured follow-up across the recruiting journey.',
+    note: 'Shown here as a capability because it appears both in day-to-day recruiting practice and in inspectable candidate feedback.',
+    x: 49,
+    y: 29
+  },
+  {
+    id: 'q1-survey',
+    type: 'Evidence',
+    title: 'Q1 2023 Survey',
+    meta: 'Reckitt · n=15',
+    body: '100% gave the maximum rating for TA contact, recruitment-stage clarity and role/company information; 14 of 15 gave the maximum overall experience rating.',
+    note: 'Evidence supports a bounded claim about this survey population. It is not presented as a universal performance score.',
+    x: 79,
+    y: 19
+  },
+  {
+    id: 'recruiting-ops',
+    type: 'Capability',
+    title: 'Recruiting Operations',
+    meta: 'Full-cycle execution',
+    body: 'Requisition, intake, profile alignment, sourcing, screening, interviews, shortlist, decision follow-up and offer within the assigned portfolio.',
+    note: 'A repeatable operating capability developed through practical recruiting work rather than a software or automation claim.',
+    x: 50,
+    y: 72
+  },
+  {
+    id: 'evaluation',
+    type: 'Exploration',
+    title: 'Evaluation & Experimentation',
+    meta: 'Capability Lab · Applied R&D',
+    body: 'Hands-on work with acceptance criteria, baseline/treatment comparisons, holdout thinking, regression checks and evidence-based iteration.',
+    note: 'A complementary Capability Lab practice. The relation shown here is transfer and extension of evidence-oriented working habits, not proof of direct causality.',
+    x: 80,
+    y: 75
+  }
+];
+
+const edges = [
+  { source: 'reckitt', target: 'candidate-experience', relation: 'developed through' },
+  { source: 'candidate-experience', target: 'q1-survey', relation: 'demonstrated by' },
+  { source: 'reckitt', target: 'recruiting-ops', relation: 'practised in' },
+  { source: 'candidate-experience', target: 'evaluation', relation: 'later extended through' }
+];
+
+const graphData = JSON.stringify({ nodes, edges });
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="theme-color" content="#ece8df" />
+    <meta name="description" content="Candidate prototype for the Living Capability Atlas: an editorial, interactive map of experience, evidence and capability." />
+    <title>Living Capability Atlas — Candidate v0.1</title>
+  </head>
+  <body>
+    <header class="prototype-bar">
+      <a href="../portfolio/" aria-label="Back to professional portfolio">Lucas Mateus</a>
+      <div>
+        <span>Living Capability Atlas</span>
+        <b>Candidate v0.1 · not public navigation</b>
+      </div>
+    </header>
+
+    <main>
+      <section class="intro" aria-labelledby="atlas-title">
+        <div class="intro-index">PROTOTYPE / 01</div>
+        <div class="intro-copy">
+          <p class="eyebrow">Experience → evidence → capability → exploration</p>
+          <h1 id="atlas-title">How experience becomes capability.</h1>
+          <p class="lede">
+            This prototype tests one idea: a professional history can be read as a living system of
+            relationships, not a stack of interchangeable cards. Select, drag or focus a node and the
+            constellation reorganizes around what matters.
+          </p>
+        </div>
+      </section>
+
+      <section class="atlas-shell" aria-label="Interactive capability constellation">
+        <aside class="atlas-key">
+          <p class="eyebrow">Reading the atlas</p>
+          <dl>
+            <div><dt><i class="key-mark key-experience"></i>Experience</dt><dd>where work happened</dd></div>
+            <div><dt><i class="key-mark key-capability"></i>Capability</dt><dd>what became reusable</dd></div>
+            <div><dt><i class="key-mark key-evidence"></i>Evidence</dt><dd>what supports a bounded claim</dd></div>
+            <div><dt><i class="key-mark key-exploration"></i>Exploration</dt><dd>what is being extended</dd></div>
+          </dl>
+          <p class="interaction-note">Click a node to reorganize its neighborhood. Dragging changes the map directly. Keyboard focus reveals the same relationships.</p>
+          <button class="reset" type="button" data-reset>Reset constellation</button>
+        </aside>
+
+        <div class="atlas-workspace">
+          <div class="atlas-canvas" data-atlas-canvas data-selected="">
+            <svg class="connections" data-atlas-svg aria-hidden="true">
+              <defs>
+                <marker id="atlas-arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto" markerUnits="strokeWidth">
+                  <path d="M0,0 L0,6 L7,3 z"></path>
+                </marker>
+              </defs>
+              {edges.map((edge, index) => (
+                <g class="edge" data-edge={index} data-source={edge.source} data-target={edge.target}>
+                  <line marker-end="url(#atlas-arrow)"></line>
+                  <text text-anchor="middle">{edge.relation}</text>
+                </g>
+              ))}
+            </svg>
+
+            <div class="atlas-axis axis-x" aria-hidden="true"></div>
+            <div class="atlas-axis axis-y" aria-hidden="true"></div>
+
+            {nodes.map((node) => (
+              <button
+                class:list={['node', `node--${node.type.toLowerCase()}`]}
+                type="button"
+                data-node={node.id}
+                data-type={node.type}
+                aria-pressed="false"
+                style={`--x:${node.x};--y:${node.y};`}
+              >
+                <span class="node-type">{node.type}</span>
+                <strong>{node.title}</strong>
+                <small>{node.meta}</small>
+              </button>
+            ))}
+
+            <div class="atlas-coordinate coordinate-a" aria-hidden="true">A / EXPERIENCE</div>
+            <div class="atlas-coordinate coordinate-b" aria-hidden="true">B / EVIDENCE</div>
+            <div class="atlas-coordinate coordinate-c" aria-hidden="true">C / TRANSFER</div>
+
+            <noscript>
+              <p class="noscript">The interactive map requires JavaScript. The same professional evidence remains available in the main portfolio.</p>
+            </noscript>
+          </div>
+
+          <aside class="drawer" data-drawer aria-live="polite">
+            <div class="drawer-topline">
+              <span data-drawer-type>Atlas note</span>
+              <span data-drawer-index>00</span>
+            </div>
+            <h2 data-drawer-title>Select a territory.</h2>
+            <p class="drawer-meta" data-drawer-meta>Nothing is selected.</p>
+            <p class="drawer-body" data-drawer-body>
+              The constellation stays quiet until the reader asks a question. Selecting a node moves
+              related territories closer and sends unrelated material into the background.
+            </p>
+            <div class="drawer-note">
+              <span>INTERPRETATION</span>
+              <p data-drawer-note>
+                Relationships describe documented transfer, practice or evidence. They are not decorative
+                causal arrows.
+              </p>
+            </div>
+            <div class="drawer-relations">
+              <span>ACTIVE RELATIONS</span>
+              <ul data-relations>
+                <li>Select a node to inspect its immediate neighborhood.</li>
+              </ul>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="prototype-reading" aria-labelledby="reading-title">
+        <div>
+          <p class="eyebrow">What this prototype is testing</p>
+          <h2 id="reading-title">Editorial first. Graph second.</h2>
+        </div>
+        <div class="reading-grid">
+          <article>
+            <span>01</span>
+            <h3>Meaningful movement</h3>
+            <p>Nodes move because the reader changes focus. There is no permanent physics simulation competing with the content.</p>
+          </article>
+          <article>
+            <span>02</span>
+            <h3>Typed relationships</h3>
+            <p>Every line has a verb. “Demonstrated by” means something different from “developed through”.</p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3>Evidence boundaries</h3>
+            <p>Evidence is shown with its population and context instead of being converted into an oversized personal score.</p>
+          </article>
+          <article>
+            <span>04</span>
+            <h3>Human-readable fallback</h3>
+            <p>The story remains understandable without motion. Interaction adds relationships; it does not hide the professional narrative.</p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <script id="atlas-data" type="application/json" set:html={graphData}></script>
+    <script is:inline>
+      (() => {
+        const canvas = document.querySelector('[data-atlas-canvas]');
+        const dataNode = document.getElementById('atlas-data');
+        if (!canvas || !dataNode) return;
+
+        const graph = JSON.parse(dataNode.textContent || '{"nodes":[],"edges":[]}');
+        const nodeEls = new Map(
+          Array.from(canvas.querySelectorAll('[data-node]')).map((element) => [element.dataset.node, element])
+        );
+        const edgeEls = Array.from(canvas.querySelectorAll('[data-edge]'));
+        const resetButton = document.querySelector('[data-reset]');
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        const drawer = {
+          type: document.querySelector('[data-drawer-type]'),
+          index: document.querySelector('[data-drawer-index]'),
+          title: document.querySelector('[data-drawer-title]'),
+          meta: document.querySelector('[data-drawer-meta]'),
+          body: document.querySelector('[data-drawer-body]'),
+          note: document.querySelector('[data-drawer-note]'),
+          relations: document.querySelector('[data-relations]')
+        };
+
+        const state = new Map();
+        graph.nodes.forEach((node) => {
+          state.set(node.id, {
+            baseX: node.x,
+            baseY: node.y,
+            x: node.x,
+            y: node.y,
+            targetX: node.x,
+            targetY: node.y,
+            dragging: false
+          });
+        });
+
+        let selected = '';
+        let active = '';
+        let dragId = '';
+        let pointerX = 0;
+        let pointerY = 0;
+        let lastTime = performance.now();
+
+        const connectedIds = (id) => {
+          const ids = new Set([id]);
+          graph.edges.forEach((edge) => {
+            if (edge.source === id) ids.add(edge.target);
+            if (edge.target === id) ids.add(edge.source);
+          });
+          return ids;
+        };
+
+        const setActive = (id) => {
+          active = id || selected;
+          const neighborhood = active ? connectedIds(active) : new Set();
+          nodeEls.forEach((element, nodeId) => {
+            element.classList.toggle('is-related', Boolean(active) && neighborhood.has(nodeId));
+            element.classList.toggle('is-muted', Boolean(active) && !neighborhood.has(nodeId));
+          });
+          edgeEls.forEach((group) => {
+            const source = group.dataset.source;
+            const target = group.dataset.target;
+            group.classList.toggle('is-active', Boolean(active) && (source === active || target === active));
+            group.classList.toggle('is-muted', Boolean(active) && source !== active && target !== active);
+          });
+        };
+
+        const relationText = (id) => {
+          const items = graph.edges
+            .filter((edge) => edge.source === id || edge.target === id)
+            .map((edge) => {
+              if (edge.source === id) {
+                const target = graph.nodes.find((node) => node.id === edge.target);
+                return `${edge.relation} → ${target?.title || edge.target}`;
+              }
+              const source = graph.nodes.find((node) => node.id === edge.source);
+              return `${source?.title || edge.source} → ${edge.relation}`;
+            });
+          return items;
+        };
+
+        const updateDrawer = (id) => {
+          const node = graph.nodes.find((item) => item.id === id);
+          if (!node) return;
+          const index = graph.nodes.findIndex((item) => item.id === id) + 1;
+          drawer.type.textContent = node.type;
+          drawer.index.textContent = String(index).padStart(2, '0');
+          drawer.title.textContent = node.title;
+          drawer.meta.textContent = node.meta;
+          drawer.body.textContent = node.body;
+          drawer.note.textContent = node.note;
+          drawer.relations.replaceChildren(
+            ...relationText(id).map((relation) => {
+              const li = document.createElement('li');
+              li.textContent = relation;
+              return li;
+            })
+          );
+        };
+
+        const setFocusTargets = (id) => {
+          selected = id;
+          canvas.dataset.selected = id;
+          nodeEls.forEach((element, nodeId) => {
+            element.setAttribute('aria-pressed', nodeId === id ? 'true' : 'false');
+          });
+
+          if (!id) {
+            graph.nodes.forEach((node) => {
+              const item = state.get(node.id);
+              item.targetX = item.baseX;
+              item.targetY = item.baseY;
+            });
+            setActive('');
+            return;
+          }
+
+          const neighbors = graph.edges
+            .filter((edge) => edge.source === id || edge.target === id)
+            .map((edge) => (edge.source === id ? edge.target : edge.source));
+          const unrelated = graph.nodes.map((node) => node.id).filter((nodeId) => nodeId !== id && !neighbors.includes(nodeId));
+
+          const selectedState = state.get(id);
+          selectedState.targetX = 41;
+          selectedState.targetY = 50;
+
+          const angles = neighbors.length === 1 ? [-20] : neighbors.length === 2 ? [-55, 48] : [-72, 0, 70, 145];
+          neighbors.forEach((nodeId, index) => {
+            const angle = (angles[index] ?? (index * 360) / neighbors.length) * Math.PI / 180;
+            const item = state.get(nodeId);
+            item.targetX = 41 + Math.cos(angle) * 27;
+            item.targetY = 50 + Math.sin(angle) * 34;
+          });
+
+          unrelated.forEach((nodeId, index) => {
+            const item = state.get(nodeId);
+            item.targetX = 83;
+            item.targetY = 29 + index * 30;
+          });
+
+          setActive(id);
+          updateDrawer(id);
+        };
+
+        const reset = () => {
+          selected = '';
+          active = '';
+          canvas.dataset.selected = '';
+          graph.nodes.forEach((node) => {
+            const item = state.get(node.id);
+            item.targetX = item.baseX;
+            item.targetY = item.baseY;
+          });
+          nodeEls.forEach((element) => {
+            element.setAttribute('aria-pressed', 'false');
+            element.classList.remove('is-related', 'is-muted');
+          });
+          edgeEls.forEach((group) => group.classList.remove('is-active', 'is-muted'));
+          drawer.type.textContent = 'Atlas note';
+          drawer.index.textContent = '00';
+          drawer.title.textContent = 'Select a territory.';
+          drawer.meta.textContent = 'Nothing is selected.';
+          drawer.body.textContent = 'The constellation stays quiet until the reader asks a question. Selecting a node moves related territories closer and sends unrelated material into the background.';
+          drawer.note.textContent = 'Relationships describe documented transfer, practice or evidence. They are not decorative causal arrows.';
+          drawer.relations.innerHTML = '<li>Select a node to inspect its immediate neighborhood.</li>';
+        };
+
+        const updateEdges = () => {
+          const canvasRect = canvas.getBoundingClientRect();
+          edgeEls.forEach((group) => {
+            const sourceEl = nodeEls.get(group.dataset.source);
+            const targetEl = nodeEls.get(group.dataset.target);
+            if (!sourceEl || !targetEl) return;
+            const a = sourceEl.getBoundingClientRect();
+            const b = targetEl.getBoundingClientRect();
+            const x1 = a.left + a.width / 2 - canvasRect.left;
+            const y1 = a.top + a.height / 2 - canvasRect.top;
+            const x2 = b.left + b.width / 2 - canvasRect.left;
+            const y2 = b.top + b.height / 2 - canvasRect.top;
+            const line = group.querySelector('line');
+            const text = group.querySelector('text');
+            line.setAttribute('x1', x1);
+            line.setAttribute('y1', y1);
+            line.setAttribute('x2', x2);
+            line.setAttribute('y2', y2);
+            text.setAttribute('x', (x1 + x2) / 2);
+            text.setAttribute('y', (y1 + y2) / 2 - 8);
+          });
+        };
+
+        const animate = (time) => {
+          const dt = Math.min(32, time - lastTime);
+          lastTime = time;
+          graph.nodes.forEach((node, index) => {
+            const item = state.get(node.id);
+            const element = nodeEls.get(node.id);
+            if (!item || !element || item.dragging) return;
+
+            const response = reducedMotion ? 1 : Math.min(1, dt * 0.0085);
+            item.x += (item.targetX - item.x) * response;
+            item.y += (item.targetY - item.y) * response;
+
+            const ambient = !reducedMotion && !selected
+              ? Math.sin(time / 1500 + index * 1.7) * 0.45
+              : 0;
+            const parallaxX = !reducedMotion && !selected ? pointerX * (index - 2) * 0.08 : 0;
+            const parallaxY = !reducedMotion && !selected ? pointerY * (2 - index) * 0.05 : 0;
+
+            element.style.left = `${item.x + ambient + parallaxX}%`;
+            element.style.top = `${item.y + ambient * 0.55 + parallaxY}%`;
+          });
+          updateEdges();
+          requestAnimationFrame(animate);
+        };
+
+        nodeEls.forEach((element, id) => {
+          element.addEventListener('mouseenter', () => setActive(id));
+          element.addEventListener('mouseleave', () => setActive(selected));
+          element.addEventListener('focus', () => setActive(id));
+          element.addEventListener('blur', () => setActive(selected));
+          element.addEventListener('click', () => setFocusTargets(id));
+
+          element.addEventListener('pointerdown', (event) => {
+            if (event.pointerType === 'mouse' && event.button !== 0) return;
+            dragId = id;
+            const item = state.get(id);
+            item.dragging = true;
+            element.setPointerCapture(event.pointerId);
+            element.classList.add('is-dragging');
+          });
+
+          element.addEventListener('pointermove', (event) => {
+            if (dragId !== id) return;
+            const rect = canvas.getBoundingClientRect();
+            const item = state.get(id);
+            item.x = Math.max(8, Math.min(92, ((event.clientX - rect.left) / rect.width) * 100));
+            item.y = Math.max(10, Math.min(90, ((event.clientY - rect.top) / rect.height) * 100));
+            item.targetX = item.x;
+            item.targetY = item.y;
+          });
+
+          const endDrag = (event) => {
+            if (dragId !== id) return;
+            const item = state.get(id);
+            item.dragging = false;
+            dragId = '';
+            element.classList.remove('is-dragging');
+            try { element.releasePointerCapture(event.pointerId); } catch {}
+          };
+          element.addEventListener('pointerup', endDrag);
+          element.addEventListener('pointercancel', endDrag);
+        });
+
+        canvas.addEventListener('pointermove', (event) => {
+          if (dragId) return;
+          const rect = canvas.getBoundingClientRect();
+          pointerX = ((event.clientX - rect.left) / rect.width - 0.5) * 2;
+          pointerY = ((event.clientY - rect.top) / rect.height - 0.5) * 2;
+        });
+        canvas.addEventListener('pointerleave', () => {
+          pointerX = 0;
+          pointerY = 0;
+        });
+
+        resetButton?.addEventListener('click', reset);
+        window.addEventListener('resize', updateEdges);
+        canvas.dataset.atlasReady = 'true';
+        requestAnimationFrame(animate);
+      })();
+    </script>
+  </body>
+</html>
+
+<style>
+  :root {
+    --ink: #171817;
+    --paper: #ece8df;
+    --paper-light: #f7f4ed;
+    --line: #bbb5a9;
+    --muted: #6f6a61;
+    --rust: #9a4639;
+    --moss: #3f5c4a;
+    --ochre: #b78a3b;
+    --blue-black: #26343a;
+  }
+
+  * { box-sizing: border-box; }
+
+  html {
+    background: var(--paper);
+    color: var(--ink);
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    background:
+      linear-gradient(rgba(23,24,23,.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(23,24,23,.035) 1px, transparent 1px),
+      var(--paper);
+    background-size: 32px 32px;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; }
+
+  .prototype-bar {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    min-height: 62px;
+    padding: 0 28px;
+    border-bottom: 1px solid var(--ink);
+    background: rgba(236,232,223,.94);
+    backdrop-filter: blur(12px);
+  }
+
+  .prototype-bar > a {
+    width: max-content;
+    font-size: 12px;
+    font-weight: 750;
+    text-decoration: none;
+  }
+
+  .prototype-bar > div {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font: 650 9px ui-monospace, SFMono-Regular, Menlo, monospace;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+  }
+
+  .prototype-bar b {
+    color: var(--rust);
+    font-weight: 650;
+  }
+
+  main {
+    width: min(100%, 1560px);
+    margin: 0 auto;
+    padding: 0 28px 56px;
+  }
+
+  .intro {
+    display: grid;
+    grid-template-columns: 180px minmax(0, 1fr);
+    gap: 48px;
+    padding: 76px 0 52px;
+    border-bottom: 1px solid var(--ink);
+  }
+
+  .intro-index,
+  .eyebrow,
+  .drawer-topline,
+  .drawer-note > span,
+  .drawer-relations > span,
+  .reading-grid > article > span {
+    font: 650 9px ui-monospace, SFMono-Regular, Menlo, monospace;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+
+  .intro-index { color: var(--muted); padding-top: 9px; }
+  .eyebrow { margin: 0; color: var(--rust); }
+
+  h1,
+  .prototype-reading h2,
+  .drawer h2 {
+    font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+    font-weight: 500;
+  }
+
+  h1 {
+    max-width: 980px;
+    margin: 18px 0 20px;
+    font-size: clamp(54px, 7.2vw, 108px);
+    line-height: .91;
+    letter-spacing: -.055em;
+  }
+
+  .lede {
+    max-width: 800px;
+    margin: 0;
+    color: #48463f;
+    font-size: clamp(18px, 1.75vw, 27px);
+    line-height: 1.42;
+    letter-spacing: -.02em;
+  }
+
+  .atlas-shell {
+    display: grid;
+    grid-template-columns: 180px minmax(0, 1fr);
+    gap: 48px;
+    padding: 42px 0 72px;
+    border-bottom: 1px solid var(--ink);
+  }
+
+  .atlas-key { padding-top: 2px; }
+  .atlas-key dl { margin: 24px 0 0; }
+  .atlas-key dl > div { padding: 11px 0; border-top: 1px solid var(--line); }
+  .atlas-key dl > div:last-child { border-bottom: 1px solid var(--line); }
+  .atlas-key dt { display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 750; }
+  .atlas-key dd { margin: 4px 0 0 16px; color: var(--muted); font-size: 10px; line-height: 1.45; }
+
+  .key-mark { width: 8px; height: 8px; display: inline-block; border-radius: 50%; }
+  .key-experience { background: var(--ink); }
+  .key-capability { border: 1px solid var(--ink); background: var(--paper-light); }
+  .key-evidence { background: var(--ochre); }
+  .key-exploration { border: 1px dashed var(--moss); background: transparent; }
+
+  .interaction-note {
+    margin: 22px 0;
+    color: #5c5850;
+    font-size: 11px;
+    line-height: 1.6;
+  }
+
+  .reset {
+    appearance: none;
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--ink);
+    background: transparent;
+    color: var(--ink);
+    font: 650 9px ui-monospace, SFMono-Regular, Menlo, monospace;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    cursor: pointer;
+  }
+
+  .reset:hover,
+  .reset:focus-visible { background: var(--ink); color: var(--paper-light); }
+
+  .atlas-workspace {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 330px;
+    min-width: 0;
+    min-height: 680px;
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+  }
+
+  .atlas-canvas {
+    position: relative;
+    min-width: 0;
+    min-height: 680px;
+    overflow: hidden;
+    border-right: 1px solid var(--ink);
+    background:
+      radial-gradient(circle at 46% 46%, rgba(255,255,255,.72), rgba(255,255,255,.12) 52%, transparent 72%);
+    touch-action: none;
+  }
+
+  .atlas-axis {
+    position: absolute;
+    pointer-events: none;
+    opacity: .32;
+  }
+
+  .axis-x { left: 0; right: 0; top: 50%; border-top: 1px dashed var(--line); }
+  .axis-y { top: 0; bottom: 0; left: 50%; border-left: 1px dashed var(--line); }
+
+  .connections {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    pointer-events: none;
+  }
+
+  .edge {
+    color: #8f897f;
+    transition: opacity 180ms ease;
+  }
+
+  .edge line {
+    stroke: currentColor;
+    stroke-width: 1.15;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .edge path { fill: currentColor; }
+  .edge text {
+    fill: #757067;
+    font: 600 8px ui-monospace, SFMono-Regular, Menlo, monospace;
+    letter-spacing: .035em;
+  }
+
+  .edge.is-active { color: var(--rust); }
+  .edge.is-active line { stroke-width: 1.8; }
+  .edge.is-active text { fill: var(--rust); }
+  .edge.is-muted { opacity: .16; }
+
+  .node {
+    --node-width: 190px;
+    position: absolute;
+    z-index: 5;
+    left: calc(var(--x) * 1%);
+    top: calc(var(--y) * 1%);
+    width: var(--node-width);
+    min-height: 104px;
+    transform: translate(-50%, -50%);
+    padding: 14px 14px 13px;
+    border: 1px solid var(--ink);
+    border-radius: 0;
+    background: rgba(247,244,237,.94);
+    color: var(--ink);
+    text-align: left;
+    cursor: grab;
+    box-shadow: 0 6px 20px rgba(29,27,23,.045);
+    transition:
+      opacity 180ms ease,
+      box-shadow 180ms ease,
+      border-color 180ms ease,
+      background 180ms ease;
+    user-select: none;
+  }
+
+  .node:hover,
+  .node:focus-visible,
+  .node[aria-pressed="true"] {
+    z-index: 8;
+    outline: none;
+    box-shadow: 0 12px 30px rgba(29,27,23,.12);
+  }
+
+  .node[aria-pressed="true"] { border-color: var(--rust); }
+  .node.is-dragging { cursor: grabbing; box-shadow: 0 16px 38px rgba(29,27,23,.17); }
+  .node.is-muted { opacity: .26; }
+  .node.is-related { opacity: 1; }
+
+  .node--experience {
+    background: var(--ink);
+    color: var(--paper-light);
+  }
+
+  .node--evidence {
+    border-color: #8b6a2b;
+    background: #e9d8ae;
+  }
+
+  .node--exploration {
+    border: 1px dashed var(--moss);
+    background: rgba(226,234,225,.9);
+  }
+
+  .node-type {
+    display: block;
+    margin-bottom: 18px;
+    font: 650 8px ui-monospace, SFMono-Regular, Menlo, monospace;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    opacity: .7;
+  }
+
+  .node strong {
+    display: block;
+    font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+    font-size: 19px;
+    font-weight: 600;
+    line-height: 1.03;
+    letter-spacing: -.025em;
+  }
+
+  .node small {
+    display: block;
+    margin-top: 7px;
+    font-size: 9px;
+    line-height: 1.35;
+    opacity: .72;
+  }
+
+  .atlas-coordinate {
+    position: absolute;
+    z-index: 0;
+    color: #999287;
+    font: 600 7px ui-monospace, SFMono-Regular, Menlo, monospace;
+    letter-spacing: .09em;
+    pointer-events: none;
+  }
+
+  .coordinate-a { left: 12px; bottom: 12px; }
+  .coordinate-b { right: 12px; top: 12px; }
+  .coordinate-c { right: 12px; bottom: 12px; }
+
+  .drawer {
+    min-width: 0;
+    padding: 26px 24px 24px;
+    background: rgba(247,244,237,.72);
+  }
+
+  .drawer-topline {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    color: var(--rust);
+  }
+
+  .drawer h2 {
+    margin: 50px 0 8px;
+    font-size: clamp(36px, 3.5vw, 54px);
+    line-height: .98;
+    letter-spacing: -.045em;
+  }
+
+  .drawer-meta {
+    margin: 0 0 34px;
+    color: var(--muted);
+    font: 600 9px ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+
+  .drawer-body {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.72;
+  }
+
+  .drawer-note,
+  .drawer-relations {
+    margin-top: 34px;
+    padding-top: 12px;
+    border-top: 1px solid var(--line);
+  }
+
+  .drawer-note > span,
+  .drawer-relations > span { color: var(--muted); }
+
+  .drawer-note p,
+  .drawer-relations li {
+    margin: 9px 0 0;
+    color: #555149;
+    font-size: 10.5px;
+    line-height: 1.55;
+  }
+
+  .drawer-relations ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .drawer-relations li + li { margin-top: 7px; }
+
+  .noscript {
+    position: absolute;
+    inset: auto 20px 20px;
+    z-index: 10;
+    padding: 12px;
+    background: var(--paper-light);
+    border: 1px solid var(--rust);
+    font-size: 11px;
+  }
+
+  .prototype-reading {
+    display: grid;
+    grid-template-columns: 180px minmax(0, 1fr);
+    gap: 48px;
+    padding: 72px 0 18px;
+  }
+
+  .prototype-reading h2 {
+    max-width: 900px;
+    margin: 16px 0 44px;
+    font-size: clamp(48px, 6vw, 82px);
+    line-height: .95;
+    letter-spacing: -.05em;
+  }
+
+  .reading-grid {
+    grid-column: 2;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--ink);
+  }
+
+  .reading-grid article {
+    min-height: 240px;
+    padding: 18px 22px 20px 0;
+    border-right: 1px solid var(--line);
+  }
+
+  .reading-grid article + article { padding-left: 22px; }
+  .reading-grid article:last-child { border-right: 0; }
+  .reading-grid > article > span { color: var(--rust); }
+  .reading-grid h3 { margin: 54px 0 12px; font-size: 18px; }
+  .reading-grid p { margin: 0; color: #5d5951; font-size: 11px; line-height: 1.65; }
+
+  @media (max-width: 1120px) {
+    .atlas-workspace { grid-template-columns: 1fr; }
+    .atlas-canvas { border-right: 0; border-bottom: 1px solid var(--ink); }
+    .drawer { min-height: 340px; }
+    .drawer h2 { max-width: 620px; }
+    .reading-grid { grid-template-columns: 1fr 1fr; }
+    .reading-grid article:nth-child(2) { border-right: 0; }
+    .reading-grid article:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+  }
+
+  @media (max-width: 760px) {
+    .prototype-bar { padding: 0 18px; }
+    .prototype-bar > div span { display: none; }
+    main { padding: 0 18px 40px; }
+    .intro,
+    .atlas-shell,
+    .prototype-reading { grid-template-columns: 1fr; gap: 24px; }
+    .intro { padding-top: 54px; }
+    .intro-index { padding-top: 0; }
+    h1 { font-size: clamp(52px, 15vw, 76px); }
+    .atlas-key { display: grid; grid-template-columns: 1fr 1fr; gap: 0 18px; }
+    .atlas-key > .eyebrow,
+    .interaction-note,
+    .reset { grid-column: 1 / -1; }
+    .atlas-key dl { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
+    .atlas-workspace { min-height: 0; }
+    .atlas-canvas { min-height: 610px; }
+    .node { --node-width: 142px; min-height: 90px; padding: 11px; }
+    .node-type { margin-bottom: 12px; font-size: 7px; }
+    .node strong { font-size: 16px; }
+    .node small { font-size: 8px; }
+    .edge text { font-size: 7px; }
+    .drawer { padding: 22px 18px; }
+    .drawer h2 { margin-top: 34px; }
+    .prototype-reading > div:first-child { grid-column: 1; }
+    .reading-grid { grid-column: 1; }
+  }
+
+  @media (max-width: 520px) {
+    .prototype-bar > div b { font-size: 8px; }
+    .atlas-key dl { grid-template-columns: 1fr; }
+    .atlas-canvas { min-height: 660px; }
+    .reading-grid { grid-template-columns: 1fr; }
+    .reading-grid article,
+    .reading-grid article + article {
+      min-height: 0;
+      padding: 20px 0;
+      border-right: 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .reading-grid article:last-child { border-bottom: 0; }
+    .reading-grid h3 { margin-top: 28px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .node,
+    .edge { transition: none; }
+  }
+</style>
