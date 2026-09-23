@@ -1,0 +1,55 @@
+name: Validate Living Capability Atlas prototype
+
+on:
+  push:
+    branches:
+      - prototype/living-capability-atlas-v0-1
+    paths:
+      - 'src/pages/atlas-prototype/**'
+      - 'tests/atlas-prototype.spec.ts'
+      - '.github/workflows/atlas-prototype.yml'
+  pull_request:
+    paths:
+      - 'src/pages/atlas-prototype/**'
+      - 'tests/atlas-prototype.spec.ts'
+      - '.github/workflows/atlas-prototype.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-atlas:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies from lock
+        run: npm ci
+
+      - name: Astro type and build gate
+        run: npm run build
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Atlas interaction and responsive gate
+        run: npx playwright test tests/atlas-prototype.spec.ts
+
+      - name: Upload Atlas visual evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: living-capability-atlas-v0-1-evidence
+          path: |
+            artifacts/atlas-prototype/
+            artifacts/playwright-report/
+          if-no-files-found: ignore
