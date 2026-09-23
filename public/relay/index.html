@@ -4,8 +4,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="referrer" content="no-referrer" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'unsafe-inline'; connect-src 'none'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'" />
-  <title>Capability Lab Relay — Zero-Cost Owner Pilot</title>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'unsafe-inline'; connect-src 'none'; img-src 'self' data:; manifest-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'" />
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <meta name="theme-color" content="#0b0d10" />
+  <title>Capability Lab Relay — Fast Handoff Pilot</title>
   <style>
     :root { color-scheme: dark; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
     body { margin: 0; min-height: 100vh; background: #0b0d10; color: #f2f5f7; }
@@ -26,14 +28,17 @@
     .status[data-kind="ok"] { color: #86efac; }
     .status[data-kind="error"] { color: #fca5a5; }
     .small { font-size: .9rem; color: #9aa4ae; }
+    .fast { border-color: #245f3d; background: #101b15; }
+    .check-row { display: flex; align-items: flex-start; gap: 10px; margin-top: 14px; }
+    .check-row input { width: auto; margin-top: 4px; }
+    .check-row label { margin: 0; font-weight: 600; }
     code { color: #b7f7c7; }
-    .hidden { display: none; }
   </style>
 </head>
 <body>
 <main>
   <h1>Capability Lab Relay</h1>
-  <p>Owner pilot zero-cost. O telefone fica criptografado apenas neste navegador; a IA fornece somente a mensagem. O envio final continua manual no WhatsApp.</p>
+  <p>Fast handoff pilot. A IA continua podendo fornecer somente a mensagem; o destinatário permanece sob seu controle local. Com a sessão rápida ativa, um handoff válido pode abrir seu WhatsApp automaticamente com o texto pronto.</p>
 
   <section class="card" id="binding-card">
     <h2>1. Vincular meu WhatsApp</h2>
@@ -47,8 +52,18 @@
     <div class="status" id="binding-status" role="status" aria-live="polite"></div>
   </section>
 
+  <section class="card fast">
+    <h2>2. Sessão rápida</h2>
+    <p class="small">Opcional. Depois de desbloquear uma vez com seu PIN, mantém o destino disponível apenas nesta sessão do navegador por até 30 minutos. Isso reduz handoffs seguintes para: abrir link → WhatsApp abre com mensagem → você toca Enviar.</p>
+    <div class="check-row">
+      <input id="fast-session" type="checkbox" />
+      <label for="fast-session">Ativar sessão rápida após o próximo desbloqueio</label>
+    </div>
+    <button class="secondary" id="clear-session">Encerrar sessão rápida agora</button>
+  </section>
+
   <section class="card">
-    <h2>2. Enviar para meu WhatsApp</h2>
+    <h2>3. Enviar para meu WhatsApp</h2>
     <label for="message">Mensagem</label>
     <textarea id="message" maxlength="4000" placeholder="Mensagem gerada pela IA"></textarea>
     <label for="send-pin">PIN local</label>
@@ -58,8 +73,13 @@
   </section>
 
   <section class="card">
+    <h2>Captura universal</h2>
+    <p class="small">Ao instalar esta página como app/PWA em Android compatível, ela pode aparecer no menu Compartilhar. O texto compartilhado é convertido localmente em handoff; com sessão rápida ativa, segue direto para a abertura do WhatsApp.</p>
+  </section>
+
+  <section class="card">
     <h2>Boundary do piloto</h2>
-    <p class="small">Este P0 não prova autenticação nativa do WhatsApp. Ele usa o self-destination já validado em Android/Web, armazenamento local criptografado e <code>wa.me</code>. Não há Firebase SMS, Cloud Run, billing ou envio automático.</p>
+    <p class="small">Este piloto não envia silenciosamente mensagens e não usa automação não oficial do WhatsApp. O passo final <strong>Enviar</strong> permanece manual. Em desktop, o navegador também pode exigir confirmação para abrir o aplicativo WhatsApp; esse gate pertence ao navegador e não é contornado.</p>
   </section>
 </main>
 <script type="module" src="./app.js"></script>
