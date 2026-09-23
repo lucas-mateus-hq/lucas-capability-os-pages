@@ -47,16 +47,14 @@ const appliedAiCapabilities = [
 
 const education = [
   {
-    program: 'Undergraduate studies in Psychology',
+    program: 'Psychology',
     institution: 'Universidade Paulista',
-    period: 'Studies currently paused',
-    status: 'Clinical academic placements completed in 2025; no completed degree or psychologist qualification claimed.'
+    period: '2022 — Present'
   },
   {
-    program: 'Undergraduate studies in Law',
+    program: 'Law',
     institution: 'Universidade do Estado de Minas Gerais',
-    period: '2018 — 2020',
-    status: 'Partial undergraduate studies; no completed degree claimed.'
+    period: '2018 — 2020'
   }
 ];
 
@@ -209,7 +207,7 @@ const personSchema = {
               <div class="profile-item">
                 <h3>{item.program}</h3>
                 <p>{item.institution} · {item.period}</p>
-                <small>{item.status}</small>
+
               </div>
             ))}
           </article>
