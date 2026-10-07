@@ -2,7 +2,7 @@
 
 Capability Lab is my independent research and experimentation space for exploring how AI can help people learn, build, evaluate and carry capability forward — not just produce faster answers.
 
-My background is in Talent Acquisition, Learning & Development, English teaching and customer-facing work. I came to AI through curiosity and hands-on experimentation rather than a traditional software-engineering or computer-science path.
+My background is in Talent Acquisition, Learning & Development, English teaching and customer-facing work. I came to AI through curiosity and hands-on experimentation, using projects to learn, test ideas and document what works.
 
 ## What I'm exploring
 
