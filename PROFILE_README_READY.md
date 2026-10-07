@@ -1,43 +1,27 @@
 # Lucas Mateus
 
-**Talent Acquisition & Recruiting Operations | International Recruiting | Sourcing**
+**Independent researcher & builder exploring human–AI collaboration, evaluation and learning**
 
-São Paulo, Brazil · Open to remote international opportunities and hybrid/on-site roles in São Paulo.
+My professional background is in Talent Acquisition, Learning & Development, English teaching and customer-facing work. I came into AI without a traditional software-engineering or computer-science path, and I learn through building, testing and documenting real experiments.
 
-I support structured, candidate-centered hiring across high-volume and international environments, with experience in sourcing, recruiting coordination, candidate communication and cross-cultural collaboration.
+## Current work
 
-Alongside my recruiting career, I independently explore applied AI and systems thinking as a practical R&D discipline focused on improving how complex work is structured, evaluated and validated.
+- **[Capability Lab](https://lucas-mateus-hq.github.io/lucas-capability-os-pages/)** — an independent research project exploring whether AI can help people turn curiosity into something they can understand, build, change and reuse.
+- **[Capability Evidence Protocol v0.1](public/protocol/CAPABILITY_EVIDENCE_PROTOCOL_v0.1.md)** — an experimental, model-agnostic protocol for separating capability claims from inspectable evidence and independent evaluation.
+- **Human–AI workflows** — practical experiments with agent playbooks, evaluation, evidence and reusable ways of working across AI tools.
 
-## Focus
+## Research interests
 
-Talent Acquisition · Recruiting Operations · International Recruiting · Talent Sourcing · Candidate Experience · Early Careers · People / Learning Operations
+Human–AI collaboration · AI-assisted learning · evaluation · agent workflows · evidence & reproducibility
 
-## Experience
+## Professional background
 
-- **Wellhub — Global Learning & Development Intern:** global stakeholder coordination, employee experience, operational support and learning technology, including Degreed rollout support.
-- **Reckitt — Talent Acquisition Intern:** recruiting across Brazil for corporate, commercial, industrial and Early Careers environments, including internship and apprentice programs.
-- **TikTok — Talent Acquisition Center (Global):** high-volume recruiting support for US and EMEA teams, including sourcing, screening, scheduling, candidate communication and KPI tracking.
-- **RealLife English — Customer Success Agent:** remote customer support and cross-cultural communication with an international user base.
+Before this work, I built experience across **Talent Acquisition, Recruiting Operations, international recruiting and Learning & Development**, including roles at Wellhub, Reckitt, TikTok and RealLife English.
 
-## Selected evidence
+For the career side of my work, see my **[professional portfolio](https://lucas-mateus-hq.github.io/lucas-capability-os-pages/portfolio/)**.
 
-- **International sourcing:** a Dublin search requiring Russian-language capability was filled in approximately one week using targeted Boolean sourcing and external communities.
-- **Candidate experience:** Q1 2023 survey, n=15 — 100% reported TA contact, 100% clarity about recruitment stages, 100% role/company information, and 93% positive overall experience.
-- **Early Careers:** supported internship and apprentice recruitment and created a candidate preparation guide for a later recruitment stage.
+## Links
 
-## Selected work
-
-**[Professional Portfolio](https://lucas-mateus-hq.github.io/lucas-capability-os-pages/portfolio/)** — concise overview of experience, capabilities and selected evidence for recruiters and hiring managers.
-
-## Applied R&D
-
-**[Capability Lab / Capability OS](https://lucas-mateus-hq.github.io/lucas-capability-os-pages/)** — independent applied R&D exploring how AI-assisted workflows, evaluation, evidence, reproducibility and human-AI collaboration can improve the structure and validation of complex work.
-
-**[Try the interactive C Lab example](https://lucas-mateus-hq.github.io/lucas-capability-os-pages/#impact-demo)** — choose a recruiting, learning/operations or community scenario and see how the evidence-first workflow translates into practice.
-
-This work is separate from my core professional career in Talent Acquisition and Recruiting Operations. The public R&D surface is intentionally limited; private implementation, credentials and internal evidence are not published.
-
-## Connect
-
-- [LinkedIn](https://www.linkedin.com/in/lucasmateus/)
+- [Capability Lab](https://lucas-mateus-hq.github.io/lucas-capability-os-pages/)
 - [Professional Portfolio](https://lucas-mateus-hq.github.io/lucas-capability-os-pages/portfolio/)
+- [LinkedIn](https://www.linkedin.com/in/lucasmateus/)
