@@ -2,7 +2,7 @@
 
 **Independent researcher & builder exploring human–AI collaboration, evaluation and learning**
 
-My professional background is in Talent Acquisition, Learning & Development, English teaching and customer-facing work. I came into AI without a traditional software-engineering or computer-science path, and I learn through building, testing and documenting real experiments.
+My professional background is in Talent Acquisition, Learning & Development, English teaching and customer-facing work. I came to AI through hands-on experimentation, using projects to learn, test ideas and document what works.
 
 ## Current work
 
