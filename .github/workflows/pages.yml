@@ -48,9 +48,13 @@ jobs:
           fi
           grep -q 'sanitized_public_snapshot' src/data/telemetry_source.json
           grep -q 'sanitized_public_snapshot' public/telemetry.json
-          grep -q 'Public presentation layer' src/pages/index.astro
-          grep -q 'no runtime authority' src/pages/index.astro
-          echo 'PUBLIC_SNAPSHOT_BOUNDARY_PASS'
+          grep -q 'Capability Lab' src/pages/index.astro
+          grep -q 'Lucas Mateus' src/pages/index.astro
+          if grep -qiE 'runtime authority|canonical working state|Canonical public professional portfolio|credentials and internal evidence are not published' src/pages/index.astro src/pages/portfolio/index.astro README.md PROFILE_README_READY.md; then
+            echo 'VISITOR_IRRELEVANT_INTERNAL_LANGUAGE_DETECTED' >&2
+            exit 1
+          fi
+          echo 'PUBLIC_SURFACE_LANGUAGE_PASS'
 
       - name: Verify registry interaction contract
         shell: bash
