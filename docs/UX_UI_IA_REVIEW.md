@@ -45,3 +45,5 @@ Recruit several representative visitors, with consent and no personal-data colle
 ## Reproducible verification
 
 `npm ci --ignore-scripts --no-audit --no-fund`; `npm run build`; `npm run test:static`. GitHub runner executes `npm run test:e2e`, `npm run test:fresh-eyes`, unchanged relay regression and unchanged desktop/mobile Lighthouse gates. New browser scenarios cover navigation order/language cues, 44px home controls, actual skip focus and text-spacing resilience. Managed Work has no control-browser skill, so local browser QA is NOT_EXECUTED. CI results must be reported from the actual run; prior version's results are not evidence for this revision.
+
+First real CI execution passed six journey tests but exposed horizontal overflow at 320px with increased text spacing. The mobile hero used an automatic minimum grid track; its long heading could force the track beyond the viewport. The hero now has a zero-minimum mobile track and shrinkable children. The text-spacing assertion is retained, with geometry diagnostics added.

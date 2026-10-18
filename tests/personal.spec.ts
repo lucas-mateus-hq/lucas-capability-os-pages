@@ -88,7 +88,8 @@ test('text spacing customization preserves content and controls', async ({ page 
     await page.addStyleTag({content:'* { line-height:1.5 !important; letter-spacing:.12em !important; word-spacing:.16em !important; } p { margin-bottom:2em !important; }'});
     const overflow = await page.evaluate(() => Array.from(document.querySelectorAll('main a, main p, main h1, main h2, main h3, .site-header nav a')).filter(el => el.scrollWidth > el.clientWidth + 1).map(el => el.textContent));
     expect(overflow).toEqual([]);
-    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
+    const geometry = await page.evaluate(() => ({width:document.documentElement.scrollWidth, offenders:Array.from(document.querySelectorAll('body *')).map(el=>({tag:el.tagName,cls:el.getAttribute('class'),right:el.getBoundingClientRect().right})).filter(el=>el.right>321)}));
+    expect(geometry.width, JSON.stringify({route,...geometry})).toBeLessThanOrEqual(320);
     await expect(page.getByRole('heading', {level:1})).toBeVisible();
   }
 });
