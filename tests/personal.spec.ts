@@ -6,6 +6,10 @@ test('home presents Lucas and real public destinations without the lab dashboard
   await expect(page.locator('html')).toHaveAttribute('lang', 'pt-BR');
   await expect(page.getByRole('heading', { level: 1 })).toContainText('ideias em prática');
   await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(38, 54, 65)');
+  await expect(page.locator('#trabalho')).toHaveCSS('background-color', 'rgb(238, 233, 223)');
+  await expect(page.locator('#criacoes')).toHaveCSS('background-color', 'rgb(24, 61, 59)');
+  await expect(page.locator('#escritos')).toHaveCSS('background-color', 'rgb(217, 226, 223)');
+  await expect(page.locator('#contato')).toHaveCSS('background-color', 'rgb(241, 184, 149)');
   await expect(page.locator('[data-capability-registry], [data-impact-demo], [data-telemetry-mode]')).toHaveCount(0);
   await expect(page.locator('script[src*="live-telemetry"]')).toHaveCount(0);
   await expect(page.getByRole('img', { name: 'Lucas Mateus', exact: true })).toBeVisible();
