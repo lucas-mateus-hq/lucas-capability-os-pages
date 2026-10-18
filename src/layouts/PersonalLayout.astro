@@ -28,14 +28,14 @@ const canonical = new URL(`${home}${path}`, Astro.site).href;
     <header class="site-header wrap">
       <a class="identity" href={home} aria-label="Lucas Mateus · início"><span class="monogram" aria-hidden="true">lm.</span><span>Lucas Mateus</span></a>
       <nav aria-label="Navegação principal">
-        <a href={`${home}#trabalho`}>Trabalho</a><a href={`${home}#criacoes`}>Criações</a><a href={`${home}#escritos`}>Escritos</a><a href={`${home}#sobre`}>Sobre</a>
+        <a href={`${home}#trabalho`}>Trabalho</a><a href={`${home}#criacoes`}>Criações</a><a href={`${home}#sobre`}>Sobre</a><a href={`${home}#contato`}>Contato</a>
       </nav>
-      <a class="header-contact" href="https://www.linkedin.com/in/lucasmateus/">Vamos conversar <span aria-hidden="true">↗</span></a>
+      <a class="header-contact" href="https://www.linkedin.com/in/lucasmateus/">LinkedIn <span aria-hidden="true">↗</span></a>
     </header>
-    <main id="conteudo"><slot /></main>
+    <main id="conteudo" tabindex="-1"><slot /></main>
     <footer class="site-footer wrap">
       <div><a class="footer-name" href={home}>Lucas Mateus</a><p>Pessoas. Aprendizagem. Ideias em prática.</p></div>
-      <div class="footer-links"><a href={`${base}/portfolio/`} lang="en">Professional portfolio · EN</a><a href="https://www.linkedin.com/in/lucasmateus/">LinkedIn ↗</a><a href={`${base}/privacy/`}>Privacidade</a></div>
+      <div class="footer-links"><a href={`${base}/portfolio/`}>Portfólio (em inglês)</a><a href="https://www.linkedin.com/in/lucasmateus/">LinkedIn ↗</a><a href={`${base}/privacy/`}>Privacidade</a></div>
       <small>São Paulo, Brasil · {new Date().getFullYear()}</small>
     </footer>
   </body>

@@ -48,6 +48,7 @@ test('keyboard access starts with skip link and works without JavaScript', async
   await expect(page.getByRole('link', { name: 'Pular para o conteúdo' })).toBeFocused();
   await page.keyboard.press('Enter');
   await expect(page).toHaveURL(/#conteudo$/);
+  await expect(page.locator('main')).toBeFocused();
   await page.getByRole('link', { name: 'Conheça a proposta' }).click();
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Reta Final.');
   await context.close();
@@ -62,4 +63,32 @@ test('existing public document and privacy links remain available', async ({ pag
   await page.getByRole('link', { name: 'Privacidade', exact: true }).click();
   await expect(page).toHaveURL(/\/privacy\/$/);
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Privacy Policy');
+});
+
+test('navigation order, destination cues and touch targets match the visitor journey', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('./');
+  const nav = page.getByRole('navigation', { name: 'Navegação principal' });
+  await expect(nav.getByRole('link')).toHaveText(['Trabalho', 'Criações', 'Sobre', 'Contato']);
+  await expect(page.locator('.destination-note')).toContainText('em inglês');
+  expect(await page.locator('#trabalho').evaluate(el => Boolean(el.compareDocumentPosition(document.querySelector('#criacoes')!) & Node.DOCUMENT_POSITION_FOLLOWING))).toBe(true);
+  for (const link of await page.locator('.site-header nav a, .actions a, .text-link, .footer-links a').all()) {
+    const box = await link.boundingBox();
+    expect(box?.height, await link.innerText()).toBeGreaterThanOrEqual(44);
+  }
+  await nav.getByRole('link', { name: 'Contato', exact: true }).click();
+  await expect(page).toHaveURL(/#contato$/);
+  await expect(page.locator('#contato').getByRole('link')).toHaveAttribute('href', 'https://www.linkedin.com/in/lucasmateus/');
+});
+
+test('text spacing customization preserves content and controls', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 844 });
+  for (const route of ['./', 'criacoes/reta-final/']) {
+    await page.goto(route);
+    await page.addStyleTag({content:'* { line-height:1.5 !important; letter-spacing:.12em !important; word-spacing:.16em !important; } p { margin-bottom:2em !important; }'});
+    const overflow = await page.evaluate(() => Array.from(document.querySelectorAll('main a, main p, main h1, main h2, main h3, .site-header nav a')).filter(el => el.scrollWidth > el.clientWidth + 1).map(el => el.textContent));
+    expect(overflow).toEqual([]);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
+    await expect(page.getByRole('heading', {level:1})).toBeVisible();
+  }
 });
