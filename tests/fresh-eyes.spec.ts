@@ -8,7 +8,7 @@ for (const route of ['', 'portfolio/', 'criacoes/reta-final/', 'privacy/']) {
       await page.goto(route || './');
       await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
       const geometry = await page.evaluate(() => ({ viewport: innerWidth, scrollWidth: document.documentElement.scrollWidth,
-        offenders: Array.from(document.querySelectorAll('main *')).map((el) => ({tag:el.tagName,box:el.getBoundingClientRect()})).filter(({box}) => box.width && (box.right > innerWidth + 1 || box.left < -1)).map(({tag,box}) => ({tag,left:box.left,right:box.right})) }));
+        offenders: Array.from(document.querySelectorAll('main *')).map((el) => ({tag:el.tagName,className:el.getAttribute('class'),box:el.getBoundingClientRect()})).filter(({box}) => box.width && (box.right > innerWidth + 1 || box.left < -1)).map(({tag,className,box}) => ({tag,className,left:box.left,right:box.right})) }));
       expect(geometry.scrollWidth, JSON.stringify(geometry)).toBeLessThanOrEqual(width);
       expect(geometry.offenders, JSON.stringify(geometry)).toEqual([]);
       const name = `${route.replaceAll('/', '-') || 'home'}-${width}`;
