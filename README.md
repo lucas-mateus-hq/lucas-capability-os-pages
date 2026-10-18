@@ -1,30 +1,25 @@
-# Capability Lab — Independent Applied AI R&D by Lucas Mateus
+# Lucas Mateus · Personal home
 
-Capability Lab is my independent research and experimentation space for exploring how AI can help people learn, build, evaluate and carry capability forward — not just produce faster answers.
+Personal website and professional portfolio for Lucas Mateus. The public home brings together his background in recruiting, learning and education, selected creations and writing. It is no longer the presentation/dashboard of Capability Lab or Billi Lab.
 
-My background is in Talent Acquisition, Learning & Development, English teaching and customer-facing work. I came to AI through curiosity and hands-on experimentation, using projects to learn, test ideas and document what works.
+## Public routes
 
-## What I'm exploring
+- [Home](https://lucas-mateus-hq.github.io/lucas-capability-os-pages/): Portuguese personal introduction, work, creations, writing and contact.
+- [Professional portfolio](https://lucas-mateus-hq.github.io/lucas-capability-os-pages/portfolio/): existing English experience, evidence and qualifications, preserved at the same URL.
+- [Reta Final](https://lucas-mateus-hq.github.io/lucas-capability-os-pages/criacoes/reta-final/): project introduction, explicitly upcoming. No checkout, invented sales URL, waitlist or collection of personal data.
+- [Privacy](https://lucas-mateus-hq.github.io/lucas-capability-os-pages/privacy/): existing LinkedIn integration policy, preserved.
 
-- human–AI collaboration and learning;
-- evaluation of AI-assisted work;
-- evidence and reproducibility;
-- agent playbooks and reusable workflows;
-- portability across models and tools.
+The repository name and free Pages address stay unchanged. There is no custom domain, paid service or new hosting dependency. Existing protocol and relay direct URLs remain available for compatibility but are not navigation entries in the personal site. Historical lab components remain in source, unmounted; public telemetry is not loaded by the personal pages.
 
-## Selected public work
+## Development
 
-**[Capability Evidence Protocol v0.1](public/protocol/CAPABILITY_EVIDENCE_PROTOCOL_v0.1.md)** is an experimental, model-agnostic protocol for separating capability claims from inspectable evidence and independent evaluation.
+```sh
+npm ci --ignore-scripts --no-audit --no-fund
+npm run build
+npm run test:static
+npm run preview
+```
 
-**[Interactive Capability Lab example](https://lucas-mateus-hq.github.io/lucas-capability-os-pages/#impact-demo)** shows how an evidence-first workflow can translate into recruiting, learning/operations and community scenarios.
+Node >=22 is required. Browser checks run with `npm run test:e2e`, `npm run test:fresh-eyes` and `npm run test:relay` after installing Playwright's Chromium. `.github/workflows/pages.yml` validates public content, real browser behavior and Lighthouse desktop/mobile before deploying main. Pull requests validate without deployment.
 
-## Current stage
-
-Capability Lab is early-stage independent research. Some ideas have been tested extensively in my own workflows; external validation is still limited. That gap is part of what I want to investigate next.
-
-## Professional background
-
-For my work in Talent Acquisition, Recruiting Operations, international recruiting and Learning & Development, see:
-
-- [Professional Portfolio](https://lucas-mateus-hq.github.io/lucas-capability-os-pages/portfolio/)
-- [LinkedIn](https://www.linkedin.com/in/lucasmateus/)
+For scope, content sources, intentional retirement of lab-specific UI tests and remaining launch requirements, see `docs/PERSONAL_HOME_V1.md`.

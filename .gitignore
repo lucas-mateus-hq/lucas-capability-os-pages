@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.astro/
+artifacts/fresh-eyes/
+artifacts/lighthouse/
+artifacts/playwright-report/
+test-results/
