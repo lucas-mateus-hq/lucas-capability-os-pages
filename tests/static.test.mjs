@@ -43,7 +43,8 @@ test('home is personal, upcoming product is honest, and no data capture or purch
   assert.match(product, /Lançamento em breve/);
   assert.match(product, /Hotmart/);
   assert.doesNotMatch(product, /href="[^"]*hotmart|<form\b|<input\b|<button\b/);
-  assert.match(home, /src="https:\/\/avatars\.githubusercontent\.com\/u\/322756565\?v=4&(?:amp;)?s=480"/, 'reuse only the existing public profile portrait');
+  assert.ok(home.includes(`src="${prefix}lucas-mateus.webp"`), 'serve an optimized copy of the existing public profile portrait');
+  assert.ok(existsSync('dist/lucas-mateus.webp'));
 });
 
 test('professional evidence and legacy public utility files remain present', () => {
