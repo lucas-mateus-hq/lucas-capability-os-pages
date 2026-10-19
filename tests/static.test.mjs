@@ -62,9 +62,9 @@ test('actual dark, paper, sage and product text pairs meet WCAG AA contrast', ()
   const pairs=[
     ['263641','f3efe6'],['263641','c3cecf'],['263641','f1b895'],
     ['eee9df','25343b'],['eee9df','5b4540'],['faf7f0','4b5c61'],
-    ['183d3b','f3efe6'],['183d3b','d9c99e'],['183d3b','c3d7d1'],
-    ['102f2f','ccdbd4'],['102f2f','bfd5cd'],['d3e5d2','203d35'],
-    ['e9a77f','25343b'],['f9efe0','25343b'],['f9efe0','9c4a2f'],
+    ['0c2037','f3efe6'],['0c2037','f2a16d'],['0c2037','c5d4e1'],
+    ['102a43','d0dce8'],['102a43','abcbe5'],['d3e5d2','203d35'],
+    ['e7641b','0c2037'],['081a2b','b9cbd9'],
     ['d9e2df','25343b'],['d9e2df','3b5553'],['d9e2df','385953'],
     ['f1b895','25343b'],['f1b895','5b3c2e'],['25343b','fff6e9']
   ];

@@ -7,6 +7,12 @@ for (const route of ['', 'en/', 'portfolio/', 'portfolio/pt/', 'criacoes/reta-fi
       await page.setViewportSize({ width, height: width >= 768 ? 1000 : 844 });
       await page.goto(route || './');
       await page.evaluate(() => document.fonts.ready);
+      const artwork = page.locator('.product-art img');
+      if (await artwork.count()) {
+        await artwork.scrollIntoViewIfNeeded();
+        await expect.poll(() => artwork.evaluate((img:HTMLImageElement)=>img.complete && img.naturalWidth===1200)).toBe(true);
+        await page.evaluate(()=>window.scrollTo(0,0));
+      }
       await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
       const geometry = await page.evaluate(() => ({ viewport: innerWidth, scrollWidth: document.documentElement.scrollWidth,
         offenders: Array.from(document.querySelectorAll('main *')).map((el) => ({tag:el.tagName,className:el.getAttribute('class'),box:el.getBoundingClientRect()})).filter(({box}) => box.width && (box.right > innerWidth + 1 || box.left < -1)).map(({tag,className,box}) => ({tag,className,left:box.left,right:box.right})) }));

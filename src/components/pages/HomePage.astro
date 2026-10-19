@@ -1,4 +1,5 @@
 ---
+import RetaFinalArtwork from '../RetaFinalArtwork.astro';
 import PersonalLayout from '../../layouts/PersonalLayout.astro';
 import { homeCopy } from '../../i18n/copy';
 interface Props { lang?: 'pt-BR'|'en-US' }
@@ -36,7 +37,7 @@ const product=`${base}/${en?'en/criacoes/reta-final/':'criacoes/reta-final/'}`;
   <section class="band creation-band" id="criacoes" aria-labelledby="creation-title"><div class="wrap">
     <header class="section-heading"><div><p class="section-number">{t("02 / Criações")}</p><h2 id="creation-title">{t("O que estou criando")}<br/><em>{t("a partir dessas experiências.")}</em></h2></div><p class="section-aside">{t("Materiais educacionais e projetos")}<br/>{t("que estão ganhando forma.")}</p></header>
     <article class="feature" id="reta-final">
-      <div class="product-art" aria-hidden="true"><span class="art-caption">{t("Recrutamento + ensino de inglês")}</span><div class="product-title"><small>{t("Preparação para entrevistas em inglês")}</small><strong>Reta<br/>Final<span>.</span></strong><div class="product-line"></div><p>{t("Organize suas experiências.")}<br/>{t("Prepare suas respostas.")}<br/>{t("Pratique sua comunicação.")}</p></div><span class="art-edition">{t("Uma criação de Lucas Mateus")}</span></div>
+      <RetaFinalArtwork lang={lang} />
       <div class="feature-copy"><span class="status">{t("Lançamento em breve")}</span><p class="label">{t("Toolkit de preparação")}</p><h3>{t("Como contar sua experiência")}<br/>{t("em uma entrevista em inglês?")}</h3><p class="product-name">Reta Final</p><p>{t("Você pode conhecer o próprio trabalho e ainda precisar de ajuda para explicá-lo em inglês. O Reta Final reúne materiais para organizar suas experiências, escolher exemplos e praticar respostas antes da entrevista.")}</p><a class="button primary" href={product}>{t("Conheça a proposta do Reta Final")}<span aria-hidden="true">↗</span></a><p class="product-note">{t("A proposta parte da minha experiência com recrutamento e ensino de inglês.")}</p></div>
     </article>
   </div></section>

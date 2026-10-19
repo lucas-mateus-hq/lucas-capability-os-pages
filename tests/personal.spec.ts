@@ -9,9 +9,10 @@ test('home presents Lucas and real public destinations without the lab dashboard
   await expect(page.locator('body')).toHaveCSS('font-family', /Source Sans 3/);
   expect(await page.evaluate(() => document.fonts.check('18px "Source Sans 3"') && document.fonts.check('40px "Source Serif 4"'))).toBe(true);
   await expect(page.locator('.hero-intro')).toHaveCSS('font-size', '18px');
+  await expect(page.locator('.language-flag').first()).toHaveCSS('width', '14px');
   await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(38, 54, 65)');
   await expect(page.locator('#trabalho')).toHaveCSS('background-color', 'rgb(238, 233, 223)');
-  await expect(page.locator('#criacoes')).toHaveCSS('background-color', 'rgb(24, 61, 59)');
+  await expect(page.locator('#criacoes')).toHaveCSS('background-color', 'rgb(12, 32, 55)');
   await expect(page.locator('#escritos')).toHaveCSS('background-color', 'rgb(217, 226, 223)');
   await expect(page.locator('#contato')).toHaveCSS('background-color', 'rgb(241, 184, 149)');
   await expect(page.locator('[data-capability-registry], [data-impact-demo], [data-telemetry-mode]')).toHaveCount(0);
