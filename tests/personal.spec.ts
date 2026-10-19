@@ -19,8 +19,8 @@ test('home presents Lucas and real public destinations without the lab dashboard
   await expect(page.getByRole('img', { name: 'Lucas Mateus', exact: true })).toBeVisible();
   await expect.poll(() => page.getByRole('img', { name: 'Lucas Mateus', exact: true }).evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth > 0), {timeout:15000}).toBe(true);
   await page.getByRole('link', { name: 'Conheça meu trabalho' }).click();
-  await expect(page).toHaveURL(/\/portfolio\/$/);
-  await expect(page.locator('#page-title')).toContainText('Talent Acquisition');
+  await expect(page).toHaveURL(/\/portfolio\/pt\/$/);
+  await expect(page.locator('#page-title')).toContainText('Recrutamento');
 });
 
 test('upcoming product has a working detail route and no fabricated checkout', async ({ page }) => {
@@ -45,7 +45,7 @@ test('portfolio retains evidence, career history, direct anchors and personal re
   await expect(page.locator('#rnd')).toContainText('Human–AI collaboration');
   await expect(page.locator('body')).not.toContainText('Capability Lab');
   await page.getByRole('link', { name: 'Lucas Mateus · Home' }).click();
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('Pessoas');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('People');
 });
 
 test('keyboard access starts with skip link and works without JavaScript', async ({ browser }) => {
@@ -69,8 +69,8 @@ test('existing public document and privacy links remain available', async ({ pag
   }
   await page.goto('./');
   await page.getByRole('link', { name: 'Privacidade', exact: true }).click();
-  await expect(page).toHaveURL(/\/privacy\/$/);
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Privacy Policy');
+  await expect(page).toHaveURL(/\/privacidade\/$/);
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Política de Privacidade');
 });
 
 test('navigation order, destination cues and touch targets match the visitor journey', async ({ page }) => {
@@ -78,7 +78,7 @@ test('navigation order, destination cues and touch targets match the visitor jou
   await page.goto('./');
   const nav = page.getByRole('navigation', { name: 'Navegação principal' });
   await expect(nav.getByRole('link')).toHaveText(['Trabalho', 'Criações', 'Sobre', 'Contato']);
-  await expect(page.locator('.destination-note')).toContainText('em inglês');
+  await expect(page.locator('.destination-note')).toContainText('inglês americano');
   expect(await page.locator('#trabalho').evaluate(el => Boolean(el.compareDocumentPosition(document.querySelector('#criacoes')!) & Node.DOCUMENT_POSITION_FOLLOWING))).toBe(true);
   for (const link of await page.locator('.site-header nav a, .actions a, .text-link, .footer-links a').all()) {
     const box = await link.boundingBox();
@@ -91,7 +91,7 @@ test('navigation order, destination cues and touch targets match the visitor jou
 
 test('text spacing customization preserves content and controls', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 844 });
-  for (const route of ['./', 'criacoes/reta-final/']) {
+  for (const route of ['./', 'en/', 'criacoes/reta-final/', 'en/criacoes/reta-final/']) {
     await page.goto(route);
     await page.addStyleTag({content:'* { line-height:1.5 !important; letter-spacing:.12em !important; word-spacing:.16em !important; } p { margin-bottom:2em !important; }'});
     const overflow = await page.evaluate(() => Array.from(document.querySelectorAll('main a, main p, main h1, main h2, main h3, .site-header nav a')).filter(el => el.scrollWidth > el.clientWidth + 1).map(el => el.textContent));
@@ -100,4 +100,39 @@ test('text spacing customization preserves content and controls', async ({ page 
     expect(geometry.width, JSON.stringify({route,...geometry})).toBeLessThanOrEqual(320);
     await expect(page.getByRole('heading', {level:1})).toBeVisible();
   }
+});
+
+
+for (const [pt,en,title] of [['./','en/','People.'],['criacoes/reta-final/','en/criacoes/reta-final/','Reta Final.'],['portfolio/pt/','portfolio/','Talent Acquisition'],['privacidade/','privacy/','Privacy Policy']] as const) {
+  test(`language switch keeps the equivalent page: ${pt}`, async ({browser}) => {
+    const context=await browser.newContext({javaScriptEnabled:false,viewport:{width:390,height:844}});
+    const page=await context.newPage();
+    await page.goto('http://127.0.0.1:4321/lucas-capability-os-pages/'+(pt==='./'?'':pt));
+    const english=page.getByRole('link',{name:'English (United States)',exact:true});
+    await expect(english).toBeVisible();
+    expect((await english.boundingBox())?.height).toBeGreaterThanOrEqual(44);
+    await english.click();
+    await expect(page).toHaveURL('http://127.0.0.1:4321/lucas-capability-os-pages/'+en);
+    await expect(page.locator('html')).toHaveAttribute('lang','en-US');
+    await expect(page.getByRole('heading',{level:1})).toContainText(title);
+    await expect(page.getByRole('link',{name:'English (United States)',exact:true})).toHaveAttribute('aria-current','page');
+    await page.getByRole('link',{name:'Português (Brasil)',exact:true}).click();
+    await expect(page.locator('html')).toHaveAttribute('lang','pt-BR');
+    await expect(page).toHaveURL('http://127.0.0.1:4321/lucas-capability-os-pages/'+(pt==='./'?'':pt));
+    await context.close();
+  });
+}
+
+test('English navigation stays English and exposes honest product status',async({page})=>{
+  await page.goto('en/');
+  await page.getByRole('link',{name:'Explore my creations'}).click();
+  await page.getByRole('link',{name:'Explore Reta Final',exact:false}).click();
+  await expect(page).toHaveURL(/\/en\/criacoes\/reta-final\/$/);
+  await expect(page.locator('.notice')).toContainText('Coming soon');
+  await expect(page.locator('a[href*="hotmart"],form,input,button')).toHaveCount(0);
+  await page.getByRole('link',{name:'Back to home',exact:true}).click();
+  await expect(page).toHaveURL(/\/en\/$/);
+  await page.getByRole('link',{name:'Explore my work'}).click();
+  await expect(page).toHaveURL(/\/portfolio\/$/);
+  await expect(page.locator('#evidence')).toContainText('14 of 15 (93%)');
 });

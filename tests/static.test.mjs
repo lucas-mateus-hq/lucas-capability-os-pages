@@ -4,7 +4,7 @@ import { readFileSync, existsSync } from 'node:fs';
 
 const prefix = '/lucas-capability-os-pages/';
 const origin = 'https://lucas-mateus-hq.github.io';
-const routes = ['', 'portfolio/', 'criacoes/reta-final/', 'privacy/'];
+const routes = ['', 'en/', 'portfolio/', 'portfolio/pt/', 'criacoes/reta-final/', 'en/criacoes/reta-final/', 'privacy/', 'privacidade/'];
 const fileFor = (path) => `dist/${path}${path.endsWith('/') || !path ? 'index.html' : ''}`;
 const html = (route) => readFileSync(fileFor(route), 'utf8');
 
@@ -72,4 +72,21 @@ test('actual dark, paper, sage and product text pairs meet WCAG AA contrast', ()
     const values=[luminance(bg),luminance(fg)].sort((a,b)=>a-b);
     assert.ok((values[1]+.05)/(values[0]+.05)>=4.5,`${fg} on ${bg}`);
   }
+});
+
+
+test('locale pairs have reciprocal language links and preserve assets and evidence', () => {
+  for (const [pt,en] of [['','en/'],['criacoes/reta-final/','en/criacoes/reta-final/'],['portfolio/pt/','portfolio/'],['privacidade/','privacy/']]) {
+    const a=html(pt),b=html(en);
+    assert.match(a, /<html lang="pt-BR"/); assert.match(b, /<html lang="en-US"/);
+    for(const page of [a,b]) for(const [lang,route] of [['pt-BR',pt],['en-US',en]]) assert.ok(page.includes(`hreflang="${lang}" href="${origin}${prefix}${route}"`),`${pt} / ${en}: alternate ${lang}`);
+    const images = x=>[...x.matchAll(/<img[^>]*src="([^"]+)"/g)].map(m=>m[1]);
+    assert.deepEqual(images(a),images(b));
+    const sections=x=>[...x.matchAll(/<section[^>]*id="([^"]+)"/g)].map(m=>m[1]);
+    assert.deepEqual(sections(a),sections(b));
+    assert.doesNotMatch(a+b,/translate\.google|localStorage|document\.cookie/);
+  }
+  assert.match(html('en/'), /Coming soon/);
+  assert.match(html('portfolio/pt/'), /14 de 15 \(93%\)/);
+  assert.match(html('portfolio/pt/'), /graduação não concluída/);
 });
