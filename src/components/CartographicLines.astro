@@ -1,0 +1,9 @@
+---
+const contours=Array.from({length:12},(_,i)=>`<path d="M${740+i*22} -80 C${500+i*24} 80 ${1060+i*18} 140 ${780+i*23} 340 S${530+i*25} 620 ${850+i*24} 890"/>`).join('')+Array.from({length:8},(_,i)=>`<path d="M${-180+i*18} 40 C${180+i*15} -40 ${240+i*18} 210 ${100+i*20} 330 S${-20+i*18} 610 ${260+i*20} 850"/>`).join('');
+const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" fill="none"><g stroke="#73cdba" stroke-width=".7" opacity=".1">${contours}</g><g stroke="#c58a45" stroke-width="1" opacity=".4"><path d="M810 750 C860 670 835 600 908 558 S990 479 978 405 S1015 298 1080 255 S1120 130 1180 84"/><circle cx="908" cy="558" r="4" fill="#071b20"/><circle cx="978" cy="405" r="3" fill="#071b20"/><circle cx="1080" cy="255" r="4" fill="#071b20"/></g></svg>`;
+---
+<div class="cartographic-lines" aria-hidden="true" style={{backgroundImage:`url("data:image/svg+xml,${encodeURIComponent(svg)}")`}}></div>
+<style is:global>
+.cartographic-lines{position:absolute;inset:0;pointer-events:none;z-index:-1;background-size:cover;background-position:center;overflow:hidden}
+@media(max-width:700px){.cartographic-lines{opacity:.55}}
+</style>

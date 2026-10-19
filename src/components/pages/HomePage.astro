@@ -1,5 +1,6 @@
 ---
 import RetaFinalArtwork from '../RetaFinalArtwork.astro';
+import CartographicLines from '../CartographicLines.astro';
 import PersonalLayout from '../../layouts/PersonalLayout.astro';
 import { homeCopy } from '../../i18n/copy';
 interface Props { lang?: 'pt-BR'|'en-US' }
@@ -12,6 +13,7 @@ const product=`${base}/${en?'en/criacoes/reta-final/':'criacoes/reta-final/'}`;
 ---
 <PersonalLayout lang={lang} path={en?'en/':''} ptPath="" enPath="en/" title={t("Lucas Mateus · Pessoas, aprendizagem e criações")} description={t("A trajetória e as criações de Lucas Mateus. Recrutamento internacional, aprendizagem e projetos que colocam conhecimento em prática.")}>
   <section class="hero wrap" aria-labelledby="home-title">
+    <CartographicLines />
     <div class="hero-copy">
       <p class="eyebrow"><span class="eyebrow-line" aria-hidden="true"></span>{t("Lucas Mateus · São Paulo")}</p>
       <h1 id="home-title">{t("Pessoas.")}<br/>{t("Aprendizagem.")}<br/><em>{t("ideias em prática.")}</em></h1>
@@ -44,7 +46,7 @@ const product=`${base}/${en?'en/criacoes/reta-final/':'criacoes/reta-final/'}`;
 
   <section class="band ideas-band" id="escritos" aria-labelledby="writing-title"><div class="wrap writing"><div><p class="section-number">{t("03 / Ideias em conversa")}</p><h2 id="writing-title">{t("O que muda quando")}<br/><em>{t("aprendemos juntos?")}</em></h2></div><div class="ideas-copy"><p>{t("Tenho explorado como pessoas e sistemas de IA podem trabalhar juntos. Me interessa entender o que essa colaboração permite aprender, criar e questionar, além do que conseguimos fazer mais rápido. Se essas perguntas também te interessam, podemos conversar pelo LinkedIn.")}</p><div class="topic-list" aria-label={en?'Topics of interest':'Temas de interesse'}><span>{t("Pessoas")}</span><span>{t("Aprendizagem")}</span><span>{t("Inteligência artificial")}</span></div><a class="text-link" href="https://www.linkedin.com/in/lucasmateus/">{t("Visitar meu perfil no LinkedIn")}<span aria-hidden="true">↗</span></a></div></div></section>
 
-  <section class="band about-band" id="sobre" aria-labelledby="about-title"><div class="wrap about"><div><p class="section-number">{t("04 / Sobre")}</p><h2 id="about-title">{t("Prazer,")}<br/><em>Lucas Mateus.</em></h2><span class="about-symbol" aria-hidden="true">↗</span></div><div class="about-copy"><p class="about-lead">{t("Gosto de entender o contexto antes de chegar a uma resposta. Principalmente quando essa resposta afeta a vida de alguém.")}</p><p>{t("No recrutamento, no ensino de inglês e no desenvolvimento de pessoas, encontrei situações que pedem mais do que uma orientação pronta. O que funciona depende de quem está ali, do que essa pessoa já viveu e das possibilidades que tem naquele momento.")}</p><p>{t("Essa atenção ao contexto também acompanha meus projetos com inteligência artificial. Quero explorar o que podemos construir com essas ferramentas, mantendo espaço para questionar o resultado e decidir o que realmente faz sentido usar.")}</p><p class="closing">{t("Aqui compartilho meu trabalho e o que sigo aprendendo.")}</p></div></div></section>
+  <section class="band about-band" id="sobre" aria-labelledby="about-title"><CartographicLines /><div class="wrap about"><div><p class="section-number">{t("04 / Sobre")}</p><h2 id="about-title">{t("Prazer,")}<br/><em>Lucas Mateus.</em></h2><span class="about-symbol" aria-hidden="true">↗</span></div><div class="about-copy"><p class="about-lead">{t("Gosto de entender o contexto antes de chegar a uma resposta. Principalmente quando essa resposta afeta a vida de alguém.")}</p><p>{t("No recrutamento, no ensino de inglês e no desenvolvimento de pessoas, encontrei situações que pedem mais do que uma orientação pronta. O que funciona depende de quem está ali, do que essa pessoa já viveu e das possibilidades que tem naquele momento.")}</p><p>{t("Essa atenção ao contexto também acompanha meus projetos com inteligência artificial. Quero explorar o que podemos construir com essas ferramentas, mantendo espaço para questionar o resultado e decidir o que realmente faz sentido usar.")}</p><p class="closing">{t("Aqui compartilho meu trabalho e o que sigo aprendendo.")}</p></div></div></section>
 
   <section class="contact-band" id="contato" aria-labelledby="contact-title"><div class="wrap contact"><div><p class="section-number">{t("Vamos conversar")}</p><h2 id="contact-title">{t("Quer conversar sobre trabalho,")}<br/><em>{t("aprendizagem ou um projeto?")}</em></h2></div><a class="button primary" href="https://www.linkedin.com/in/lucasmateus/">{t("Conversar pelo LinkedIn")}<span aria-hidden="true">↗</span></a></div></section>
 </PersonalLayout>

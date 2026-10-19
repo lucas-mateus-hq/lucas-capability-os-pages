@@ -1,4 +1,5 @@
 ---
+import '../../styles/identity.css';
 import LanguageSwitcher from '../LanguageSwitcher.astro';
 import {privacyCopy} from '../../i18n/privacy';
 interface Props {lang?: 'pt-BR'|'en-US'}
@@ -25,7 +26,7 @@ const updated=en?'September 15, 2026':'15 de setembro de 2026';
     <link rel="stylesheet" href={`${base}/fonts/fonts.css`} />
     <title>{t("Privacy Policy — Lucas Mateus")}</title>
     <style>
-      :root { font-family: "Source Sans 3", Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #f3efe6; background: #263641; }
+      :root { font-family: "Source Sans 3", Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #f7f3ea; background: #071b20; }
       * { box-sizing: border-box; }
       body { margin: 0; }
       .privacy-languages{width:min(760px,calc(100% - 40px));margin:0 auto;display:flex;justify-content:flex-end;padding-top:20px}
@@ -33,11 +34,11 @@ const updated=en?'September 15, 2026':'15 de setembro de 2026';
       a { color: inherit; }
       .back { display: inline-block; margin-bottom: 48px; font-size: .92rem; }
       .eyebrow { text-transform: uppercase; letter-spacing: .12em; font-size: .75rem; }
-      h1 { font-size: clamp(2.4rem, 7vw, 4.5rem); line-height: .98; letter-spacing: -.045em; margin: 12px 0 20px; }
+      h1 { font-family:"Source Serif 4",Georgia,serif; font-weight:400; font-size: clamp(2.4rem, 7vw, 4.5rem); line-height: 1.15; letter-spacing: -.045em; margin: 12px 0 20px; }
       .lead { font-size: 1.16rem; line-height: 1.65; max-width: 680px; }
       .updated { margin: 28px 0 52px; font-size: .9rem; opacity: .7; }
-      section { border-top: 1px solid #53646b; padding: 28px 0; }
-      h2 { margin: 0 0 12px; font-size: 1.15rem; }
+      section { border-top: 1px solid #41595e; padding: 28px 0; }
+      h2 { font-family:"Source Serif 4",Georgia,serif; font-weight:400; margin: 0 0 12px; font-size: 1.15rem; }
       p { font-size: 18px; line-height: 1.7; margin: 0; max-width: 62ch; }
     </style>
   </head>

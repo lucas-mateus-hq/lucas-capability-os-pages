@@ -54,19 +54,19 @@ test('professional evidence and legacy public utility files remain present', () 
   for (const path of ['protocol/CAPABILITY_EVIDENCE_PROTOCOL_v0.1.md','protocol/capability-evidence-receipt.schema.json','relay/index.html','relay/app.js']) assert.ok(existsSync(`dist/${path}`),path);
 });
 
-test('actual dark, paper, sage and product text pairs meet WCAG AA contrast', () => {
+test('actual editorial identity and product text pairs meet WCAG AA contrast', () => {
   const luminance = (hex) => {
     const rgb = hex.match(/[0-9a-f]{2}/gi).map((x) => parseInt(x,16)/255).map((x) => x<=.04045 ? x/12.92 : ((x+.055)/1.055)**2.4);
     return .2126*rgb[0]+.7152*rgb[1]+.0722*rgb[2];
   };
   const pairs=[
-    ['263641','f3efe6'],['263641','c3cecf'],['263641','f1b895'],
-    ['eee9df','25343b'],['eee9df','5b4540'],['faf7f0','4b5c61'],
-    ['0c2037','f3efe6'],['0c2037','f2a16d'],['0c2037','c5d4e1'],
+    ['071b20','f7f3ea'],['071b20','bdccc9'],['071b20','c58a45'],['071b20','73cdba'],
+    ['102c31','f7f3ea'],['102c31','bdccc9'],['102c31','c58a45'],
+    ['1f2933','f7f3ea'],['1f2933','bdccc9'],['1f2933','73cdba'],['1f2933','c58a45'],
+    ['0b2429','f7f3ea'],['0b2429','bdccc9'],['0b2429','c58a45'],
+    ['0f6b61','f7f3ea'],['73cdba','071b20'],
     ['102a43','d0dce8'],['102a43','abcbe5'],['d3e5d2','203d35'],
-    ['e7641b','0c2037'],['081a2b','b9cbd9'],
-    ['d9e2df','25343b'],['d9e2df','3b5553'],['d9e2df','385953'],
-    ['f1b895','25343b'],['f1b895','5b3c2e'],['25343b','fff6e9']
+    ['e7641b','0c2037'],['081a2b','b9cbd9']
   ];
   for (const [bg,fg] of pairs) {
     const values=[luminance(bg),luminance(fg)].sort((a,b)=>a-b);

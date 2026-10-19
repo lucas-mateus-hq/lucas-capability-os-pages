@@ -1,4 +1,5 @@
 ---
+import '../styles/identity.css';
 import '../styles/personal.css';
 import LanguageSwitcher from '../components/LanguageSwitcher.astro';
 interface Props { title: string; description: string; path?: string; lang?: string; ptPath?: string; enPath?: string }
@@ -17,7 +18,7 @@ const canonical = new URL(`${base}/${path}`, Astro.site).href;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#263641" />
+    <meta name="theme-color" content="#071b20" />
     <meta name="color-scheme" content="dark" />
     <meta name="robots" content="index,follow,max-image-preview:large" />
     <meta name="description" content={description} />
