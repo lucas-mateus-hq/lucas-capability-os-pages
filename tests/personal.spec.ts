@@ -5,6 +5,10 @@ test('home presents Lucas and real public destinations without the lab dashboard
   await expect(page).toHaveTitle('Lucas Mateus · Pessoas, aprendizagem e criações');
   await expect(page.locator('html')).toHaveAttribute('lang', 'pt-BR');
   await expect(page.getByRole('heading', { level: 1 })).toContainText('ideias em prática');
+  await page.evaluate(() => document.fonts.ready);
+  await expect(page.locator('body')).toHaveCSS('font-family', /Source Sans 3/);
+  expect(await page.evaluate(() => document.fonts.check('18px "Source Sans 3"') && document.fonts.check('40px "Source Serif 4"'))).toBe(true);
+  await expect(page.locator('.hero-intro')).toHaveCSS('font-size', '18px');
   await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(38, 54, 65)');
   await expect(page.locator('#trabalho')).toHaveCSS('background-color', 'rgb(238, 233, 223)');
   await expect(page.locator('#criacoes')).toHaveCSS('background-color', 'rgb(24, 61, 59)');
