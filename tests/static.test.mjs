@@ -45,6 +45,9 @@ test('home is personal, upcoming product is honest, and no data capture or purch
   assert.doesNotMatch(product, /href="[^"]*hotmart|<form\b|<input\b|<button\b/);
   assert.ok(home.includes(`src="${prefix}lucas-mateus.webp"`), 'serve an optimized copy of the existing public profile portrait');
   assert.ok(existsSync('dist/lucas-mateus.webp'));
+  for(const route of ['', 'en/']){assert.doesNotMatch(html(route),/Disponível em português brasileiro|Available in Brazilian Portuguese|Materiais educacionais e projetos|Learning materials and projects/);}
+  for(const route of ['', 'portfolio/pt/']){assert.ok(html(route).includes('produtividade no dia a dia'));assert.doesNotMatch(html(route),/organização de trabalhos complexos/);}
+  for(const route of ['en/', 'portfolio/'])assert.ok(html(route).includes('everyday productivity'));
 });
 
 test('professional evidence and legacy public utility files remain present', () => {
@@ -62,7 +65,9 @@ test('actual editorial identity and product text pairs meet WCAG AA contrast', (
   const pairs=[
     ['071b20','f7f3ea'],['071b20','bdccc9'],['071b20','c58a45'],['071b20','73cdba'],
     ['102c31','f7f3ea'],['102c31','bdccc9'],['102c31','c58a45'],
-    ['1f2933','f7f3ea'],['1f2933','bdccc9'],['1f2933','73cdba'],['1f2933','c58a45'],
+    ['103039','f7f3ea'],['103039','bdccc9'],['103039','73cdba'],['103039','c58a45'],
+    ['123a3b','f7f3ea'],['123a3b','bdccc9'],['123a3b','73cdba'],
+    ['19353a','f7f3ea'],['19353a','bdccc9'],['19353a','73cdba'],
     ['0b2429','f7f3ea'],['0b2429','bdccc9'],['0b2429','c58a45'],
     ['0f6b61','f7f3ea'],['73cdba','071b20'],
     ['102a43','d0dce8'],['102a43','abcbe5'],['d3e5d2','203d35'],

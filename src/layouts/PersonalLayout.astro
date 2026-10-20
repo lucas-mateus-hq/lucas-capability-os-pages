@@ -1,6 +1,7 @@
 ---
 import '../styles/identity.css';
 import '../styles/personal.css';
+import CartographicLines from '../components/CartographicLines.astro';
 import LanguageSwitcher from '../components/LanguageSwitcher.astro';
 interface Props { title: string; description: string; path?: string; lang?: string; ptPath?: string; enPath?: string }
 const { title, description, path = '', lang = 'pt-BR', ptPath = '', enPath = 'en/' } = Astro.props;
@@ -33,7 +34,6 @@ const canonical = new URL(`${base}/${path}`, Astro.site).href;
     <link rel="icon" type="image/svg+xml" href={`${base}/identity.svg`} />
     <link rel="stylesheet" href={`${base}/fonts/fonts.css`} />
     <link rel="preload" href={`${base}/fonts/source-sans-3-latin.woff2`} as="font" type="font/woff2" crossorigin="anonymous" />
-    <link rel="preload" href={`${base}/fonts/source-serif-4-latin.woff2`} as="font" type="font/woff2" crossorigin="anonymous" />
     <title>{title}</title>
   </head>
   <body>
@@ -46,7 +46,7 @@ const canonical = new URL(`${base}/${path}`, Astro.site).href;
       <LanguageSwitcher lang={lang} pt={pt} en={english} />
       <a class="header-contact" href="https://www.linkedin.com/in/lucasmateus/">LinkedIn <span aria-hidden="true">↗</span></a>
     </header>
-    <main id="conteudo" tabindex="-1"><slot /></main>
+    <main id="conteudo" class="journey-main" tabindex="-1"><CartographicLines /><slot /></main>
     <footer class="site-footer wrap">
       <div><a class="footer-name" href={home}>Lucas Mateus</a><p>{en?'Work, projects, and questions I keep exploring.':'Trabalho, projetos e perguntas que sigo explorando.'}</p></div>
       <div class="footer-links"><a href={portfolio}>{en?'Professional portfolio':'Portfólio profissional'}</a><a href="https://www.linkedin.com/in/lucasmateus/">LinkedIn ↗</a><a href={privacy}>{en?'Privacy':'Privacidade'}</a></div>

@@ -1,9 +1,9 @@
 ---
-const contours=Array.from({length:12},(_,i)=>`<path d="M${740+i*22} -80 C${500+i*24} 80 ${1060+i*18} 140 ${780+i*23} 340 S${530+i*25} 620 ${850+i*24} 890"/>`).join('')+Array.from({length:8},(_,i)=>`<path d="M${-180+i*18} 40 C${180+i*15} -40 ${240+i*18} 210 ${100+i*20} 330 S${-20+i*18} 610 ${260+i*20} 850"/>`).join('');
-const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" fill="none"><g stroke="#73cdba" stroke-width=".7" opacity=".1">${contours}</g><g stroke="#c58a45" stroke-width="1" opacity=".4"><path d="M810 750 C860 670 835 600 908 558 S990 479 978 405 S1015 298 1080 255 S1120 130 1180 84"/><circle cx="908" cy="558" r="4" fill="#071b20"/><circle cx="978" cy="405" r="3" fill="#071b20"/><circle cx="1080" cy="255" r="4" fill="#071b20"/></g></svg>`;
+const contours=Array.from({length:7},(_,i)=>`<path d="M${80+i*22} 0 C${570+i*20} 540 ${-140+i*20} 1080 ${150+i*22} 1600 S${910+i*20} 2540 ${510+i*22} 3200 S${-100+i*20} 4150 ${420+i*20} 4800"/>`).join('');
+const route='M1080 0 C870 370 1020 560 870 850 S400 1280 430 1660 S1060 2160 940 2590 S300 3000 380 3450 S1020 4090 950 4800';
+const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 4800" preserveAspectRatio="none" fill="none"><defs><linearGradient id="route" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#73cdba"/><stop offset=".32" stop-color="#c58a45"/><stop offset=".64" stop-color="#a4d8ca"/><stop offset="1" stop-color="#c58a45"/></linearGradient></defs><g stroke="#73cdba" stroke-width=".7" opacity=".07" vector-effect="non-scaling-stroke">${contours}</g><path d="${route}" stroke="url(#route)" stroke-width="1" stroke-dasharray="3 9" vector-effect="non-scaling-stroke" opacity=".2"/></svg>`;
 ---
 <div class="cartographic-lines" aria-hidden="true" style={{backgroundImage:`url("data:image/svg+xml,${encodeURIComponent(svg)}")`}}></div>
 <style is:global>
-.cartographic-lines{position:absolute;inset:0;pointer-events:none;z-index:-1;background-size:cover;background-position:center;overflow:hidden}
-@media(max-width:700px){.cartographic-lines{opacity:.55}}
+.cartographic-lines{position:absolute;inset:0;pointer-events:none;z-index:-1;background-size:100% 100%;background-position:center;background-repeat:no-repeat;overflow:hidden}
 </style>

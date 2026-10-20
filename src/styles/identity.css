@@ -1,3 +1,9 @@
 /* Personal editorial identity. Product artwork may retain its own palette. */
-:root{--brand-bg:#071b20;--brand-surface:#1f2933;--brand-teal:#0f6b61;--brand-ivory:#f7f3ea;--brand-mint:#73cdba;--brand-copper:#c58a45;--brand-muted:#bdccc9;--brand-line:#41595e;font-synthesis:none;color-scheme:dark}
+:root{--brand-bg:#071b20;--brand-surface:#103039;--brand-teal:#0f6b61;--brand-ivory:#f7f3ea;--brand-mint:#73cdba;--brand-copper:#c58a45;--brand-muted:#bdccc9;--brand-line:#41595e;font-synthesis:none;color-scheme:dark}
 ::selection{background:var(--brand-mint);color:var(--brand-bg)}
+
+:root{--card-bg:#103039;--card-border:rgba(189,235,219,.16);--card-radius:20px;--card-blur:none}
+@supports ((backdrop-filter:blur(6px)) or (-webkit-backdrop-filter:blur(6px))){:root{--card-bg:rgba(209,255,236,.045);--card-blur:blur(6px)}}
+@media(prefers-reduced-transparency:reduce){:root{--card-bg:#103039;--card-blur:none}}
+@media(max-width:700px){:root{--card-bg:#103039;--card-blur:none}}
+.journey-main{position:relative;isolation:isolate}

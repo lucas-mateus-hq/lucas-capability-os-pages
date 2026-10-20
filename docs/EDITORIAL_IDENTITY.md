@@ -33,3 +33,5 @@ Static contrast pairs and actual browser theme assertions are updated to the
 new design, retaining AA thresholds, overflow/spacing checks, locale journeys
 and all regression gates. This is implementation validation, not a reader
 study, formal accessibility audit or legal revision of the privacy policy.
+
+The October 20 refinement in [VISUAL_POLISH_V4.md](VISUAL_POLISH_V4.md) supersedes the charcoal surfaces, serif headings and disconnected map treatment described above.

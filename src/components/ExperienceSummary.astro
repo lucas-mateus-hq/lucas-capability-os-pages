@@ -1,0 +1,6 @@
+---
+interface Props { lang: 'pt-BR'|'en-US'; className: string }
+const {lang,className}=Astro.props;
+const en=lang==='en-US';
+---
+<p class={className}>{en?'My experience includes international recruiting, sourcing, candidate communication, and process coordination. I also explore how AI-assisted workflows can support research, learning, and ':'Minha experiência inclui recrutamento internacional, sourcing, comunicação com candidatos e coordenação de processos. Também exploro como fluxos com apoio de IA podem contribuir para a pesquisa, aprendizagem e '}<strong>{en?'everyday productivity':'produtividade no dia a dia'}</strong>.</p>

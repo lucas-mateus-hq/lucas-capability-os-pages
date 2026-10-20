@@ -1,6 +1,6 @@
 ---
 import RetaFinalArtwork from '../RetaFinalArtwork.astro';
-import CartographicLines from '../CartographicLines.astro';
+import ExperienceSummary from '../ExperienceSummary.astro';
 import PersonalLayout from '../../layouts/PersonalLayout.astro';
 import { homeCopy } from '../../i18n/copy';
 interface Props { lang?: 'pt-BR'|'en-US' }
@@ -13,13 +13,11 @@ const product=`${base}/${en?'en/criacoes/reta-final/':'criacoes/reta-final/'}`;
 ---
 <PersonalLayout lang={lang} path={en?'en/':''} ptPath="" enPath="en/" title={t("Lucas Mateus · Pessoas, aprendizagem e criações")} description={t("A trajetória e as criações de Lucas Mateus. Recrutamento internacional, aprendizagem e projetos que colocam conhecimento em prática.")}>
   <section class="hero wrap" aria-labelledby="home-title">
-    <CartographicLines />
     <div class="hero-copy">
       <p class="eyebrow"><span class="eyebrow-line" aria-hidden="true"></span>{t("Lucas Mateus · São Paulo")}</p>
       <h1 id="home-title">{t("Pessoas.")}<br/>{t("Aprendizagem.")}<br/><em>{t("ideias em prática.")}</em></h1>
-      <p class="hero-intro">{t("Trabalhei com recrutamento internacional, desenvolvimento de pessoas e ensino de inglês. Hoje, reúno essas experiências para criar materiais e explorar como a inteligência artificial pode ampliar nossa capacidade de aprender e construir.")}</p>
+      <ExperienceSummary lang={lang} className="hero-intro" />
       <div class="actions"><a class="button primary" href={portfolio}>{t("Conheça meu trabalho")}<span aria-hidden="true">↗</span></a><a class="text-link" href="#criacoes">{t("Explore minhas criações")}<span aria-hidden="true">↓</span></a></div>
-      <p class="destination-note">{t("Disponível em português brasileiro e inglês americano.")}</p>
     </div>
     <figure class="portrait-note">
       <div class="portrait-frame"><img src={`${base}/lucas-mateus.webp`} alt="Lucas Mateus" width="360" height="420" decoding="async" /><span class="portrait-mark" aria-hidden="true">✳</span></div>
@@ -37,7 +35,7 @@ const product=`${base}/${en?'en/criacoes/reta-final/':'criacoes/reta-final/'}`;
   </div></section>
 
   <section class="band creation-band" id="criacoes" aria-labelledby="creation-title"><div class="wrap">
-    <header class="section-heading"><div><p class="section-number">{t("02 / Criações")}</p><h2 id="creation-title">{t("O que estou criando")}<br/><em>{t("a partir dessas experiências.")}</em></h2></div><p class="section-aside">{t("Materiais educacionais e projetos")}<br/>{t("que estão ganhando forma.")}</p></header>
+    <header class="section-heading"><div><p class="section-number">{t("02 / Criações")}</p><h2 id="creation-title">{t("O que estou criando")}<br/><em>{t("a partir dessas experiências.")}</em></h2></div></header>
     <article class="feature" id="reta-final">
       <RetaFinalArtwork lang={lang} />
       <div class="feature-copy"><span class="status">{t("Lançamento em breve")}</span><p class="label">{t("Toolkit de preparação")}</p><h3>{t("Como contar sua experiência")}<br/>{t("em uma entrevista em inglês?")}</h3><p class="product-name">Reta Final</p><p>{t("Você pode conhecer o próprio trabalho e ainda precisar de ajuda para explicá-lo em inglês. O Reta Final reúne materiais para organizar suas experiências, escolher exemplos e praticar respostas antes da entrevista.")}</p><a class="button primary" href={product}>{t("Conheça a proposta do Reta Final")}<span aria-hidden="true">↗</span></a><p class="product-note">{t("A proposta parte da minha experiência com recrutamento e ensino de inglês.")}</p></div>
@@ -46,7 +44,7 @@ const product=`${base}/${en?'en/criacoes/reta-final/':'criacoes/reta-final/'}`;
 
   <section class="band ideas-band" id="escritos" aria-labelledby="writing-title"><div class="wrap writing"><div><p class="section-number">{t("03 / Ideias em conversa")}</p><h2 id="writing-title">{t("O que muda quando")}<br/><em>{t("aprendemos juntos?")}</em></h2></div><div class="ideas-copy"><p>{t("Tenho explorado como pessoas e sistemas de IA podem trabalhar juntos. Me interessa entender o que essa colaboração permite aprender, criar e questionar, além do que conseguimos fazer mais rápido. Se essas perguntas também te interessam, podemos conversar pelo LinkedIn.")}</p><div class="topic-list" aria-label={en?'Topics of interest':'Temas de interesse'}><span>{t("Pessoas")}</span><span>{t("Aprendizagem")}</span><span>{t("Inteligência artificial")}</span></div><a class="text-link" href="https://www.linkedin.com/in/lucasmateus/">{t("Visitar meu perfil no LinkedIn")}<span aria-hidden="true">↗</span></a></div></div></section>
 
-  <section class="band about-band" id="sobre" aria-labelledby="about-title"><CartographicLines /><div class="wrap about"><div><p class="section-number">{t("04 / Sobre")}</p><h2 id="about-title">{t("Prazer,")}<br/><em>Lucas Mateus.</em></h2><span class="about-symbol" aria-hidden="true">↗</span></div><div class="about-copy"><p class="about-lead">{t("Gosto de entender o contexto antes de chegar a uma resposta. Principalmente quando essa resposta afeta a vida de alguém.")}</p><p>{t("No recrutamento, no ensino de inglês e no desenvolvimento de pessoas, encontrei situações que pedem mais do que uma orientação pronta. O que funciona depende de quem está ali, do que essa pessoa já viveu e das possibilidades que tem naquele momento.")}</p><p>{t("Essa atenção ao contexto também acompanha meus projetos com inteligência artificial. Quero explorar o que podemos construir com essas ferramentas, mantendo espaço para questionar o resultado e decidir o que realmente faz sentido usar.")}</p><p class="closing">{t("Aqui compartilho meu trabalho e o que sigo aprendendo.")}</p></div></div></section>
+  <section class="band about-band" id="sobre" aria-labelledby="about-title"><div class="wrap about"><div><p class="section-number">{t("04 / Sobre")}</p><h2 id="about-title">{t("Prazer,")}<br/><em>Lucas Mateus.</em></h2><span class="about-symbol" aria-hidden="true">↗</span></div><div class="about-copy"><p class="about-lead">{t("Gosto de entender o contexto antes de chegar a uma resposta. Principalmente quando essa resposta afeta a vida de alguém.")}</p><p>{t("No recrutamento, no ensino de inglês e no desenvolvimento de pessoas, encontrei situações que pedem mais do que uma orientação pronta. O que funciona depende de quem está ali, do que essa pessoa já viveu e das possibilidades que tem naquele momento.")}</p><p>{t("Essa atenção ao contexto também acompanha meus projetos com inteligência artificial. Quero explorar o que podemos construir com essas ferramentas, mantendo espaço para questionar o resultado e decidir o que realmente faz sentido usar.")}</p><p class="closing">{t("Aqui compartilho meu trabalho e o que sigo aprendendo.")}</p></div></div></section>
 
   <section class="contact-band" id="contato" aria-labelledby="contact-title"><div class="wrap contact"><div><p class="section-number">{t("Vamos conversar")}</p><h2 id="contact-title">{t("Quer conversar sobre trabalho,")}<br/><em>{t("aprendizagem ou um projeto?")}</em></h2></div><a class="button primary" href="https://www.linkedin.com/in/lucasmateus/">{t("Conversar pelo LinkedIn")}<span aria-hidden="true">↗</span></a></div></section>
 </PersonalLayout>
