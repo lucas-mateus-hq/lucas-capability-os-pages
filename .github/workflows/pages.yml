@@ -100,6 +100,8 @@ jobs:
         run: npm ci --ignore-scripts --no-audit --no-fund
       - name: Build static site
         run: npm run build
+      - name: Identify the exact release
+        run: python3 scripts/verify-publication.py --prepare
       - name: Configure Pages
         uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
       - name: Upload Pages artifact
@@ -109,3 +111,15 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4
+      - name: Verify the live release and retired dashboard assets
+        env:
+          PUBLICATION_URL: ${{ steps.deployment.outputs.page_url }}
+        run: python3 scripts/verify-publication.py --url "$PUBLICATION_URL"
+      - name: Preserve publication receipt
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: publication-receipt
+          path: artifacts/publication-receipt.json
+          if-no-files-found: warn
+          retention-days: 14
