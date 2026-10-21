@@ -41,33 +41,14 @@ jobs:
           fi
       - name: Install dependencies from lock
         run: npm ci --ignore-scripts --no-audit --no-fund
-      - name: Astro type and build gate
-        run: npm run build
-      - name: Public identity, links, content and contrast contracts
-        run: npm run test:static
+      - name: Build old-address forwarding pages
+        run: node scripts/build-migration-redirects.mjs
+      - name: Verify explicit route mapping and retirement
+        run: node --test tests/migration.test.mjs
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
-      - name: Real browser personal navigation and compatibility
-        run: npm run test:e2e
-      - name: Desktop, tablet and mobile geometry and captures
-        run: npm run test:fresh-eyes
-      - name: Lighthouse desktop/mobile gate
-        shell: bash
-        run: |
-          set -euo pipefail
-          npm run preview > /tmp/personal-home-preview.log 2>&1 &
-          server_pid=$!
-          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
-          for attempt in $(seq 1 30); do
-            if curl --fail --silent http://127.0.0.1:4321/lucas-capability-os-pages/ > /dev/null; then
-              break
-            fi
-            sleep 1
-          done
-          curl --fail --silent http://127.0.0.1:4321/lucas-capability-os-pages/ > /dev/null
-          export CHROME_PATH="$(node -e "console.log(require('@playwright/test').chromium.executablePath())")"
-          timeout 240s npx lhci autorun --config=./lighthouserc.desktop.cjs
-          timeout 240s npx lhci autorun --config=./lighthouserc.mobile.cjs
+      - name: Verify redirects in Chromium
+        run: npx playwright test tests/migration.spec.ts
       - name: Upload browser and Lighthouse evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
@@ -99,9 +80,9 @@ jobs:
       - name: Install dependencies from lock
         run: npm ci --ignore-scripts --no-audit --no-fund
       - name: Build static site
-        run: npm run build
+        run: node scripts/build-migration-redirects.mjs
       - name: Identify the exact release
-        run: python3 scripts/verify-publication.py --prepare
+        run: python3 scripts/verify-migration.py --prepare
       - name: Configure Pages
         uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
       - name: Upload Pages artifact
@@ -114,7 +95,7 @@ jobs:
       - name: Verify the live release and retired dashboard assets
         env:
           PUBLICATION_URL: ${{ steps.deployment.outputs.page_url }}
-        run: python3 scripts/verify-publication.py --url "$PUBLICATION_URL"
+        run: python3 scripts/verify-migration.py --url "$PUBLICATION_URL"
       - name: Preserve publication receipt
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
