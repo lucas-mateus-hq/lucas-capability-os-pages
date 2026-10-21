@@ -54,15 +54,17 @@ for route, lang in [('', 'pt-BR'), ('en/', 'en-US'), ('portfolio/pt/', 'pt-BR'),
     if route in ('', 'en/'):
         assert 'id="criacoes"' in html and 'id="contato"' in html, route
     if route in ('privacy/', 'privacidade/'):
-        assert 'id="hosting"' in html and 'id="relay"' in html and 'id="rights"' in html, route
+        assert 'id="hosting"' in html and 'id="rights"' in html, route
     checks.append({'path':route, 'status':status, 'language':lang})
 for path in ['identity.svg', 'lucas-mateus.webp', 'images/reta-final-tablet.webp',
-             'images/social-pt.png', 'images/social-en.png', 'fonts/fonts.css',
-             'relay/', 'protocol/CAPABILITY_EVIDENCE_PROTOCOL_v0.1.md']:
+             'images/social-pt.png', 'images/social-en.png', 'fonts/fonts.css', 'sitemap.xml']:
     status, body = fetch(path)
     assert status == 200 and body, path
     checks.append({'path':path, 'status':status})
-for path in ['telemetry.json', 'live-telemetry.js', 'responsive-guard.css']:
+for path in ['telemetry.json', 'live-telemetry.js', 'responsive-guard.css', 'relay/', 'relay/index.html', 'relay/app.js',
+             'relay/AI_HANDOFF_CONTRACT.md', 'protocol/CAPABILITY_EVIDENCE_PROTOCOL_v0.1.md',
+             'protocol/capability-evidence-receipt.schema.json', 'protocol/examples/example-receipt.json', 'fonts/README.md',
+             'images/README.md', 'images/social-pt.svg', 'images/social-en.svg']:
     status, _ = fetch(path)
     assert status == 404, f'Retired asset still public: {path} ({status})'
     checks.append({'path':path, 'status':status, 'expected':'retired'})

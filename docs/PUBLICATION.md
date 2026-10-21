@@ -7,13 +7,11 @@ landing page on October 20, 2026 (America/Sao_Paulo).
 The current eight-route personal site replaces the laboratory dashboard at the
 same free Pages address. The old public telemetry JSON, polling script and
 unused responsive stylesheet are retired. Git history remains for recovery;
-private repositories and unpublished work are not published. Direct protocol
-and legacy Relay URLs remain compatible and are not promoted in navigation.
+private repositories and unpublished work are not published. Direct protocol and legacy Relay URLs were retired on October 21, 2026 at the Founder’s request. Technical utility files, handoff documents, asset READMEs and unused social-card SVG sources are no longer served by Pages. Font license notices remain with redistributed fonts. Git history and repository documentation remain public; this is website cleanup, not a history purge.
 
 The PT/EN privacy notice now describes the actual static site, GitHub Pages
 security logging, local font/image delivery, lack of portfolio analytics and
-forms, external LinkedIn contact, optional Relay storage/WhatsApp handoff,
-private publishing integration, rights requests and provider-policy references.
+forms, external LinkedIn contact, private publishing integration, rights requests and provider-policy references.
 It does not certify legal compliance or invent provider retention periods.
 
 Primary references checked for the notice:

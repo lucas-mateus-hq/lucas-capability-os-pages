@@ -12,11 +12,11 @@ test('publication keeps LinkedIn-only contact, describes actual privacy boundari
   for(const route of routes) assert.doesNotMatch(html(route),/mailto:|<input\b|<form\b/);
   for(const route of ['privacidade/','privacy/']){
     const source=html(route);
-    for(const id of ['responsibility','hosting','browsing','contact','relay','publishing','rights','changes'])assert.ok(source.includes(`id="${id}"`),route+': '+id);
+    for(const id of ['responsibility','hosting','browsing','contact','publishing','rights','changes'])assert.ok(source.includes(`id="${id}"`),route+': '+id);
     assert.ok(source.includes('https://www.linkedin.com/in/lucasmateus/'));
     assert.ok(source.includes('https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement'));
     assert.ok(source.includes('2026'));
-    assert.match(source,/GitHub Pages/);assert.match(source,/WhatsApp\/Meta/);assert.match(source,/LGPD/);
+    assert.match(source,/GitHub Pages/);assert.doesNotMatch(source,/WhatsApp|wa\.me|id="relay"/);assert.match(source,/LGPD/);
   }
   for(const path of ['live-telemetry.js','telemetry.json','responsive-guard.css'])assert.equal(existsSync('dist/'+path),false,path);
 });
@@ -80,11 +80,11 @@ test('home is personal, upcoming product is honest, and no data capture or purch
   for(const route of ['en/', 'portfolio/'])assert.ok(html(route).includes('everyday productivity'));
 });
 
-test('professional evidence and legacy public utility files remain present', () => {
+test('professional evidence remains present and technical utility files are not published', () => {
   const portfolio = html('portfolio/');
   for (const value of ['Talent Acquisition','Recruiting Operations','14 of 15 (93%)','Wellhub','Reckitt','TikTok','RealLife English','degree not completed','id="rnd"']) assert.ok(portfolio.includes(value),value);
   assert.doesNotMatch(portfolio,/Capability Lab/);
-  for (const path of ['protocol/CAPABILITY_EVIDENCE_PROTOCOL_v0.1.md','protocol/capability-evidence-receipt.schema.json','relay/index.html','relay/app.js']) assert.ok(existsSync(`dist/${path}`),path);
+  for (const path of ['protocol/CAPABILITY_EVIDENCE_PROTOCOL_v0.1.md','protocol/capability-evidence-receipt.schema.json','relay/index.html','relay/app.js','relay/AI_HANDOFF_CONTRACT.md','protocol/examples/example-receipt.json','fonts/README.md','images/README.md','images/social-pt.svg','images/social-en.svg']) assert.equal(existsSync(`dist/${path}`),false,path);
 });
 
 test('actual editorial identity and product text pairs meet WCAG AA contrast', () => {

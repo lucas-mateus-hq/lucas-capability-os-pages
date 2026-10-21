@@ -9,7 +9,7 @@ Personal website and professional portfolio for Lucas Mateus. The public home br
 - [Reta Final](https://lucas-mateus-hq.github.io/lucas-capability-os-pages/criacoes/reta-final/): project introduction, explicitly upcoming. No checkout, invented sales URL, waitlist or collection of personal data.
 - [Privacy](https://lucas-mateus-hq.github.io/lucas-capability-os-pages/privacy/): existing LinkedIn integration policy, preserved.
 
-The repository name and free Pages address stay unchanged. There is no custom domain, paid service or new hosting dependency. Existing protocol and relay direct URLs remain available for compatibility but are not navigation entries in the personal site. Historical lab components remain in source, unmounted; the old public telemetry assets have been retired. The Founder approved publication and LinkedIn-only contact; see docs/PUBLICATION.md.
+The repository name and free Pages address stay unchanged. There is no custom domain, paid service or new hosting dependency. Legacy protocol and Relay URLs have been retired from the site and now return 404; their implementation remains recoverable in Git history. Historical lab components remain in source, unmounted; the old public telemetry assets have been retired. The Founder approved publication and LinkedIn-only contact; see docs/PUBLICATION.md.
 
 ## Development
 
@@ -20,7 +20,7 @@ npm run test:static
 npm run preview
 ```
 
-Node >=22 is required. Browser checks run with `npm run test:e2e`, `npm run test:fresh-eyes` and `npm run test:relay` after installing Playwright's Chromium. `.github/workflows/pages.yml` validates public content, real browser behavior and Lighthouse desktop/mobile before deploying main. Pull requests validate without deployment.
+Node >=22 is required. Browser checks run with `npm run test:e2e`, `npm run test:fresh-eyes` and `npm run test:relay` (retired-route HTTP regression) after installing Playwright's Chromium. `.github/workflows/pages.yml` validates public content, real browser behavior and Lighthouse desktop/mobile before deploying main. Pull requests validate without deployment.
 
 For scope, content sources, intentional retirement of lab-specific UI tests and remaining launch requirements, see `docs/PERSONAL_HOME_V1.md`.
 
