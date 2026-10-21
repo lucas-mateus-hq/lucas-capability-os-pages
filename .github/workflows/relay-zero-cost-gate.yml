@@ -25,7 +25,7 @@ jobs:
         run: npm ci --ignore-scripts --no-audit --no-fund
 
       - name: Build static site
-        run: npm run build
+        run: node scripts/build-migration-redirects.mjs
 
       - name: Verify retired routes are absent from the deployment artifact
         shell: bash
