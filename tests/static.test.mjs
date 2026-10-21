@@ -8,6 +8,19 @@ const routes = ['', 'en/', 'portfolio/', 'portfolio/pt/', 'criacoes/reta-final/'
 const fileFor = (path) => `dist/${path}${path.endsWith('/') || !path ? 'index.html' : ''}`;
 const html = (route) => readFileSync(fileFor(route), 'utf8');
 
+test('publication keeps LinkedIn-only contact, describes actual privacy boundaries and retires dashboard assets', () => {
+  for(const route of routes) assert.doesNotMatch(html(route),/mailto:|<input\b|<form\b/);
+  for(const route of ['privacidade/','privacy/']){
+    const source=html(route);
+    for(const id of ['responsibility','hosting','browsing','contact','relay','publishing','rights','changes'])assert.ok(source.includes(`id="${id}"`),route+': '+id);
+    assert.ok(source.includes('https://www.linkedin.com/in/lucasmateus/'));
+    assert.ok(source.includes('https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement'));
+    assert.ok(source.includes('2026'));
+    assert.match(source,/GitHub Pages/);assert.match(source,/WhatsApp\/Meta/);assert.match(source,/LGPD/);
+  }
+  for(const path of ['live-telemetry.js','telemetry.json','responsive-guard.css'])assert.equal(existsSync('dist/'+path),false,path);
+});
+
 test('every locale serves cacheable raster assets, an SVG favicon and a 1200×630 social card', () => {
   for (const route of routes) {
     const source=html(route);

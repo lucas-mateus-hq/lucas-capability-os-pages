@@ -3,7 +3,7 @@ import SocialMeta from '../SocialMeta.astro';
 import NavigationEnhancements from '../NavigationEnhancements.astro';
 import '../../styles/identity.css';
 import LanguageSwitcher from '../LanguageSwitcher.astro';
-import {privacyCopy} from '../../i18n/privacy';
+import {privacyCopy,privacySections} from '../../i18n/privacy';
 interface Props {lang?: 'pt-BR'|'en-US'}
 const {lang='en-US'}=Astro.props;
 const en=lang==='en-US';
@@ -13,7 +13,7 @@ const english=`${base}/privacy/`;
 const canonical=new URL(en?english:pt,Astro.site).href;
 const portfolio=`${base}/portfolio/${en?'':'pt/'}`;
 const t=(key:string):string=>{if(en)return key;const value=privacyCopy[key];if(value===undefined)throw new Error('Missing translation: '+key);return value;};
-const updated=en?'September 15, 2026':'15 de setembro de 2026';
+const updated=en?'October 20, 2026':'20 de outubro de 2026';
 ---
 <!doctype html>
 <html lang={lang}>
@@ -21,7 +21,7 @@ const updated=en?'September 15, 2026':'15 de setembro de 2026';
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="index,follow" />
-    <meta name="description" content={t("Privacy policy for Lucas Mateus's personal LinkedIn publishing integration.")} />
+    <meta name="description" content={t("Privacy notice for Lucas Mateus’s personal website, hosting and optional legacy tools.")} />
     <link rel="icon" type="image/svg+xml" href={`${base}/identity.svg`} />
     <link rel="canonical" href={canonical} />
     <link rel="alternate" hreflang="pt-BR" href={new URL(pt,Astro.site).href} />
@@ -42,10 +42,11 @@ const updated=en?'September 15, 2026':'15 de setembro de 2026';
       .updated { margin: 28px 0 52px; font-size: .9rem; opacity: .7; }
       section { border-top: 1px solid #41595e; padding: 28px 0; }
       h2 { font-family:"Source Sans 3",Arial,sans-serif; font-weight:600; margin: 0 0 12px; font-size: 1.15rem; }
+      .policy-link{margin-top:16px}.policy-link a,li a{display:inline-flex;align-items:center;min-height:44px}ul{padding-left:20px}li{line-height:1.7;margin-bottom:8px}
       p { font-size: 18px; line-height: 1.7; margin: 0; max-width: 62ch; }
     </style>
     <meta property="og:title" content={t("Privacy Policy — Lucas Mateus")} />
-    <meta property="og:description" content={t("Privacy policy for Lucas Mateus's personal LinkedIn publishing integration.")} />
+    <meta property="og:description" content={t("Privacy notice for Lucas Mateus’s personal website, hosting and optional legacy tools.")} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
     <SocialMeta lang={lang} />
@@ -56,17 +57,15 @@ const updated=en?'September 15, 2026':'15 de setembro de 2026';
       <a class="back" href={portfolio}>{t("← Professional portfolio")}</a>
       <p class="eyebrow">{t("Lucas Mateus · Privacy")}</p>
       <h1>{t("Privacy Policy")}</h1>
-      <p class="lead">{t("This policy describes the limited data handling associated with Lucas Mateus's personal professional publishing workflow and its authorized LinkedIn integration.")}</p>
+      <p class="lead">{t("This notice explains how the personal portfolio works, what the hosting provider processes and what happens when you use its contact links or optional legacy tools.")}</p>
       <p class="updated"><strong>{t("Last updated:")}</strong> {updated}</p>
 
-      <section><h2>{t("Purpose")}</h2><p>{t("The integration is a private publishing workflow used to distribute Lucas Mateus's own approved professional content to his personal LinkedIn presence. It is not offered as a public application or service to other users.")}</p></section>
-      <section><h2>{t("Information processed")}</h2><p>{t("The workflow processes only information required to authenticate the authorized LinkedIn account and publish approved content. This may include LinkedIn authorization credentials, the account identifier required by the API, publication text, links and media metadata.")}</p></section>
-      <section><h2>{t("Credentials and storage")}</h2><p>{t("Access tokens and authentication secrets are not embedded in this public website or intentionally exposed in public source content. Credentials used by the workflow are stored in restricted secret storage and used only for authorized publishing operations.")}</p></section>
-      <section><h2>{t("Use and sharing")}</h2><p>{t("Information obtained through LinkedIn authorization is used only to operate the personal publishing integration. It is not sold, used for advertising, used to build third-party profiles, or intentionally shared with unrelated third parties. LinkedIn and infrastructure providers process information under their own applicable terms and privacy practices.")}</p></section>
-      <section><h2>{t("Retention and revocation")}</h2><p>{t("Authentication credentials are retained only while the integration remains in use or until they expire or are revoked. Authorization may be revoked through the relevant LinkedIn account settings, and stored credentials may be removed from the private publishing environment. Content already published on LinkedIn may remain there until separately deleted.")}</p></section>
-      <section><h2>{t("Website visitors")}</h2><p>{t("This public site does not require an account to read the professional portfolio. This policy does not claim collection of visitor data beyond information that may be processed by the site's hosting infrastructure as part of ordinary service delivery.")}</p></section>
-      <section><h2>{t("Changes")}</h2><p>{t("This policy may be updated if the publishing workflow, data handling, or third-party integrations materially change. The revision date above identifies the current version.")}</p></section>
-      <section><h2>{t("Contact")}</h2><p>{t("Questions about this policy or the publishing integration may be sent through the contact information available on Lucas Mateus's professional profiles.")}</p></section>
+      {privacySections.map(section=><section id={section.id}><h2>{t(section.title)}</h2><p>{t(section.text)}</p>{section.id==='contact'||section.id==='rights'?<p class="policy-link"><a href="https://www.linkedin.com/in/lucasmateus/">{t("Contact Lucas on LinkedIn")} ↗</a></p>:null}</section>)}
+      <section id="references"><h2>{t("Provider policies and your rights")}</h2><ul>
+        <li><a href="https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages">{t("GitHub Pages hosting")}</a></li>
+        <li><a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">{t("GitHub privacy statement")}</a></li>
+        <li><a href="https://www.gov.br/anpd/pt-br/assuntos/titular-de-dados/direito-dos-titulares">{t("Your rights under the LGPD (ANPD)")}</a></li>
+      </ul></section>
     </main>
     <NavigationEnhancements />
   </body>

@@ -18,14 +18,15 @@ Static editorial dictionaries provide translations; missing keys fail the build
 rather than silently mixing languages. Canonical URLs, reciprocal hreflang and
 the sitemap describe all eight pages. Existing English direct URLs remain.
 
-The privacy text is a faithful translation of the existing LinkedIn integration
-policy, retaining its September 15, 2026 update date. This feature does not
-complete the separately discussed website/relay privacy review or certify legal
-compliance. No contact, retention promise or additional legal claim was invented.
+The privacy notice now covers the portfolio, GitHub Pages IP/security records,
+external contact links, the optional legacy Relay and the private LinkedIn
+publishing workflow. It was revised on October 20, 2026. Contact is LinkedIn
+only by the Founder's decision; no email or additional data-capture form is added.
+This implementation does not claim a formal legal compliance audit.
 
 Reproduce with `npm ci --ignore-scripts`, `npm run build`, `npm run test:static`,
 `npx playwright install --with-deps chromium`, `npm run test:e2e` and
 `npm run test:fresh-eyes`. Browser suites run in GitHub Actions and include
 no-JavaScript language round trips, English navigation, text spacing and eight
 routes at 320, 390, 768 and 1440 pixels. The existing relay suite and Lighthouse
-gates remain in CI. No public deployment is part of this branch update.
+gates remain in CI. Publication was authorized by the Founder on October 20, 2026, after visual approval.

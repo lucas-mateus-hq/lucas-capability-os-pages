@@ -9,7 +9,7 @@ Personal website and professional portfolio for Lucas Mateus. The public home br
 - [Reta Final](https://lucas-mateus-hq.github.io/lucas-capability-os-pages/criacoes/reta-final/): project introduction, explicitly upcoming. No checkout, invented sales URL, waitlist or collection of personal data.
 - [Privacy](https://lucas-mateus-hq.github.io/lucas-capability-os-pages/privacy/): existing LinkedIn integration policy, preserved.
 
-The repository name and free Pages address stay unchanged. There is no custom domain, paid service or new hosting dependency. Existing protocol and relay direct URLs remain available for compatibility but are not navigation entries in the personal site. Historical lab components remain in source, unmounted; public telemetry is not loaded by the personal pages.
+The repository name and free Pages address stay unchanged. There is no custom domain, paid service or new hosting dependency. Existing protocol and relay direct URLs remain available for compatibility but are not navigation entries in the personal site. Historical lab components remain in source, unmounted; the old public telemetry assets have been retired. The Founder approved publication and LinkedIn-only contact; see docs/PUBLICATION.md.
 
 ## Development
 
