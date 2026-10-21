@@ -157,6 +157,7 @@ for(const [route,anchor] of [['./','sobre'],['portfolio/pt/','evidence']] as con
     await expect.poll(async()=>Math.round((await header.boundingBox())!.y)).toBe(0);
     const target=page.locator('#'+anchor);
     await expect.poll(async()=>Math.round((await target.boundingBox())!.y)).toBeGreaterThanOrEqual(Math.floor((await header.boundingBox())!.height));
+    await expect.poll(async()=>Math.round((await target.boundingBox())!.y)).toBeLessThanOrEqual(Math.ceil((await header.boundingBox())!.height)+32);
     await page.getByRole('link',{name:'English (United States)',exact:true}).click();
     await expect(page).toHaveURL(new RegExp('#'+anchor+'$'));
     await expect(page.locator('html')).toHaveAttribute('lang','en-US');
