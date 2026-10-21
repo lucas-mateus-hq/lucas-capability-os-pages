@@ -1,0 +1,40 @@
+<script is:inline>
+  (() => {
+    const init = () => {
+      const header = document.querySelector('.site-header, .topbar, .privacy-languages');
+      const measure = () => {
+        if (header) document.documentElement.style.setProperty('--header-offset', `${Math.ceil(header.getBoundingClientRect().height) + 16}px`);
+      };
+      measure();
+      if (header && 'ResizeObserver' in window) new ResizeObserver(measure).observe(header);
+      const links = [...document.querySelectorAll('.language-switch a')];
+      links.forEach(link => link.dataset.localeHref = link.getAttribute('href'));
+      const sections = [...document.querySelectorAll('main section[id], main article[id]')];
+      const update = () => {
+        const offset = header ? header.getBoundingClientRect().height + 32 : 32;
+        // Prefer the section actually being read, including scrolling without a URL fragment.
+        const section = sections.find(el => {
+          const rect = el.getBoundingClientRect();
+          return rect.top <= offset + 80 && rect.bottom > offset;
+        });
+        const hash = section ? `#${section.id}` : (window.scrollY < 100 ? '' : window.location.hash);
+        links.forEach(link => link.setAttribute('href', link.dataset.localeHref + hash));
+      };
+      let scheduled = false;
+      window.addEventListener('scroll', () => {
+        if (!scheduled) {
+          scheduled = true;
+          requestAnimationFrame(() => { scheduled = false; update(); });
+        }
+      }, {passive:true});
+      window.addEventListener('hashchange', update);
+      document.addEventListener('click', event => {
+        if (event.target instanceof Element && event.target.closest('.language-switch a')) update();
+      }, true);
+      // On a deep link, preserve its explicit fragment before the first layout/scroll event.
+      links.forEach(link => link.setAttribute('href', link.dataset.localeHref + window.location.hash));
+    };
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, {once:true});
+    else init();
+  })();
+</script>

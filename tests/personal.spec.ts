@@ -147,3 +147,43 @@ test('English navigation stays English and exposes honest product status',async(
   await expect(page).toHaveURL(/\/portfolio\/$/);
   await expect(page.locator('#evidence')).toContainText('14 of 15 (93%)');
 });
+
+for(const [route,anchor] of [['./','sobre'],['portfolio/pt/','evidence']] as const){
+  test(`language switching preserves the section and sticky navigation: ${route}`,async({page})=>{
+    await page.setViewportSize({width:390,height:844});
+    await page.goto(route+'#'+anchor);
+    const header=page.locator('.site-header,.topbar');
+    await expect(header).toHaveCSS('position','sticky');
+    await expect.poll(async()=>Math.round((await header.boundingBox())!.y)).toBe(0);
+    const target=page.locator('#'+anchor);
+    await expect.poll(async()=>Math.round((await target.boundingBox())!.y)).toBeGreaterThanOrEqual(Math.floor((await header.boundingBox())!.height));
+    await page.getByRole('link',{name:'English (United States)',exact:true}).click();
+    await expect(page).toHaveURL(new RegExp('#'+anchor+'$'));
+    await expect(page.locator('html')).toHaveAttribute('lang','en-US');
+    await expect(page.locator('#'+anchor)).toBeVisible();
+    await page.getByRole('link',{name:'Português (Brasil)',exact:true}).click();
+    await expect(page).toHaveURL(new RegExp('#'+anchor+'$'));
+    await expect(page.locator('html')).toHaveAttribute('lang','pt-BR');
+  });
+}
+
+test('scrolling without a fragment retains the section on language change',async({page})=>{
+  await page.goto('./');
+  await page.locator('#escritos').scrollIntoViewIfNeeded();
+  await expect(page).not.toHaveURL(/#/);
+  await page.getByRole('link',{name:'English (United States)',exact:true}).click();
+  await expect(page).toHaveURL(/\/en\/#escritos$/);
+});
+
+test('portfolio title has a readable scale and reduced motion suppresses transitions',async({page})=>{
+  await page.setViewportSize({width:1440,height:1000});
+  await page.goto('portfolio/pt/');
+  expect(await page.locator('#page-title').evaluate(el=>parseFloat(getComputedStyle(el).fontSize))).toBeLessThanOrEqual(51.2);
+  await page.emulateMedia({reducedMotion:'reduce'});
+  await page.goto('./');
+  await expect(page.locator('.hero .button')).toHaveCSS('transition-duration','0s');
+  await page.locator('.hero .button').hover();
+  await expect(page.locator('.hero .button')).toHaveCSS('transform','none');
+  await page.getByRole('link',{name:'Entrar em contato',exact:true}).click();
+  await expect(page).toHaveURL(/#contato$/);
+});

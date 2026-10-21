@@ -1,0 +1,16 @@
+---
+interface Props { lang: string }
+const {lang}=Astro.props;
+const base=import.meta.env.BASE_URL.replace(/\/$/,'');
+const image=new URL(`${base}/images/social-${lang==='en-US'?'en':'pt'}.png`,Astro.site).href;
+const alt=lang==='en-US'?'Lucas Mateus · People, learning, and projects':'Lucas Mateus · Pessoas, aprendizagem e projetos';
+---
+<meta property="og:image" content={image} />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content={alt} />
+<meta property="og:locale" content={lang==='en-US'?'en_US':'pt_BR'} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content={image} />
+<meta name="twitter:image:alt" content={alt} />

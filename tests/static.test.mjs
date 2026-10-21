@@ -8,6 +8,23 @@ const routes = ['', 'en/', 'portfolio/', 'portfolio/pt/', 'criacoes/reta-final/'
 const fileFor = (path) => `dist/${path}${path.endsWith('/') || !path ? 'index.html' : ''}`;
 const html = (route) => readFileSync(fileFor(route), 'utf8');
 
+test('every locale serves cacheable raster assets, an SVG favicon and a 1200×630 social card', () => {
+  for (const route of routes) {
+    const source=html(route);
+    assert.doesNotMatch(source, /data:image\/(?:webp|png|jpeg);base64/);
+    assert.match(source, /rel="icon" type="image\/svg\+xml"/);
+    const match=source.match(/property="og:image" content="([^"]+)"/);
+    assert.ok(match,route);
+    const url=new URL(match[1]);
+    assert.equal(url.origin,origin);
+    assert.ok(url.pathname.startsWith(prefix));
+    const png=readFileSync('dist/'+url.pathname.slice(prefix.length));
+    assert.equal(png.toString('hex',0,8),'89504e470d0a1a0a');
+    assert.equal(png.readUInt32BE(16),1200);assert.equal(png.readUInt32BE(20),630);
+    assert.match(source, /name="twitter:card" content="summary_large_image"/);
+  }
+});
+
 test('all canonical public pages build, use the correct base and stay indexable', () => {
   for (const route of routes) {
     const source = html(route);

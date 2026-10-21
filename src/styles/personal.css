@@ -15,3 +15,17 @@
 .hero-intro strong{font-weight:600;color:var(--ink)}
 .ideas-band .section-number{color:var(--mint)}
 .work-card .card-index{color:var(--mint)}
+html{scroll-padding-top:var(--header-offset,160px)}
+
+/* Editorial refinement: a human scale, a framed portrait, a visible public example. */
+.site-header.wrap{width:100%;margin:0;padding-inline:max(48px,calc((100% - 1200px)/2))}
+.skip-link{z-index:110}
+.hero h1 em,.about-copy .closing{font-family:"Source Serif 4",Georgia,serif;font-style:italic;font-weight:400}
+.hero h1 em{font-size:.94em}
+.portrait-frame{position:relative;border-radius:50%;padding:7px;background:linear-gradient(135deg,rgba(197,138,69,.4),rgba(115,205,186,.08));border:1px solid rgba(197,138,69,.25);box-shadow:0 12px 36px rgba(0,0,0,.22)}
+.portrait-frame img{mask-image:radial-gradient(circle closest-side,#000 78%,transparent 100%);-webkit-mask-image:radial-gradient(circle closest-side,#000 78%,transparent 100%)}
+.section-heading h2,.writing h2,.about h2,.contact h2{font-size:clamp(2rem,4vw,3.2rem);line-height:1.15}
+.public-case{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:40px;align-items:center;margin-top:26px;padding:30px 32px;border:1px solid var(--card-border);border-radius:var(--card-radius);background:var(--card-bg);backdrop-filter:var(--card-blur)}
+.public-case .label{margin:0 0 12px}.public-case h3{font-size:28px;line-height:1.25;margin:0 0 12px}.public-case p:not(.label){font-size:18px;line-height:1.6;color:var(--muted);margin:0}.case-links{display:flex;flex-direction:column;align-items:start;gap:12px}
+@media(max-width:1050px){.site-header.wrap{padding-inline:32px}}
+@media(max-width:700px){.site-header.wrap{padding-inline:20px}.hero h1 em{font-size:.94em}.public-case{grid-template-columns:minmax(0,1fr);padding:26px;gap:20px}.portrait-frame{width:190px}}

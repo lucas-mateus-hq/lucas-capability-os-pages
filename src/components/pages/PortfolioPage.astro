@@ -1,4 +1,6 @@
 ---
+import SocialMeta from '../SocialMeta.astro';
+import NavigationEnhancements from '../NavigationEnhancements.astro';
 import '../../styles/identity.css';
 import CartographicLines from '../CartographicLines.astro';
 import ExperienceSummary from '../ExperienceSummary.astro';
@@ -110,6 +112,7 @@ const personSchema = {
     <link rel="preload" href={`${base}/fonts/source-sans-3-latin.woff2`} as="font" type="font/woff2" crossorigin="anonymous" />
     <title>{t("Lucas Mateus — Talent Acquisition & Recruiting Operations")}</title>
     <script is:inline type="application/ld+json" set:html={JSON.stringify(personSchema)}></script>
+    <SocialMeta lang={lang} />
   </head>
   <body>
     <header class="topbar">
@@ -258,6 +261,7 @@ const personSchema = {
       <div class="links"><a href="https://www.linkedin.com/in/lucasmateus/">LinkedIn</a><a href="https://github.com/lucas-mateus-hq">GitHub</a></div>
       <p>{t("Professional portfolio · Talent Acquisition, Recruiting Operations and selected applied R&D.")}</p>
     </footer>
+    <NavigationEnhancements />
   </body>
 </html>
 
@@ -302,4 +306,8 @@ const personSchema = {
   .experience-list article{border-color:var(--card-border)}
   .rnd-card>div{min-width:0}.mini-tag-grid{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0}.mini-tag-grid span{max-width:100%;padding:6px 10px;border:1px solid var(--card-border);border-radius:10px;color:var(--accent);font-size:12px;line-height:1.5}.rnd-card>a{display:inline-flex;align-items:center;min-height:44px}
   @media(max-width:820px){.profile-grid{grid-template-columns:1fr}.rnd-card,.profile-card{padding:24px}.evidence-grid p{margin-top:24px}}
+  #page-title{font-size:clamp(2rem,4vw,3.2rem);line-height:1.15;letter-spacing:-.02em;max-width:23ch}
+  .section-head h2{font-size:clamp(2rem,4vw,3.2rem);line-height:1.15}
+  .hero{min-height:0;padding-block:64px}
+  @media(max-width:560px){html[lang] #page-title{font-size:clamp(2rem,4vw,3.2rem)}.hero{padding-block:40px}}
 </style>

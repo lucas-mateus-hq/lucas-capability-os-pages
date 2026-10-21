@@ -61,7 +61,7 @@ export const homeCopy: Record<string,string> = {
   "Gosto de entender o contexto antes de chegar a uma resposta. Principalmente quando essa resposta afeta a vida de alguém.": "I like understanding the context before settling on an answer. Especially when that answer affects someone’s life.",
   "No recrutamento, no ensino de inglês e no desenvolvimento de pessoas, encontrei situações que pedem mais do que uma orientação pronta. O que funciona depende de quem está ali, do que essa pessoa já viveu e das possibilidades que tem naquele momento.": "In recruiting, English teaching, and learning and development, I’ve encountered situations that call for more than ready-made advice. What works depends on the person, their experience, and the options available to them at that moment.",
   "Essa atenção ao contexto também acompanha meus projetos com inteligência artificial. Quero explorar o que podemos construir com essas ferramentas, mantendo espaço para questionar o resultado e decidir o que realmente faz sentido usar.": "That attention to context also shapes my AI projects. I want to explore what we can build with these tools while keeping room to question the results and decide what’s actually useful.",
-  "Aqui compartilho meu trabalho e o que sigo aprendendo.": "This is where I share my work and what I’m continuing to learn.",
+  "Aqui compartilho minha trajetória, projetos práticos e o que sigo aprendendo. Fique à vontade para explorar ou entrar em contato.": "Here I share my journey, hands-on projects, and what I’m continuing to learn. Feel free to explore or get in touch.",
   "Vamos conversar": "Let’s connect",
   "Quer conversar sobre trabalho,": "Want to talk about work,",
   "aprendizagem ou um projeto?": "learning, or a project?",
