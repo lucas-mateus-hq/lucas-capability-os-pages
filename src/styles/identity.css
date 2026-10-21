@@ -8,8 +8,9 @@
 @media(max-width:700px){:root{--card-bg:#103039;--card-blur:none}}
 .journey-main{position:relative;isolation:isolate}
 
-/* Native links remain usable without scripts; measured offset improves sticky navigation. */
-html{scroll-padding-top:var(--header-offset,160px)}
+/* Offset fragment targets, not the viewport: focusing a sticky header must not scroll the page. */
+html{scroll-padding-top:0}
+main[id],main [id]{scroll-margin-top:var(--header-offset,160px)}
 .site-header,.topbar,.privacy-languages{position:sticky!important;top:0;z-index:100!important;background:rgba(7,27,32,.95);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
 @media(prefers-reduced-transparency:reduce){.site-header,.topbar,.privacy-languages{background:#071b20;backdrop-filter:none;-webkit-backdrop-filter:none}}
 @media(prefers-reduced-motion:no-preference) and (hover:hover){.button,.work-card,.public-case,.actions a,.rnd-card,.profile-card{transition:transform .18s ease,background-color .18s ease,border-color .18s ease}.button:hover,.work-card:hover,.public-case:hover,.actions a:hover,.rnd-card:hover,.profile-card:hover{transform:translateY(-2px)}}

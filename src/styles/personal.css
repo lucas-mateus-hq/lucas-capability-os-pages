@@ -15,7 +15,7 @@
 .hero-intro strong{font-weight:600;color:var(--ink)}
 .ideas-band .section-number{color:var(--mint)}
 .work-card .card-index{color:var(--mint)}
-html{scroll-padding-top:var(--header-offset,160px)}
+html{scroll-padding-top:0}
 
 /* Editorial refinement: a human scale, a framed portrait, a visible public example. */
 .site-header.wrap{width:100%;margin:0;padding-inline:max(48px,calc((100% - 1200px)/2))}
