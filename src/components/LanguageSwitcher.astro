@@ -1,0 +1,16 @@
+---
+interface Props { lang: string; pt: string; en: string }
+const {lang,pt,en}=Astro.props;
+---
+<nav class="language-switch" aria-label={lang==='pt-BR'?'Idioma do site':'Site language'}>
+  <a href={pt} lang="pt-BR" hreflang="pt-BR" aria-label="Português (Brasil)" aria-current={lang==='pt-BR'?'page':undefined} title="Português (Brasil)">
+    <svg class="language-flag" viewBox="0 0 24 24" aria-hidden="true"><path fill="#168441" d="M0 0h24v24H0z"/><path fill="#ffdf4a" d="m12 3 10 9-10 9L2 12z"/><circle cx="12" cy="12" r="5" fill="#233d91"/><path d="M7.4 10.2c3.1-.7 6.1.2 9 2.8" fill="none" stroke="#fff" stroke-width="1"/><circle cx="11" cy="14" r=".45" fill="#fff"/><circle cx="14" cy="13" r=".45" fill="#fff"/></svg><span>PT</span>
+  </a>
+  <a href={en} lang="en-US" hreflang="en-US" aria-label="English (United States)" aria-current={lang==='en-US'?'page':undefined} title="English (United States)">
+    <svg class="language-flag" viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M0 0h24v24H0z"/>{Array.from({length:7},(_,i)=><rect x="0" y={i*24/6.5} width="24" height={24/13} fill="#b63443"/>)}<path fill="#253f77" d="M0 0h13v13H0z"/>{Array.from({length:9},(_,row)=>Array.from({length:row%2?5:6},(_,col)=><circle cx={1.1+col*2.14+(row%2?1.07:0)} cy={1+row*1.38} r=".35" fill="#fff"/>))}</svg><span>EN</span>
+  </a>
+</nav>
+<style is:global>
+.language-switch{display:flex!important;align-items:center;gap:4px!important;flex:none;width:auto!important}.language-switch a{display:inline-flex!important;align-items:center;justify-content:center;gap:5px;min-height:44px;min-width:48px;padding:7px 6px;border:1px solid transparent;border-radius:4px;text-decoration:none!important;font:600 11px/1.3 'Source Sans 3',Arial,sans-serif;color:inherit!important;white-space:nowrap}.language-switch a[aria-current=page]{border-color:rgba(180,195,199,.4);background:rgba(128,128,128,.06)}.language-switch a:hover{background:rgba(128,128,128,.2)}.language-switch a:focus-visible{outline:3px solid currentColor;outline-offset:3px}.language-flag{display:block;flex:none;width:14px;height:14px;border-radius:2px;box-shadow:0 0 0 1px rgba(255,255,255,.35)}
+@media(max-width:700px){.site-header .identity{order:0}.site-header>.language-switch{order:1;margin-left:auto}.site-header>.primary-navigation{order:2;width:100%}.site-header .header-contact{display:none}}
+</style>

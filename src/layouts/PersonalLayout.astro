@@ -1,0 +1,60 @@
+---
+import SocialMeta from '../components/SocialMeta.astro';
+import NavigationEnhancements from '../components/NavigationEnhancements.astro';
+import '../styles/identity.css';
+import '../styles/personal.css';
+import CartographicLines from '../components/CartographicLines.astro';
+import LanguageSwitcher from '../components/LanguageSwitcher.astro';
+interface Props { title: string; description: string; path?: string; lang?: string; ptPath?: string; enPath?: string }
+const { title, description, path = '', lang = 'pt-BR', ptPath = '', enPath = 'en/' } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const en = lang==='en-US';
+const home = `${base}/${en?'en/':''}`;
+const portfolio = `${base}/portfolio/${en?'':'pt/'}`;
+const privacy = `${base}/${en?'privacy/':'privacidade/'}`;
+const pt = `${base}/${ptPath}`;
+const english = `${base}/${enPath}`;
+const canonical = new URL(`${base}/${path}`, Astro.site).href;
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#071b20" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="robots" content="index,follow,max-image-preview:large" />
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="pt-BR" href={new URL(pt,Astro.site).href} />
+    <link rel="alternate" hreflang="en-US" href={new URL(english,Astro.site).href} />
+    <link rel="alternate" hreflang="x-default" href={new URL(pt,Astro.site).href} />
+    <link rel="icon" type="image/svg+xml" href={`${base}/identity.svg`} />
+    <link rel="stylesheet" href={`${base}/fonts/fonts.css`} />
+    <link rel="preload" href={`${base}/fonts/source-sans-3-latin.woff2`} as="font" type="font/woff2" crossorigin="anonymous" />
+    <title>{title}</title>
+    <SocialMeta lang={lang} />
+  </head>
+  <body>
+    <a class="skip-link" href="#conteudo">{en?'Skip to content':'Pular para o conteúdo'}</a>
+    <header class="site-header wrap">
+      <a class="identity" href={home} aria-label={en?'Lucas Mateus · Home':'Lucas Mateus · início'}><span class="monogram" aria-hidden="true">lm.</span><span>Lucas Mateus</span></a>
+      <nav class="primary-navigation" aria-label={en?'Main navigation':'Navegação principal'}>
+        <a href={`${home}#trabalho`}>{en?'Work':'Trabalho'}</a><a href={`${home}#criacoes`}>{en?'Creations':'Criações'}</a><a href={`${home}#sobre`}>{en?'About':'Sobre'}</a><a href={`${home}#contato`}>{en?'Contact':'Contato'}</a>
+      </nav>
+      <LanguageSwitcher lang={lang} pt={pt} en={english} />
+      <a class="header-contact" href="https://www.linkedin.com/in/lucasmateus/">LinkedIn <span aria-hidden="true">↗</span></a>
+    </header>
+    <main id="conteudo" class="journey-main" tabindex="-1"><CartographicLines /><slot /></main>
+    <footer class="site-footer wrap">
+      <div><a class="footer-name" href={home}>Lucas Mateus</a><p>{en?'Work, projects, and questions I keep exploring.':'Trabalho, projetos e perguntas que sigo explorando.'}</p></div>
+      <div class="footer-links"><a href={portfolio}>{en?'Professional portfolio':'Portfólio profissional'}</a><a href="https://www.linkedin.com/in/lucasmateus/">LinkedIn ↗</a><a href={privacy}>{en?'Privacy':'Privacidade'}</a></div>
+      <small>São Paulo, {en?'Brazil':'Brasil'} · {new Date().getFullYear()}</small>
+    </footer>
+    <NavigationEnhancements />
+  </body>
+</html>

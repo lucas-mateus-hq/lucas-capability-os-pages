@@ -1,0 +1,17 @@
+---
+interface Props { lang: 'pt-BR'|'en-US'; detail?: boolean }
+const {lang,detail=false}=Astro.props;
+const en=lang==='en-US';
+const base=import.meta.env.BASE_URL.replace(/\/$/,'');
+---
+<figure class:list={['product-art',{'product-art-detail':detail}]}>
+  <img src={`${base}/images/reta-final-tablet.webp`} width="1200" height="900" loading="lazy" decoding="async" alt={en?'Illustrative mockup of a tablet displaying Reta Final, a workbook for interview preparation in English, in navy blue and orange.':'Mockup ilustrativo de um tablet com o Reta Final, material de preparação para entrevistas em inglês, em azul-marinho e laranja.'} />
+  <figcaption>{en?'Illustrative mockup of the digital material.':'Mockup ilustrativo do material digital.'}</figcaption>
+</figure>
+<style is:global>
+.product-art{margin:0;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:16px;padding:24px;background:#081a2b;color:#b9cbd9}
+.product-art img{display:block;width:100%;height:auto;aspect-ratio:4/3;border-radius:3px;box-shadow:0 12px 30px #0004}
+.product-art figcaption{font-size:12px;line-height:1.6;max-width:54ch}
+.product-art-detail{margin-block:32px;border:1px solid #405a70;border-radius:4px}
+@media(max-width:700px){.product-art{padding:18px;gap:12px}.product-art-detail{margin-block:24px}}
+</style>

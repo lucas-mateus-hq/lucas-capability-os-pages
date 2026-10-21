@@ -1,0 +1,17 @@
+/* Personal editorial identity. Product artwork may retain its own palette. */
+:root{--brand-bg:#071b20;--brand-surface:#103039;--brand-teal:#0f6b61;--brand-ivory:#f7f3ea;--brand-mint:#73cdba;--brand-copper:#c58a45;--brand-muted:#bdccc9;--brand-line:#41595e;font-synthesis:none;color-scheme:dark}
+::selection{background:var(--brand-mint);color:var(--brand-bg)}
+
+:root{--card-bg:#103039;--card-border:rgba(189,235,219,.16);--card-radius:20px;--card-blur:none}
+@supports ((backdrop-filter:blur(6px)) or (-webkit-backdrop-filter:blur(6px))){:root{--card-bg:rgba(209,255,236,.045);--card-blur:blur(6px)}}
+@media(prefers-reduced-transparency:reduce){:root{--card-bg:#103039;--card-blur:none}}
+@media(max-width:700px){:root{--card-bg:#103039;--card-blur:none}}
+.journey-main{position:relative;isolation:isolate}
+
+/* Offset fragment targets, not the viewport: focusing a sticky header must not scroll the page. */
+html{scroll-padding-top:0}
+main[id],main [id]{scroll-margin-top:var(--header-offset,160px)}
+.site-header,.topbar,.privacy-languages{position:sticky!important;top:0;z-index:100!important;background:rgba(7,27,32,.95);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+@media(prefers-reduced-transparency:reduce){.site-header,.topbar,.privacy-languages{background:#071b20;backdrop-filter:none;-webkit-backdrop-filter:none}}
+@media(prefers-reduced-motion:no-preference) and (hover:hover){.button,.work-card,.public-case,.actions a,.rnd-card,.profile-card{transition:transform .18s ease,background-color .18s ease,border-color .18s ease}.button:hover,.work-card:hover,.public-case:hover,.actions a:hover,.rnd-card:hover,.profile-card:hover{transform:translateY(-2px)}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}

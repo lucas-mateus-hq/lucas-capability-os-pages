@@ -1,0 +1,21 @@
+---
+import RetaFinalArtwork from '../RetaFinalArtwork.astro';
+import PersonalLayout from '../../layouts/PersonalLayout.astro';
+import { productCopy } from '../../i18n/copy';
+interface Props { lang?: 'pt-BR'|'en-US' }
+const {lang='pt-BR'}=Astro.props;
+const en=lang==='en-US';
+const t=(key:string):string=>{if(!en)return key;const value=productCopy[key];if(value===undefined)throw new Error('Missing translation: '+key);return value;};
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const home=`${base}/${en?'en/':''}`;
+---
+<PersonalLayout title={t("Reta Final · Uma criação de Lucas Mateus")} description={t("Conheça a proposta do Reta Final, um toolkit de preparação para entrevistas profissionais em inglês. Lançamento em breve.")} lang={lang} path={en?'en/criacoes/reta-final/':'criacoes/reta-final/'} ptPath="criacoes/reta-final/" enPath="en/criacoes/reta-final/">
+  <article class="wrap detail">
+    <a class="text-link back" href={`${home}#criacoes`}>{t("← Voltar às criações")}</a><p class="eyebrow">{t("Uma criação de Lucas Mateus")}</p><h1>Reta Final.</h1><p class="lead">{t("Para quem precisa contar sua experiência profissional em inglês e quer organizar o que dizer antes da entrevista.")}</p>
+    <div class="notice"><span class="status">{t("Lançamento em breve")}</span><p>{t("O Reta Final está em preparação para lançamento. A página de vendas será disponibilizada na Hotmart.")}</p></div>
+    <RetaFinalArtwork lang={lang} detail />
+    <section class="detail-section"><h2>{t("O que você vai preparar.")}</h2><p>{t("Saber fazer o próprio trabalho e conseguir explicá-lo em uma entrevista são coisas diferentes. Em inglês, você ainda precisa escolher como comunicar essa experiência. O Reta Final propõe uma preparação prática:")}</p><ul><li>{t("Organizar experiências profissionais e exemplos relevantes.")}</li><li>{t("Estruturar respostas com clareza.")}</li><li>{t("Praticar a comunicação em inglês antes da entrevista.")}</li></ul></section>
+    <section class="detail-section"><h2>{t("Por que estou criando esse material.")}</h2><p>{t("Minha experiência com recrutamento e ensino de inglês é a base deste projeto. Quero reunir esse repertório em materiais que você possa consultar, praticar e adaptar à sua experiência, sem precisar decorar uma forma única de responder.")}</p><p>{t("O material apoia a preparação; não garante contratação ou resultado em processos seletivos.")}</p></section>
+    <div class="actions"><a class="button primary" href={home}>{t("Voltar ao início")}</a><a class="text-link" href="https://www.linkedin.com/in/lucasmateus/">{t("Acompanhar Lucas no LinkedIn ↗")}</a></div>
+  </article>
+</PersonalLayout>

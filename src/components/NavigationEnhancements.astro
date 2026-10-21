@@ -1,0 +1,46 @@
+<script is:inline>
+  (() => {
+    const init = () => {
+      const header = document.querySelector('.site-header, .topbar, .privacy-languages');
+      const measure = () => {
+        if (header) document.documentElement.style.setProperty('--header-offset', `${Math.ceil(header.getBoundingClientRect().height) + 16}px`);
+      };
+      measure();
+      if (header && 'ResizeObserver' in window) new ResizeObserver(measure).observe(header);
+      const links = [...document.querySelectorAll('.language-switch a')];
+      links.forEach(link => link.dataset.localeHref = link.getAttribute('href'));
+      const sections = [...document.querySelectorAll('main section[id], main article[id]')];
+      const update = () => {
+        const offset = header ? header.getBoundingClientRect().height + 16 : 16;
+        // A sliver of the previous section must not outweigh the content in view.
+        const visible = sections.map(el => {
+          const rect = el.getBoundingClientRect();
+          return {el, area:Math.max(0, Math.min(rect.bottom, innerHeight) - Math.max(rect.top, offset))};
+        }).filter(item => item.area > 0).sort((a,b) => b.area - a.area);
+        const fragment = window.location.hash;
+        let target = null;
+        try { target = fragment ? document.getElementById(decodeURIComponent(fragment.slice(1))) : null; }
+        catch { /* A malformed fragment is not a valid section. */ }
+        const rect = target?.getBoundingClientRect();
+        const explicit = rect && rect.top >= offset - 24 && rect.top < offset + 80;
+        const hash = explicit ? fragment : (window.scrollY < 100 ? '' : (visible[0] ? `#${visible[0].el.id}` : ''));
+        links.forEach(link => link.setAttribute('href', link.dataset.localeHref + hash));
+      };
+      let scheduled = false;
+      window.addEventListener('scroll', () => {
+        if (!scheduled) {
+          scheduled = true;
+          requestAnimationFrame(() => { scheduled = false; update(); });
+        }
+      }, {passive:true});
+      window.addEventListener('hashchange', update);
+      document.addEventListener('click', event => {
+        if (event.target instanceof Element && event.target.closest('.language-switch a')) update();
+      }, true);
+      // On a deep link, preserve its explicit fragment before the first layout/scroll event.
+      links.forEach(link => link.setAttribute('href', link.dataset.localeHref + window.location.hash));
+    };
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, {once:true});
+    else init();
+  })();
+</script>
