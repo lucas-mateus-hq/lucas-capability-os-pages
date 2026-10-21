@@ -73,10 +73,10 @@ test('keyboard access starts with skip link and works without JavaScript', async
   await context.close();
 });
 
-test('existing public document and privacy links remain available', async ({ page, request }) => {
-  for (const path of ['privacy/', 'protocol/CAPABILITY_EVIDENCE_PROTOCOL_v0.1.md', 'relay/', 'relay/app.js']) {
+test('privacy links remain available and legacy utilities return 404', async ({ page, request }) => {
+  for (const path of ['protocol/CAPABILITY_EVIDENCE_PROTOCOL_v0.1.md', 'relay/', 'relay/app.js']) {
     const response = await request.get(path);
-    expect(response.status(), path).toBe(200);
+    expect(response.status(), path).toBe(404);
   }
   await page.goto('./');
   await page.getByRole('link', { name: 'Privacidade', exact: true }).click();

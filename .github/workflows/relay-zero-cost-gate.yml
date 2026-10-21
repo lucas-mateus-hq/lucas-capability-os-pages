@@ -1,4 +1,4 @@
-name: Relay Zero-Cost Owner Pilot Gate
+name: Retired technical routes gate
 
 on:
   pull_request:
@@ -27,25 +27,16 @@ jobs:
       - name: Build static site
         run: npm run build
 
-      - name: Verify static privacy boundary
+      - name: Verify retired routes are absent from the deployment artifact
         shell: bash
         run: |
           set -euo pipefail
-          test -f dist/relay/index.html
-          test -f dist/relay/app.js
-          grep -q "connect-src 'none'" dist/relay/index.html
-          grep -q 'PBKDF2_ITERATIONS = 250000' dist/relay/app.js
-          grep -q "AES-GCM" dist/relay/app.js
-          grep -q "localStorage" dist/relay/app.js
-          grep -q "https://wa.me/" dist/relay/app.js
-          ! grep -q '5511996673607' dist/relay/app.js
-          ! grep -q '5511996673607' dist/relay/index.html
-          echo 'RELAY_ZERO_COST_STATIC_BOUNDARY_PASS'
+          test ! -e dist/relay
+          test ! -e dist/protocol
+          echo 'LEGACY_ROUTES_RETIRED'
 
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
 
-      - name: Relay encrypted self-binding E2E
+      - name: Retired technical route HTTP regression
         run: npm run test:relay
-
-# O que isso faz: impede promoção do piloto estático se o número aparecer no código público ou se o fluxo criptografado deixar de funcionar em navegador real.

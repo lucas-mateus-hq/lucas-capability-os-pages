@@ -13,7 +13,7 @@ const english=`${base}/privacy/`;
 const canonical=new URL(en?english:pt,Astro.site).href;
 const portfolio=`${base}/portfolio/${en?'':'pt/'}`;
 const t=(key:string):string=>{if(en)return key;const value=privacyCopy[key];if(value===undefined)throw new Error('Missing translation: '+key);return value;};
-const updated=en?'October 20, 2026':'20 de outubro de 2026';
+const updated=en?'October 21, 2026':'21 de outubro de 2026';
 ---
 <!doctype html>
 <html lang={lang}>
@@ -21,7 +21,7 @@ const updated=en?'October 20, 2026':'20 de outubro de 2026';
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="index,follow" />
-    <meta name="description" content={t("Privacy notice for Lucas Mateus’s personal website, hosting and optional legacy tools.")} />
+    <meta name="description" content={t("Privacy notice for Lucas Mateus’s personal website, hosting.")} />
     <link rel="icon" type="image/svg+xml" href={`${base}/identity.svg`} />
     <link rel="canonical" href={canonical} />
     <link rel="alternate" hreflang="pt-BR" href={new URL(pt,Astro.site).href} />
@@ -46,7 +46,7 @@ const updated=en?'October 20, 2026':'20 de outubro de 2026';
       p { font-size: 18px; line-height: 1.7; margin: 0; max-width: 62ch; }
     </style>
     <meta property="og:title" content={t("Privacy Policy — Lucas Mateus")} />
-    <meta property="og:description" content={t("Privacy notice for Lucas Mateus’s personal website, hosting and optional legacy tools.")} />
+    <meta property="og:description" content={t("Privacy notice for Lucas Mateus’s personal website, hosting.")} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
     <SocialMeta lang={lang} />
@@ -57,7 +57,7 @@ const updated=en?'October 20, 2026':'20 de outubro de 2026';
       <a class="back" href={portfolio}>{t("← Professional portfolio")}</a>
       <p class="eyebrow">{t("Lucas Mateus · Privacy")}</p>
       <h1>{t("Privacy Policy")}</h1>
-      <p class="lead">{t("This notice explains how the personal portfolio works, what the hosting provider processes and what happens when you use its contact links or optional legacy tools.")}</p>
+      <p class="lead">{t("This notice explains how the personal portfolio works, what the hosting provider processes and what happens when you use its contact links.")}</p>
       <p class="updated"><strong>{t("Last updated:")}</strong> {updated}</p>
 
       {privacySections.map(section=><section id={section.id}><h2>{t(section.title)}</h2><p>{t(section.text)}</p>{section.id==='contact'||section.id==='rights'?<p class="policy-link"><a href="https://www.linkedin.com/in/lucasmateus/">{t("Contact Lucas on LinkedIn")} ↗</a></p>:null}</section>)}
